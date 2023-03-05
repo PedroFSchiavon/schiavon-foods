@@ -13,7 +13,7 @@ public class TesteJpaMain {
 
         List<Restaurante> restaurantes = restauranteRepository.findAll();
         restaurantes.forEach(restaurante -> System.out.printf("----------------------------\n" +
-                "|%s  |%s  |%s  |\n", restaurante.getNome(), restaurante.getTaxaFrete()
-                .toString(), restaurante.getCozinha().getNome()));
+                "|%s  |%f  |%s  |\n", restaurante.getNome(), restaurante.getTaxaFrete(),
+                restaurante.getCozinha().getNome()));
     }
 }
