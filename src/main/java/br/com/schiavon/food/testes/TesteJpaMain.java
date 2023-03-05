@@ -1,24 +1,19 @@
 package br.com.schiavon.food.testes;
 
 import br.com.schiavon.food.domain.models.Cozinha;
+import br.com.schiavon.food.domain.models.Restaurante;
 import br.com.schiavon.food.domain.repositories.CozinhaRepository;
+import br.com.schiavon.food.domain.repositories.RestauranteRepository;
 
 import java.util.List;
 
 public class TesteJpaMain {
     public static void main(String[] args) {
-        CozinhaRepository cozinhaRepository = GeradorCozinhaRepository.getCozinhaRepository();
-        Cozinha cozinha = new Cozinha();
-        Cozinha cozinha1 = new Cozinha();
+        RestauranteRepository restauranteRepository = GeradorRestauranteRepository.getCozinhaRepository();
 
-        cozinha.setNome("Japonesa");
-        cozinha1.setNome("Árabe");
-
-        cozinhaRepository.save(cozinha);
-        cozinhaRepository.save(cozinha1);
-
-        List<Cozinha> cozinhas = cozinhaRepository.findAll();
-
-        cozinhas.forEach(cozinha2 -> System.out.println(cozinha2.getId() + "=====" + cozinha2.getNome()));
+        List<Restaurante> restaurantes = restauranteRepository.findAll();
+        restaurantes.forEach(restaurante -> System.out.printf("----------------------------\n" +
+                "|%s  |%s  |%s  |\n", restaurante.getNome(), restaurante.getTaxaFrete()
+                .toString(), restaurante.getCozinha().getNome()));
     }
 }
