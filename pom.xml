@@ -47,6 +47,10 @@
 			<artifactId>mariadb-java-client</artifactId>
 			<version>LATEST</version>
 		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
