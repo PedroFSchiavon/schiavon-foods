@@ -1,7 +1,9 @@
 package br.com.schiavon.food.api.controller;
 
+import br.com.schiavon.food.api.model.CozinhasXMLWrapper;
 import br.com.schiavon.food.domain.models.Cozinha;
 import br.com.schiavon.food.domain.repositories.CozinhaRepository;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,11 @@ public class CozinhaController {
     @GetMapping
     public List<Cozinha> listar(){
         return cozinhaRepository.findAll();
+    }
+
+    @GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
+    public CozinhasXMLWrapper listarXML(){
+        return new CozinhasXMLWrapper(cozinhaRepository.findAll());
     }
 
     @GetMapping("/{id}")
