@@ -1,5 +1,8 @@
 package br.com.schiavon.food.domain.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,12 +15,15 @@ import java.io.Serializable;
 @Entity
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@JsonRootName("gastronomia")
 public class Cozinha implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private long id;
+    //@JsonIgnore
+    @JsonProperty("titulo")
     private String nome;
 
 }
