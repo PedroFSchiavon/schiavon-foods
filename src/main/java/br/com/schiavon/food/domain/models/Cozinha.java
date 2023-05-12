@@ -23,7 +23,7 @@ public class Cozinha implements Serializable {
     @EqualsAndHashCode.Include
     private long id;
     //@JsonIgnore
-    @JsonProperty("titulo")
+    @JsonProperty("nome")
     private String nome;
 
 }

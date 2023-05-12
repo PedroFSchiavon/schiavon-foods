@@ -46,7 +46,17 @@ public class CozinhaController {
     }
 
     @PostMapping
-    public ResponseEntity adicionar(@RequestBody Cozinha cozinha){
+    public ResponseEntity<Cozinha> adicionar(@RequestBody Cozinha cozinha){
         return ResponseEntity.status(HttpStatus.CREATED).body(cozinhaRepository.save(cozinha));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Cozinha> atualizar(@PathVariable Long id, @RequestBody Cozinha cozinha){
+        if(cozinhaRepository.existsById(id)){
+            cozinha.setId(id);
+            return ResponseEntity.ok(cozinhaRepository.save(cozinha));
+        }
+        return ResponseEntity.notFound().build();
+    }
+
 }
