@@ -1,6 +1,8 @@
 package br.com.schiavon.food.api.controller;
 
 import br.com.schiavon.food.api.model.CozinhasXMLWrapper;
+import br.com.schiavon.food.domain.exceptions.CozinhaEmUsoException;
+import br.com.schiavon.food.domain.exceptions.CozinhaNaoEncontradaException;
 import br.com.schiavon.food.domain.models.Cozinha;
 import br.com.schiavon.food.domain.repositories.CozinhaRepository;
 import br.com.schiavon.food.domain.services.CozinhaService;
@@ -67,15 +69,13 @@ public class CozinhaController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Cozinha> deletar(@PathVariable Long id){
-        Optional<Cozinha> cozinhaOptional = cozinhaRepository.findById(id);
-        try {
-            if (cozinhaOptional.isPresent()) {
-                cozinhaRepository.delete(cozinhaOptional.get());
-                return ResponseEntity.noContent().build();
-            }
-            return ResponseEntity.notFound().build();
-        }catch (DataIntegrityViolationException e){
+        try{
+            cozinhaService.deletar(id);
+            return ResponseEntity.noContent().build();
+        }catch (CozinhaEmUsoException e){
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }catch (CozinhaNaoEncontradaException e){
+            return ResponseEntity.notFound().build();
         }
     }
 
