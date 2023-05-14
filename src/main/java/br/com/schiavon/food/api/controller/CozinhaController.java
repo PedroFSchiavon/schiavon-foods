@@ -3,13 +3,13 @@ package br.com.schiavon.food.api.controller;
 import br.com.schiavon.food.api.model.CozinhasXMLWrapper;
 import br.com.schiavon.food.domain.models.Cozinha;
 import br.com.schiavon.food.domain.repositories.CozinhaRepository;
+import br.com.schiavon.food.domain.services.CozinhaService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,9 +17,11 @@ import java.util.Optional;
 @RequestMapping("/cozinhas")
 public class CozinhaController {
     private final CozinhaRepository cozinhaRepository;
+    private final CozinhaService cozinhaService;
 
-    public CozinhaController(CozinhaRepository cozinhaRepository){
+    public CozinhaController(CozinhaRepository cozinhaRepository, CozinhaService cozinhaService){
         this.cozinhaRepository = cozinhaRepository;
+        this.cozinhaService = cozinhaService;
     }
 
     @GetMapping
@@ -51,7 +53,7 @@ public class CozinhaController {
 
     @PostMapping
     public ResponseEntity<Cozinha> adicionar(@RequestBody Cozinha cozinha){
-        return ResponseEntity.status(HttpStatus.CREATED).body(cozinhaRepository.save(cozinha));
+        return ResponseEntity.status(HttpStatus.CREATED).body(cozinhaService.cadastro(cozinha));
     }
 
     @PutMapping("/{id}")
