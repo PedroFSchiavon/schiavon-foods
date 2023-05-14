@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,8 +74,10 @@ public class CozinhaController {
             cozinhaService.deletar(id);
             return ResponseEntity.noContent().build();
         }catch (CozinhaEmUsoException e){
+            Arrays.stream(e.getStackTrace()).forEach(System.out::println);
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }catch (CozinhaNaoEncontradaException e){
+            Arrays.stream(e.getStackTrace()).forEach(System.out::println);
             return ResponseEntity.notFound().build();
         }
     }
