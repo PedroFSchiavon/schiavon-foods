@@ -19,7 +19,7 @@ public class Restaurante implements Serializable {
     private long id;
     private String nome;
     private BigDecimal taxaFrete;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "cozinha_id", nullable = false)
     private Cozinha cozinha;
     @OneToMany

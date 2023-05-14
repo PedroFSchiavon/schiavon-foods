@@ -3,11 +3,13 @@ package br.com.schiavon.food.api.controller;
 import br.com.schiavon.food.api.model.CozinhasXMLWrapper;
 import br.com.schiavon.food.domain.models.Cozinha;
 import br.com.schiavon.food.domain.repositories.CozinhaRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,11 +66,15 @@ public class CozinhaController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Cozinha> deletar(@PathVariable Long id){
         Optional<Cozinha> cozinhaOptional = cozinhaRepository.findById(id);
-        if(cozinhaOptional.isPresent()){
-            cozinhaRepository.delete(cozinhaOptional.get());
-            return ResponseEntity.noContent().build();
+        try {
+            if (cozinhaOptional.isPresent()) {
+                cozinhaRepository.delete(cozinhaOptional.get());
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.notFound().build();
+        }catch (DataIntegrityViolationException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
-        return ResponseEntity.notFound().build();
     }
 
 }
