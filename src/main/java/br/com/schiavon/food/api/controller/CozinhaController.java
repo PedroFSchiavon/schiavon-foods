@@ -61,11 +61,11 @@ public class CozinhaController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Cozinha> atualizar(@PathVariable Long id, @RequestBody Cozinha cozinha){
-        if(cozinhaRepository.existsById(id)){
-            cozinha.setId(id);
-            return ResponseEntity.ok(cozinhaRepository.save(cozinha));
+        try{
+            return ResponseEntity.ok(cozinhaService.atualizar(id, cozinha));
+        }catch (CozinhaNaoEncontradaException e){
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")

@@ -5,6 +5,7 @@ import br.com.schiavon.food.domain.exceptions.CozinhaNaoEncontradaException;
 import br.com.schiavon.food.domain.models.Cozinha;
 import br.com.schiavon.food.domain.repositories.CozinhaRepository;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -32,5 +33,13 @@ public class CozinhaService {
         }else {
             throw new CozinhaNaoEncontradaException(String.format("Cozinha de id %d não encontrada.", id));
         }
+    }
+
+    public Cozinha atualizar(Long id, Cozinha cozinha){
+        if(cozinhaRepository.existsById(id)){
+            cozinha.setId(id);
+            return cozinhaRepository.save(cozinha);
+        }
+        throw new CozinhaNaoEncontradaException(String.format("Cozinha de id %d não encontrada.", id));
     }
 }
