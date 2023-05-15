@@ -6,7 +6,6 @@ import br.com.schiavon.food.domain.exceptions.CozinhaNaoEncontradaException;
 import br.com.schiavon.food.domain.models.Cozinha;
 import br.com.schiavon.food.domain.repositories.CozinhaRepository;
 import br.com.schiavon.food.domain.services.CozinhaService;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
