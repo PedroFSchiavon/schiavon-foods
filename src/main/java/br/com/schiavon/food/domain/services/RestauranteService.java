@@ -26,6 +26,6 @@ public class RestauranteService {
             restaurante.setCozinha(cozinhaOptional.get());
             return restauranteRepository.save(restaurante);
         }
-        throw new EntidadeNaoEncontradaException(String.format("Cozinha de id %d não encontrada.", idCozinha);
+        throw new EntidadeNaoEncontradaException(String.format("Cozinha de id %d não encontrada.", idCozinha));
     }
 }
