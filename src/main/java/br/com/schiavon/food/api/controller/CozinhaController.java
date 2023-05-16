@@ -54,7 +54,7 @@ public class CozinhaController {
     }
 
     @PostMapping
-    public ResponseEntity<Cozinha> adicionar(@RequestBody Cozinha cozinha){
+    public ResponseEntity<Cozinha> cadastro(@RequestBody Cozinha cozinha){
         return ResponseEntity.status(HttpStatus.CREATED).body(cozinhaService.cadastro(cozinha));
     }
 

@@ -1,6 +1,7 @@
 package br.com.schiavon.food.api.controller;
 
 import br.com.schiavon.food.domain.exceptions.EntidadeNaoEncontradaException;
+import br.com.schiavon.food.domain.exceptions.RelacionamentoEntidadeNaoEncontradoException;
 import br.com.schiavon.food.domain.models.Restaurante;
 import br.com.schiavon.food.domain.repositories.RestauranteRepository;
 import br.com.schiavon.food.domain.services.RestauranteService;
@@ -34,10 +35,21 @@ public class RestauranteController {
     }
 
     @PostMapping
-    public ResponseEntity<?> adicionar(@RequestBody Restaurante restaurante){
+    public ResponseEntity<?> cadastro(@RequestBody Restaurante restaurante){
         try{
             return ResponseEntity.status(HttpStatus.CREATED).body(restauranteService.cadastro(restaurante));
         }catch (EntidadeNaoEncontradaException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody Restaurante restaurante){
+        try {
+            return ResponseEntity.ok(restauranteService.atualizar(id, restaurante));
+        }catch (EntidadeNaoEncontradaException e){
+            return ResponseEntity.notFound().build();
+        }catch (RelacionamentoEntidadeNaoEncontradoException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
