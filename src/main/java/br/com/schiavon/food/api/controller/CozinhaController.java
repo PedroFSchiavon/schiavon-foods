@@ -40,13 +40,7 @@ public class CozinhaController {
     public ResponseEntity<Cozinha> buscar(@PathVariable Long id){
         Optional<Cozinha> cozinha = cozinhaRepository.findById(id);
         return cozinha.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-
-//        if(cozinha.isPresent())
-//            return ResponseEntity.ok(cozinha.get());
-//
-//        return ResponseEntity.notFound().build();
-
-        //        return ResponseEntity.status(HttpStatus.OK).body(cozinha);
+        
 //        HttpHeaders headers = new HttpHeaders();
 //        headers.add(HttpHeaders.LOCATION, "http://localhost:8080/cozinhas");
 //
