@@ -1,11 +1,10 @@
 package br.com.schiavon.food.domain.services;
 
-import br.com.schiavon.food.domain.exceptions.CozinhaEmUsoException;
-import br.com.schiavon.food.domain.exceptions.CozinhaNaoEncontradaException;
+import br.com.schiavon.food.domain.exceptions.EntidadeEmUsoException;
+import br.com.schiavon.food.domain.exceptions.EntidadeNaoEncontradaException;
 import br.com.schiavon.food.domain.models.Cozinha;
 import br.com.schiavon.food.domain.repositories.CozinhaRepository;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -28,10 +27,10 @@ public class CozinhaService {
             try{
                 cozinhaRepository.delete(cozinhaOptional.get());
             }catch (DataIntegrityViolationException e){
-                throw new CozinhaEmUsoException(String.format("Cozinha de id %d se encontra em uso no momento.", id));
+                throw new EntidadeEmUsoException(String.format("Cozinha de id %d se encontra em uso no momento.", id));
             }
         }else {
-            throw new CozinhaNaoEncontradaException(String.format("Cozinha de id %d não encontrada.", id));
+            throw new EntidadeNaoEncontradaException(String.format("Cozinha de id %d não encontrada.", id));
         }
     }
 
@@ -40,6 +39,6 @@ public class CozinhaService {
             cozinha.setId(id);
             return cozinhaRepository.save(cozinha);
         }
-        throw new CozinhaNaoEncontradaException(String.format("Cozinha de id %d não encontrada.", id));
+        throw new EntidadeNaoEncontradaException(String.format("Cozinha de id %d não encontrada.", id));
     }
 }

@@ -1,8 +1,8 @@
 package br.com.schiavon.food.api.controller;
 
 import br.com.schiavon.food.api.model.CozinhasXMLWrapper;
-import br.com.schiavon.food.domain.exceptions.CozinhaEmUsoException;
-import br.com.schiavon.food.domain.exceptions.CozinhaNaoEncontradaException;
+import br.com.schiavon.food.domain.exceptions.EntidadeEmUsoException;
+import br.com.schiavon.food.domain.exceptions.EntidadeNaoEncontradaException;
 import br.com.schiavon.food.domain.models.Cozinha;
 import br.com.schiavon.food.domain.repositories.CozinhaRepository;
 import br.com.schiavon.food.domain.services.CozinhaService;
@@ -62,7 +62,7 @@ public class CozinhaController {
     public ResponseEntity<Cozinha> atualizar(@PathVariable Long id, @RequestBody Cozinha cozinha){
         try{
             return ResponseEntity.ok(cozinhaService.atualizar(id, cozinha));
-        }catch (CozinhaNaoEncontradaException e){
+        }catch (EntidadeNaoEncontradaException e){
             return ResponseEntity.notFound().build();
         }
     }
@@ -72,10 +72,10 @@ public class CozinhaController {
         try{
             cozinhaService.deletar(id);
             return ResponseEntity.noContent().build();
-        }catch (CozinhaEmUsoException e){
+        }catch (EntidadeEmUsoException e){
             Arrays.stream(e.getStackTrace()).forEach(System.out::println);
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        }catch (CozinhaNaoEncontradaException e){
+        }catch (EntidadeNaoEncontradaException e){
             Arrays.stream(e.getStackTrace()).forEach(System.out::println);
             return ResponseEntity.notFound().build();
         }

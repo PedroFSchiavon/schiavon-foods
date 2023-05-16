@@ -1,8 +1,8 @@
 package br.com.schiavon.food.domain.exceptions;
 
-public class CozinhaEmUsoException extends RuntimeException{
+public class EntidadeNaoEncontradaException extends RuntimeException{
     private static final long serialVersionUID = 1L;
-    public CozinhaEmUsoException(String menssagem){
+    public EntidadeNaoEncontradaException(String menssagem){
         super(menssagem);
     }
 }
