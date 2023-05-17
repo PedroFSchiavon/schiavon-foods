@@ -1,5 +1,6 @@
 package br.com.schiavon.food.api.controller;
 
+import br.com.schiavon.food.domain.exceptions.EntidadeNaoEncontradaException;
 import br.com.schiavon.food.domain.exceptions.RelacionamentoEntidadeNaoEncontradoException;
 import br.com.schiavon.food.domain.models.Cidade;
 import br.com.schiavon.food.domain.repositories.CidadeRepository;
@@ -39,6 +40,27 @@ public class CidadeController {
             return ResponseEntity.status(HttpStatus.CREATED).body(cidadeService.cadastro(cidade));
         }catch (RelacionamentoEntidadeNaoEncontradoException e){
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody Cidade cidade){
+        try{
+            return ResponseEntity.ok(cidadeService.atualizar(id, cidade));
+        }catch (EntidadeNaoEncontradaException e){
+            return ResponseEntity.notFound().build();
+        }catch (RelacionamentoEntidadeNaoEncontradoException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Cidade> deletar(@PathVariable Long id){
+        try{
+            cidadeService.deletar(id);
+            return ResponseEntity.noContent().build();
+        }catch (EntidadeNaoEncontradaException e){
+            return ResponseEntity.notFound().build();
         }
     }
 }
