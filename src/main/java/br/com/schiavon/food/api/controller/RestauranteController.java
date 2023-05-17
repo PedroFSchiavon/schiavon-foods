@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -52,5 +53,18 @@ public class RestauranteController {
         }catch (RelacionamentoEntidadeNaoEncontradoException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> atualizarParcial(@PathVariable Long id, @RequestBody Map<String, Object> restauranteMap){
+        Optional<Restaurante> restauranteOptional = restauranteRepository.findById(id);
+        if (restauranteOptional.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+
+        Restaurante restaurante = restauranteOptional.get();
+        restauranteService.atualizarParcial(restaurante, restauranteMap);
+
+        return atualizar(id, restaurante);
     }
 }

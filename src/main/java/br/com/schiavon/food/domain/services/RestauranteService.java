@@ -6,8 +6,12 @@ import br.com.schiavon.food.domain.models.Cozinha;
 import br.com.schiavon.food.domain.models.Restaurante;
 import br.com.schiavon.food.domain.repositories.CozinhaRepository;
 import br.com.schiavon.food.domain.repositories.RestauranteRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Field;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -43,5 +47,20 @@ public class RestauranteService {
             restaurante.setId(id);
             return restauranteRepository.save(restaurante);
         }
+    }
+
+    public void atualizarParcial(Restaurante restauranteDestino, Map<String, Object> dadosOrigem) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Restaurante restauranteOrigem = objectMapper.convertValue(dadosOrigem, Restaurante.class);
+        System.out.println(restauranteOrigem);
+
+        dadosOrigem.forEach((chave, valor) -> {
+            Field field = ReflectionUtils.findField(Restaurante.class, chave);
+            field.setAccessible(true);
+
+            Object novoValor = ReflectionUtils.getField(field, restauranteOrigem);
+
+            ReflectionUtils.setField(field, restauranteDestino, novoValor);
+        });
     }
 }
