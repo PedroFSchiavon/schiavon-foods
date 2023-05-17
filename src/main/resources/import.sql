@@ -9,7 +9,7 @@ insert into estado (nome) values ('Minas Gerais');
 insert into estado (nome) values ('São Paulo');
 insert into estado (nome) values ('Rio Grande do Sul');
 insert into estado (nome) values ('Santa Catarina');
-insert into cidade (nome, estado_id) values ('Capinas', 2);
+insert into cidade (nome, estado_id) values ('Campinas', 2);
 insert into cidade (nome, estado_id) values ('Porto Alegre', 3);
 insert into cidade (nome, estado_id) values ('Florianopolis', 4);
 insert into cidade (nome, estado_id) values ('Belo Horizonte', 1);
