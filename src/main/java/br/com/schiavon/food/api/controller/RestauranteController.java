@@ -29,6 +29,11 @@ public class RestauranteController {
         return restauranteRepository.findAll();
     }
 
+    @GetMapping("/nome")
+    public List<Restaurante> buscarPorNome(@RequestParam String nome){
+        return restauranteRepository.buscarPorNome(nome);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Restaurante> buscar(@PathVariable Long id){
         Optional<Restaurante> restauranteOptional = restauranteRepository.findById(id);
