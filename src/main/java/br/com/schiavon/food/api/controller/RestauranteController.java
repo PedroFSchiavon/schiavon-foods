@@ -36,9 +36,7 @@ public class RestauranteController {
     }
 
     @GetMapping("/nome-taxa")
-    public List<Restaurante> buscarPorNomeETaxa(@RequestParam String nome,
-                                                @RequestParam BigDecimal taxaInicial,
-                                                @RequestParam BigDecimal taxaFinal){
+    public List<Restaurante> buscarPorNomeETaxa(String nome, BigDecimal taxaInicial, BigDecimal taxaFinal){
 
         return restauranteRepository.buscaPorNomeETaxa(nome, taxaInicial, taxaFinal);
     }
