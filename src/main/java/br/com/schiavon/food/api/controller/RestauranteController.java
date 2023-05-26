@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -32,6 +33,14 @@ public class RestauranteController {
     @GetMapping("/nome")
     public List<Restaurante> buscarPorNome(@RequestParam String nome){
         return restauranteRepository.buscarPorNome(nome);
+    }
+
+    @GetMapping("/nome-taxa")
+    public List<Restaurante> buscarPorNomeETaxa(@RequestParam String nome,
+                                                @RequestParam BigDecimal taxaInicial,
+                                                @RequestParam BigDecimal taxaFinal){
+
+        return restauranteRepository.buscaPorNomeETaxa(nome, taxaInicial, taxaFinal);
     }
 
     @GetMapping("/{id}")
