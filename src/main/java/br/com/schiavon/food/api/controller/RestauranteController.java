@@ -6,6 +6,7 @@ import br.com.schiavon.food.domain.models.Restaurante;
 import br.com.schiavon.food.domain.repositories.RestauranteRepository;
 import br.com.schiavon.food.domain.services.RestauranteService;
 import br.com.schiavon.food.infrastructure.specifications.RestauranteFreteGratisSpec;
+import br.com.schiavon.food.infrastructure.specifications.RestauranteNomeIgualSpec;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,9 +46,9 @@ public class RestauranteController {
     @GetMapping("/taxa-zero")
     public List<Restaurante> restauranteTaxaZeroENome(String nome){
         RestauranteFreteGratisSpec freteGratis = new RestauranteFreteGratisSpec();
+        RestauranteNomeIgualSpec nomeIgual = new RestauranteNomeIgualSpec(nome);
 
-
-        return restauranteRepository.findAll()
+        return restauranteRepository.findAll(freteGratis.and(nomeIgual));
     }
 
     @GetMapping("/{id}")
