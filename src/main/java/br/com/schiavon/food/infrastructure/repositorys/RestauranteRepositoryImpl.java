@@ -1,7 +1,9 @@
 package br.com.schiavon.food.infrastructure.repositorys;
 
 import br.com.schiavon.food.domain.models.Restaurante;
+import br.com.schiavon.food.domain.repositories.RestauranteRepository;
 import br.com.schiavon.food.domain.repositories.RestauranteRepositoryQuery;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -13,13 +15,20 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+
+import static br.com.schiavon.food.infrastructure.specifications.RestauranteSpecificationFactory.comFreteGratis;
+import static br.com.schiavon.food.infrastructure.specifications.RestauranteSpecificationFactory.comNomeSemelhante;
 
 @Repository
 public class RestauranteRepositoryImpl implements RestauranteRepositoryQuery {
     @PersistenceContext
     private EntityManager manager;
+    private final RestauranteRepository restauranteRepository;
+
+    public RestauranteRepositoryImpl(@Lazy RestauranteRepository restauranteRepository){
+        this.restauranteRepository = restauranteRepository;
+    }
 
     @Override
     public List<Restaurante> buscaPorNomeETaxa(String nome, BigDecimal taxaInicial, BigDecimal taxaFinal){
@@ -66,5 +75,10 @@ public class RestauranteRepositoryImpl implements RestauranteRepositoryQuery {
         parametros.forEach(query::setParameter);
 
         return query.getResultList();*/
+    }
+
+    @Override
+    public List<Restaurante> buscarFreteGratis(String nome) {
+        return restauranteRepository.findAll(comFreteGratis().and(comNomeSemelhante(nome)));
     }
 }

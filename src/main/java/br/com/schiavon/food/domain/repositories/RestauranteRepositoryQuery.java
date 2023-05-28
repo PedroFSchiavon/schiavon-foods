@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface RestauranteRepositoryQuery {
     List<Restaurante> buscaPorNomeETaxa(String nome, BigDecimal taxaInicial, BigDecimal taxaFinal);
+
+    List<Restaurante> buscarFreteGratis(String nome);
 }
