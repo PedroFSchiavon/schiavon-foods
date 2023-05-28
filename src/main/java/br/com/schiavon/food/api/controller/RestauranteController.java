@@ -5,6 +5,7 @@ import br.com.schiavon.food.domain.exceptions.RelacionamentoEntidadeNaoEncontrad
 import br.com.schiavon.food.domain.models.Restaurante;
 import br.com.schiavon.food.domain.repositories.RestauranteRepository;
 import br.com.schiavon.food.domain.services.RestauranteService;
+import br.com.schiavon.food.infrastructure.specifications.RestauranteFreteGratisSpec;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +40,14 @@ public class RestauranteController {
     public List<Restaurante> buscarPorNomeETaxa(String nome, BigDecimal taxaInicial, BigDecimal taxaFinal){
 
         return restauranteRepository.buscaPorNomeETaxa(nome, taxaInicial, taxaFinal);
+    }
+
+    @GetMapping("/taxa-zero")
+    public List<Restaurante> restauranteTaxaZeroENome(String nome){
+        RestauranteFreteGratisSpec freteGratis = new RestauranteFreteGratisSpec();
+
+
+        return restauranteRepository.findAll()
     }
 
     @GetMapping("/{id}")
