@@ -5,8 +5,7 @@ import br.com.schiavon.food.domain.exceptions.RelacionamentoEntidadeNaoEncontrad
 import br.com.schiavon.food.domain.models.Restaurante;
 import br.com.schiavon.food.domain.repositories.RestauranteRepository;
 import br.com.schiavon.food.domain.services.RestauranteService;
-import br.com.schiavon.food.infrastructure.specifications.RestauranteFreteGratisSpec;
-import br.com.schiavon.food.infrastructure.specifications.RestauranteNomeIgualSpec;
+import br.com.schiavon.food.infrastructure.specifications.RestauranteSpecificationFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +14,9 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import static br.com.schiavon.food.infrastructure.specifications.RestauranteSpecificationFactory.comFreteGratis;
+import static br.com.schiavon.food.infrastructure.specifications.RestauranteSpecificationFactory.comNomeSemelhante;
 
 @RestController
 @RequestMapping("/restaurantes")
@@ -45,10 +47,7 @@ public class RestauranteController {
 
     @GetMapping("/taxa-zero")
     public List<Restaurante> restauranteTaxaZeroENome(String nome){
-        RestauranteFreteGratisSpec freteGratis = new RestauranteFreteGratisSpec();
-        RestauranteNomeIgualSpec nomeIgual = new RestauranteNomeIgualSpec(nome);
-
-        return restauranteRepository.findAll(freteGratis.and(nomeIgual));
+        return restauranteRepository.findAll(comFreteGratis().and(comNomeSemelhante(nome)));
     }
 
     @GetMapping("/{id}")
