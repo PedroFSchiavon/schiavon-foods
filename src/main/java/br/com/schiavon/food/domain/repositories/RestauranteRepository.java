@@ -3,7 +3,6 @@ package br.com.schiavon.food.domain.repositories;
 import br.com.schiavon.food.domain.models.Restaurante;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
-import br.com.schiavon.food.domain.repositories.CustomJpaRepositry;
 
 import java.util.List;
 

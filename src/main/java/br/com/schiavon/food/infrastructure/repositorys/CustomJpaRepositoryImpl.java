@@ -8,10 +8,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.Optional;
 
-public class CusomSimpleJpaRepositoryImpl<T, ID> extends SimpleJpaRepository<T, ID> implements CustomJpaRepositry<T, ID> {
+public class CustomJpaRepositoryImpl<T, ID> extends SimpleJpaRepository<T, ID> implements CustomJpaRepositry<T, ID> {
     private EntityManager manager;
 
-    public CusomSimpleJpaRepositoryImpl(JpaEntityInformation<T, ?> entityInformation, EntityManager entityManager) {
+    public CustomJpaRepositoryImpl(JpaEntityInformation<T, ?> entityInformation, EntityManager entityManager) {
         super(entityInformation, entityManager);
         this.manager = entityManager;
     }
