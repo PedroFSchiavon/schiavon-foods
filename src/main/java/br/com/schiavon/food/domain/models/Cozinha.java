@@ -18,10 +18,12 @@ import java.io.Serializable;
 @JsonRootName("gastronomia")
 public class Cozinha implements Serializable {
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private long id;
+
     //@JsonIgnore
     @JsonProperty("nome")
     private String nome;
