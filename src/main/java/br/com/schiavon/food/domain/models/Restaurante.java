@@ -1,11 +1,15 @@
 package br.com.schiavon.food.domain.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -28,6 +32,7 @@ public class Restaurante implements Serializable {
     private Cozinha cozinha;
 
     @Embedded
+    @JsonIgnore
     private Endereco endereco;
 
     @ManyToMany
@@ -36,4 +41,11 @@ public class Restaurante implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
     private List<FormaPagamento> formaPagamento;
 
+    @CreationTimestamp
+    @Column(nullable = false, columnDefinition = "datetime")
+    LocalDateTime dataCadastro;
+
+    @UpdateTimestamp
+    @Column(nullable = false, columnDefinition = "datetime")
+    LocalDateTime dataAtualizacao;
 }
