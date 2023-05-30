@@ -41,6 +41,9 @@ public class Restaurante implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
     private List<FormaPagamento> formaPagamento;
 
+    @OneToMany(mappedBy = "restaurante")
+    private List<Produto> produtos;
+
     @CreationTimestamp
     @Column(nullable = false, columnDefinition = "datetime")
     LocalDateTime dataCadastro;
