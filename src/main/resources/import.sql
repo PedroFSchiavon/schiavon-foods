@@ -42,3 +42,8 @@ insert into grupo (nome) values ("Vendedor");
 insert into grupo (nome) values ("Admin");
 insert into grupo (nome) values ("Consumidor");
 insert into grupo (nome) values ("Visitante");
+-- Grupo de Permissao
+insert  into grupo_permissao values (1,1), (1,2), (1,4), (1,5), (1,6);
+insert  into grupo_permissao values (2,1), (2,2), (2,3), (2,4), (2,5), (2,6);
+insert  into grupo_permissao values (3,4), (3,5), (3,6);
+insert  into grupo_permissao values (4,6);
