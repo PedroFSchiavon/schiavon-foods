@@ -47,3 +47,10 @@ insert  into grupo_permissao values (1,1), (1,2), (1,4), (1,5), (1,6);
 insert  into grupo_permissao values (2,1), (2,2), (2,3), (2,4), (2,5), (2,6);
 insert  into grupo_permissao values (3,4), (3,5), (3,6);
 insert  into grupo_permissao values (4,6);
+-- Usuario
+insert into usuario (nome, email, senha) values ("Pedro", "pedro@gmail.com", "senhasenha");
+insert into usuario (nome, email, senha) values ("Andressa", "andressa@gmail.com", "senhasenha123");
+insert into usuario (nome, email, senha) values ("Noah", "noah@gmail.com", "broabroa");
+insert into usuario (nome, email, senha) values ("Amora", "amora@gmail.com", "rozilda");
+-- Grupo de usuario
+insert into grupo_usuario values (1,2), (2,1), (3,4), (4,3);
