@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -44,12 +45,17 @@ public class Pedido implements Serializable {
     private Endereco enderecoEntrega;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cliente_id")
     private Usuario cliente;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurante_id")
     private Restaurante restaurante;
 
     @ManyToOne
+    @JoinColumn(name = "forma_pagamento_id")
     private FormaPagamento formaPagamento;
 
+    @OneToMany(mappedBy = "pedido")
+    private List<ItemPedido> itensPedidos;
 }
