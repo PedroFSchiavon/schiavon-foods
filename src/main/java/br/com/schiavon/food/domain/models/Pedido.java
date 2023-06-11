@@ -40,4 +40,16 @@ public class Pedido implements Serializable {
     @Enumerated(value = EnumType.STRING)
     private StatusPedido statusPedido;
 
+    @Embedded
+    private Endereco enderecoEntrega;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Usuario cliente;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Restaurante restaurante;
+
+    @ManyToOne
+    private FormaPagamento formaPagamento;
+
 }
