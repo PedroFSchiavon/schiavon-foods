@@ -1,12 +1,16 @@
 package br.com.schiavon.food.domain.exceptions;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.server.ResponseStatusException;
 
-@ResponseStatus(HttpStatus.NOT_FOUND)
-public class EntidadeNaoEncontradaException extends RuntimeException{
+public class EntidadeNaoEncontradaException extends ResponseStatusException {
     private static final long serialVersionUID = 1L;
-    public EntidadeNaoEncontradaException(String menssagem){
-        super(menssagem);
+
+    public EntidadeNaoEncontradaException(HttpStatus status, String menssagem) {
+        super(status, menssagem);
+    }
+
+    public EntidadeNaoEncontradaException(String menssagem) {
+        this(HttpStatus.NOT_FOUND, menssagem);
     }
 }
