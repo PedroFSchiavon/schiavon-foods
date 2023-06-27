@@ -1,5 +1,6 @@
 package br.com.schiavon.food.domain.services;
 
+import br.com.schiavon.food.domain.exceptions.EntidadeEmUsoException;
 import br.com.schiavon.food.domain.exceptions.EntidadeNaoEncontradaException;
 import br.com.schiavon.food.domain.exceptions.RelacionamentoEntidadeNaoEncontradoException;
 import br.com.schiavon.food.domain.models.Cozinha;
@@ -7,6 +8,7 @@ import br.com.schiavon.food.domain.models.Restaurante;
 import br.com.schiavon.food.domain.repositories.CozinhaRepository;
 import br.com.schiavon.food.domain.repositories.RestauranteRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
@@ -62,5 +64,19 @@ public class RestauranteService {
 
             ReflectionUtils.setField(field, restauranteDestino, novoValor);
         });
+    }
+
+    public void deletar(Long id){
+        Optional<Restaurante> restauranteOptional = restauranteRepository.findById(id);
+
+        if(restauranteOptional.isPresent()){
+            try {
+                restauranteRepository.delete(restauranteOptional.get());
+            }catch (DataIntegrityViolationException e){
+                throw new EntidadeEmUsoException(String.format("Restaurante de id %d esta em uso por outra entidade", id));
+            }
+        }else {
+            throw new EntidadeNaoEncontradaException(String.format("Restaurante com id %d não encontrado.", id));
+        }
     }
 }

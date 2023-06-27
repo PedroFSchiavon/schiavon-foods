@@ -89,4 +89,10 @@ public class RestauranteController {
 
         return atualizar(id, restaurante);
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletar(@PathVariable Long id){
+        restauranteService.deletar(id);
+    }
 }
