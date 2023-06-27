@@ -11,6 +11,7 @@ import java.util.Optional;
 
 @Service
 public class CozinhaService {
+    public static final String COZINHA_NAO_ENCONTRADA = "Cozinha de id %d não encontrada.";
     private final CozinhaRepository cozinhaRepository;
 
     public CozinhaService(CozinhaRepository cozinhaRepository){
@@ -30,7 +31,7 @@ public class CozinhaService {
                 throw new EntidadeEmUsoException(String.format("Cozinha de id %d se encontra em uso no momento.", id));
             }
         }else {
-            throw new EntidadeNaoEncontradaException(String.format("Cozinha de id %d não encontrada.", id));
+            throw new EntidadeNaoEncontradaException(String.format(COZINHA_NAO_ENCONTRADA, id));
         }
     }
 
@@ -39,6 +40,11 @@ public class CozinhaService {
             cozinha.setId(id);
             return cozinhaRepository.save(cozinha);
         }
-        throw new EntidadeNaoEncontradaException(String.format("Cozinha de id %d não encontrada.", id));
+        throw new EntidadeNaoEncontradaException(String.format(COZINHA_NAO_ENCONTRADA, id));
+    }
+
+    public Cozinha buscarCozinhaId(Long id) {
+        return cozinhaRepository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException(String
+                .format(COZINHA_NAO_ENCONTRADA, id)));
     }
 }
