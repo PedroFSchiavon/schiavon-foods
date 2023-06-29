@@ -52,9 +52,8 @@ public class RestauranteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Restaurante> buscar(@PathVariable Long id){
-        Optional<Restaurante> restauranteOptional = restauranteRepository.findById(id);
-        return restauranteOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public Restaurante buscar(@PathVariable Long id){
+        return restauranteService.buscarRestauranteId(id);
     }
 
     @PostMapping
@@ -67,24 +66,14 @@ public class RestauranteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody Restaurante restaurante){
-        try {
-            return ResponseEntity.ok(restauranteService.atualizar(id, restaurante));
-        }catch (EntidadeNaoEncontradaException e){
-            return ResponseEntity.notFound().build();
-        }catch (RelacionamentoEntidadeNaoEncontradoException e){
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    public Restaurante atualizar(@PathVariable Long id, @RequestBody Restaurante restaurante){
+            return restauranteService.atualizar(id, restaurante);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<?> atualizarParcial(@PathVariable Long id, @RequestBody Map<String, Object> restauranteMap){
-        Optional<Restaurante> restauranteOptional = restauranteRepository.findById(id);
-        if (restauranteOptional.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
+    public Restaurante atualizarParcial(@PathVariable Long id, @RequestBody Map<String, Object> restauranteMap){
+        Restaurante restaurante = restauranteService.buscarRestauranteId(id);
 
-        Restaurante restaurante = restauranteOptional.get();
         restauranteService.atualizarParcial(restaurante, restauranteMap);
 
         return atualizar(id, restaurante);

@@ -63,9 +63,6 @@ public class CozinhaController {
         }catch (EntidadeEmUsoException e){
             Arrays.stream(e.getStackTrace()).forEach(System.out::println);
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        }catch (EntidadeNaoEncontradaException e){
-            Arrays.stream(e.getStackTrace()).forEach(System.out::println);
-            return ResponseEntity.notFound().build();
         }
     }
 

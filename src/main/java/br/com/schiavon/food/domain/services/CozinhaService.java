@@ -14,29 +14,25 @@ public class CozinhaService {
     public static final String COZINHA_NAO_ENCONTRADA = "Cozinha de id %d não encontrada.";
     private final CozinhaRepository cozinhaRepository;
 
-    public CozinhaService(CozinhaRepository cozinhaRepository){
+    public CozinhaService(CozinhaRepository cozinhaRepository) {
         this.cozinhaRepository = cozinhaRepository;
     }
 
-    public Cozinha cadastro(Cozinha cozinha){
+    public Cozinha cadastro(Cozinha cozinha) {
         return cozinhaRepository.save(cozinha);
     }
 
-    public void deletar(Long id){
-        Optional<Cozinha> cozinhaOptional = cozinhaRepository.findById(id);
-        if(cozinhaOptional.isPresent()){
-            try{
-                cozinhaRepository.delete(cozinhaOptional.get());
-            }catch (DataIntegrityViolationException e){
-                throw new EntidadeEmUsoException(String.format("Cozinha de id %d se encontra em uso no momento.", id));
-            }
-        }else {
-            throw new EntidadeNaoEncontradaException(String.format(COZINHA_NAO_ENCONTRADA, id));
+    public void deletar(Long id) {
+        Cozinha cozinha = buscarCozinhaId(id);
+        try {
+            cozinhaRepository.delete(cozinha);
+        } catch (DataIntegrityViolationException e) {
+            throw new EntidadeEmUsoException(String.format("Cozinha de id %d se encontra em uso no momento.", id));
         }
     }
 
-    public Cozinha atualizar(Long id, Cozinha cozinha){
-        if(cozinhaRepository.existsById(id)){
+    public Cozinha atualizar(Long id, Cozinha cozinha) {
+        if (cozinhaRepository.existsById(id)) {
             cozinha.setId(id);
             return cozinhaRepository.save(cozinha);
         }

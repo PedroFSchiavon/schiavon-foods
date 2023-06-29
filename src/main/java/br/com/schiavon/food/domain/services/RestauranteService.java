@@ -18,37 +18,30 @@ import java.util.Optional;
 
 @Service
 public class RestauranteService {
+    public static final String RESTAURANTE_ID_NÃO_ENCONTRADO = "Restaurante com id %d não encontrado.";
     private final RestauranteRepository restauranteRepository;
-    private final CozinhaRepository cozinhaRepository;
+        private final CozinhaService cozinhaService;
 
-    public RestauranteService(RestauranteRepository restauranteRepository, CozinhaRepository cozinhaRepository){
+    public RestauranteService(RestauranteRepository restauranteRepository, CozinhaService cozinhaService) {
         this.restauranteRepository = restauranteRepository;
-        this.cozinhaRepository = cozinhaRepository;
+        this.cozinhaService = cozinhaService;
     }
 
-    public Restaurante cadastro(Restaurante restaurante){
+    public Restaurante cadastro(Restaurante restaurante) {
         long idCozinha = restaurante.getCozinha().getId();
-        Optional<Cozinha> cozinhaOptional = cozinhaRepository.findById(idCozinha);
-        if(cozinhaOptional.isPresent()){
-            restaurante.setCozinha(cozinhaOptional.get());
-            return restauranteRepository.save(restaurante);
-        }
-        throw new EntidadeNaoEncontradaException(String.format("Cozinha de id %d não encontrada.", idCozinha));
+        Cozinha cozinha = cozinhaService.buscarCozinhaId(idCozinha);
+
+        restaurante.setCozinha(cozinha);
+        return restauranteRepository.save(restaurante);
     }
 
-    public Restaurante atualizar(Long id, Restaurante restaurante){
-        Optional<Restaurante> restauranteOptional = restauranteRepository.findById(id);
+    public Restaurante atualizar(Long id, Restaurante restaurante) {
+        Restaurante restauranteDb = buscarRestauranteId(id);
         long cozinhaId = restaurante.getCozinha().getId();
-        Optional<Cozinha> cozinhaOptional = cozinhaRepository.findById(cozinhaId);
-        if(restauranteOptional.isEmpty()){
-            throw new EntidadeNaoEncontradaException(String.format("Restaurante com id %d não encontrado", id));
-        }else if(cozinhaOptional.isEmpty()){
-            throw new RelacionamentoEntidadeNaoEncontradoException(String
-                    .format("Cozinha com id %d não encontrado", cozinhaId));
-        }else {
-            restaurante.setId(id);
-            return restauranteRepository.save(restaurante);
-        }
+        cozinhaService.buscarCozinhaId(cozinhaId);
+
+        restaurante.setId(id);
+        return restauranteRepository.save(restaurante);
     }
 
     public void atualizarParcial(Restaurante restauranteDestino, Map<String, Object> dadosOrigem) {
@@ -66,17 +59,22 @@ public class RestauranteService {
         });
     }
 
-    public void deletar(Long id){
+    public void deletar(Long id) {
         Optional<Restaurante> restauranteOptional = restauranteRepository.findById(id);
 
-        if(restauranteOptional.isPresent()){
+        if (restauranteOptional.isPresent()) {
             try {
                 restauranteRepository.delete(restauranteOptional.get());
-            }catch (DataIntegrityViolationException e){
+            } catch (DataIntegrityViolationException e) {
                 throw new EntidadeEmUsoException(String.format("Restaurante de id %d esta em uso por outra entidade", id));
             }
-        }else {
-            throw new EntidadeNaoEncontradaException(String.format("Restaurante com id %d não encontrado.", id));
+        } else {
+            throw new EntidadeNaoEncontradaException(String.format(RESTAURANTE_ID_NÃO_ENCONTRADO, id));
         }
+    }
+
+    public Restaurante buscarRestauranteId(Long id) {
+        return restauranteRepository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException(String
+                .format(RESTAURANTE_ID_NÃO_ENCONTRADO, id)));
     }
 }
