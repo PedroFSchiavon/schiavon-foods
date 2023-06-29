@@ -56,14 +56,9 @@ public class CozinhaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Cozinha> deletar(@PathVariable Long id){
-        try{
-            cozinhaService.deletar(id);
-            return ResponseEntity.noContent().build();
-        }catch (EntidadeEmUsoException e){
-            Arrays.stream(e.getStackTrace()).forEach(System.out::println);
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        }
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletar(@PathVariable Long id){
+        cozinhaService.deletar(id);
     }
 
 }

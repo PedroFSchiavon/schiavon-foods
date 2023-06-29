@@ -29,9 +29,8 @@ public class EstadoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Estado> buscar(@PathVariable Long id) {
-        Optional<Estado> estadoOptional = estadoRepository.findById(id);
-        return estadoOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public Estado buscar(@PathVariable Long id) {
+        return estadoService.buscaEstadoId(id);
     }
 
     @PostMapping
@@ -40,23 +39,13 @@ public class EstadoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Estado> atualizar(@PathVariable Long id, @RequestBody Estado estado) {
-        try {
-            return ResponseEntity.ok(estadoService.atualizar(id, estado));
-        } catch (EntidadeNaoEncontradaException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public Estado atualizar(@PathVariable Long id, @RequestBody Estado estado) {
+        return estadoService.atualizar(id, estado);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Estado> deletar(@PathVariable Long id) {
-        try {
-            estadoService.deletar(id);
-            return ResponseEntity.noContent().build();
-        } catch (EntidadeNaoEncontradaException e) {
-            return ResponseEntity.notFound().build();
-        } catch (EntidadeEmUsoException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        }
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletar(@PathVariable Long id) {
+        estadoService.deletar(id);
     }
 }

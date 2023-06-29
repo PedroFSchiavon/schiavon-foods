@@ -11,6 +11,7 @@ import java.util.Optional;
 
 @Service
 public class EstadoService {
+    public static final String ESTADO_ID_NÃO_ENCONTRADO = "Estado com id %d não encontrado";
     private final EstadoRepository estadoRepository;
 
     public EstadoService(EstadoRepository estadoRepository){
@@ -26,18 +27,20 @@ public class EstadoService {
             estado.setId(id);
             return estadoRepository.save(estado);
         }
-        throw new EntidadeNaoEncontradaException(String.format("Estado com id %d não encontrado", id));
+        throw new EntidadeNaoEncontradaException(String.format(ESTADO_ID_NÃO_ENCONTRADO, id));
     }
 
     public void deletar(Long id){
-        Optional<Estado> estadoOptional = estadoRepository.findById(id);
-        try {
-            if (estadoOptional.isPresent()) {
-                estadoRepository.delete(estadoOptional.get());
-            } else
-                throw new EntidadeNaoEncontradaException(String.format("Estado com id %d não encontrado", id));
+        Estado estado = buscaEstadoId(id);
+        try{
+            estadoRepository.delete(estado);
         }catch (DataIntegrityViolationException e){
             throw new EntidadeEmUsoException(String.format("Estado com o id %d esta em uso por oura entidade.", id));
         }
+    }
+
+    public Estado buscaEstadoId(Long id) {
+        return estadoRepository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException(String
+                .format(ESTADO_ID_NÃO_ENCONTRADO, id)));
     }
 }
