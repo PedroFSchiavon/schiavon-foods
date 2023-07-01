@@ -6,13 +6,11 @@ import br.com.schiavon.food.domain.models.Restaurante;
 import br.com.schiavon.food.domain.repositories.RestauranteRepository;
 import br.com.schiavon.food.domain.services.RestauranteService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/restaurantes")
@@ -57,24 +55,29 @@ public class RestauranteController {
     }
 
     @PostMapping
-    public ResponseEntity<?> cadastro(@RequestBody Restaurante restaurante){
+    @ResponseStatus(HttpStatus.CREATED)
+    public Restaurante cadastro(@RequestBody Restaurante restaurante){
         try{
-            return ResponseEntity.status(HttpStatus.CREATED).body(restauranteService.cadastro(restaurante));
+            return restauranteService.cadastro(restaurante);
         }catch (EntidadeNaoEncontradaException e){
-            return ResponseEntity.badRequest().body(e.getMessage());
+            throw new RelacionamentoEntidadeNaoEncontradoException(e.getMessage());
         }
     }
 
     @PutMapping("/{id}")
     public Restaurante atualizar(@PathVariable Long id, @RequestBody Restaurante restaurante){
-            return restauranteService.atualizar(id, restaurante);
+        return restauranteService.atualizar(id, restaurante);
     }
 
     @PatchMapping("/{id}")
     public Restaurante atualizarParcial(@PathVariable Long id, @RequestBody Map<String, Object> restauranteMap){
         Restaurante restaurante = restauranteService.buscarRestauranteId(id);
 
-        restauranteService.atualizarParcial(restaurante, restauranteMap);
+        try {
+            restauranteService.atualizarParcial(restaurante, restauranteMap);
+        }catch (EntidadeNaoEncontradaException e){
+            throw new RelacionamentoEntidadeNaoEncontradoException(e.getMessage());
+        }
 
         return atualizar(id, restaurante);
     }

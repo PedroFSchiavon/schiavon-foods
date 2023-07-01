@@ -1,17 +1,13 @@
 package br.com.schiavon.food.api.controller;
 
 import br.com.schiavon.food.api.model.CozinhasXMLWrapper;
-import br.com.schiavon.food.domain.exceptions.EntidadeEmUsoException;
-import br.com.schiavon.food.domain.exceptions.EntidadeNaoEncontradaException;
 import br.com.schiavon.food.domain.models.Cozinha;
 import br.com.schiavon.food.domain.repositories.CozinhaRepository;
 import br.com.schiavon.food.domain.services.CozinhaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -46,8 +42,9 @@ public class CozinhaController {
     }
 
     @PostMapping
-    public ResponseEntity<Cozinha> cadastro(@RequestBody Cozinha cozinha){
-        return ResponseEntity.status(HttpStatus.CREATED).body(cozinhaService.cadastro(cozinha));
+    @ResponseStatus(HttpStatus.CREATED)
+    public Cozinha cadastro(@RequestBody Cozinha cozinha){
+        return cozinhaService.cadastro(cozinha);
     }
 
     @PutMapping("/{id}")

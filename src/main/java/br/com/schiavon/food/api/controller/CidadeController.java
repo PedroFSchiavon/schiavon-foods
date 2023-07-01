@@ -34,11 +34,12 @@ public class CidadeController {
     }
 
     @PostMapping
-    public ResponseEntity<?> cadastro(@RequestBody Cidade cidade){
+    @ResponseStatus(HttpStatus.CREATED)
+    public Cidade cadastro(@RequestBody Cidade cidade){
         try{
-            return ResponseEntity.status(HttpStatus.CREATED).body(cidadeService.cadastro(cidade));
-        }catch (RelacionamentoEntidadeNaoEncontradoException e){
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return cidadeService.cadastro(cidade);
+        }catch (EntidadeNaoEncontradaException e){
+            throw new RelacionamentoEntidadeNaoEncontradoException(e.getMessage());
         }
     }
 

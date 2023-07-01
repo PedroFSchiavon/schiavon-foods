@@ -37,8 +37,12 @@ public class RestauranteService {
 
     public Restaurante atualizar(Long id, Restaurante restaurante) {
         buscarRestauranteId(id);
-        long cozinhaId = restaurante.getCozinha().getId();
-        cozinhaService.buscarCozinhaId(cozinhaId);
+        try{
+            long cozinhaId = restaurante.getCozinha().getId();
+            cozinhaService.buscarCozinhaId(cozinhaId);
+        }catch (EntidadeNaoEncontradaException e){
+            throw new RelacionamentoEntidadeNaoEncontradoException(e.getMessage());
+        }
 
         restaurante.setId(id);
         return restauranteRepository.save(restaurante);
