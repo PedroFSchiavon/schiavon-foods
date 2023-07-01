@@ -1,53 +1,49 @@
 package br.com.schiavon.food.domain.services;
 
-import br.com.schiavon.food.domain.exceptions.EntidadeEmUsoException;
 import br.com.schiavon.food.domain.exceptions.EntidadeNaoEncontradaException;
 import br.com.schiavon.food.domain.exceptions.RelacionamentoEntidadeNaoEncontradoException;
 import br.com.schiavon.food.domain.models.Cidade;
 import br.com.schiavon.food.domain.repositories.CidadeRepository;
 import br.com.schiavon.food.domain.repositories.EstadoRepository;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 public class CidadeService {
+    public static final String CIDADE_ID_NÃO_ENCONTRADA = "Cidade de id %d não encontrada";
     private final CidadeRepository cidadeRepository;
     private final EstadoRepository estadoRepository;
+    private final EstadoService estadoService;
 
-    public CidadeService(CidadeRepository cidadeRepository, EstadoRepository estadoRepository) {
+    public CidadeService(CidadeRepository cidadeRepository, EstadoRepository estadoRepository, EstadoService estadoService) {
         this.cidadeRepository = cidadeRepository;
         this.estadoRepository = estadoRepository;
+        this.estadoService = estadoService;
     }
 
     public Cidade cadastro(Cidade cidade) {
         long idEstado = cidade.getEstado().getId();
-        if (estadoRepository.existsById(idEstado))
-            return cidadeRepository.save(cidade);
-        throw new RelacionamentoEntidadeNaoEncontradoException(String
-                .format("Estado com id %d não encontrado.", idEstado));
+        estadoService.buscaEstadoId(idEstado);
+
+        return cidadeRepository.save(cidade);
     }
 
     public Cidade atualizar(Long id, Cidade cidade) {
-        if (!cidadeRepository.existsById(id))
-            throw new EntidadeNaoEncontradaException(String.format("Cidade de id %d não encontrada", id));
-        else if (!estadoRepository.existsById(cidade.getEstado().getId())) {
-            throw new RelacionamentoEntidadeNaoEncontradoException(String
-                    .format("Estado de id %d não encontrado", cidade.getEstado().getId()));
-        } else {
-            cidade.setId(id);
-            return cidadeRepository.save(cidade);
-        }
+        buscarCidadeId(id);
+        estadoService.buscaEstadoId(cidade.getEstado().getId());
+
+        cidade.setId(id);
+        return cidadeRepository.save(cidade);
     }
 
     public void deletar(Long id) {
-        Optional<Cidade> cidadeOptional = cidadeRepository.findById(id);
+        Cidade cidade = buscarCidadeId(id);
+        cidadeRepository.delete(cidade);
+    }
 
-        if (cidadeOptional.isPresent()) {
-            cidadeRepository.delete(cidadeOptional.get());
-        } else {
-            throw new EntidadeNaoEncontradaException(String.format("Cidade de id %d não encontrada", id));
-        }
+    public Cidade buscarCidadeId(Long id) {
+        return cidadeRepository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException(String
+                .format(CIDADE_ID_NÃO_ENCONTRADA, id)));
     }
 }

@@ -36,7 +36,7 @@ public class RestauranteService {
     }
 
     public Restaurante atualizar(Long id, Restaurante restaurante) {
-        Restaurante restauranteDb = buscarRestauranteId(id);
+        buscarRestauranteId(id);
         long cozinhaId = restaurante.getCozinha().getId();
         cozinhaService.buscarCozinhaId(cozinhaId);
 
