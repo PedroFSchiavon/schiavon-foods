@@ -1,5 +1,6 @@
 package br.com.schiavon.food.domain.services;
 
+import br.com.schiavon.food.domain.exceptions.CidadeNaoEncontradaException;
 import br.com.schiavon.food.domain.exceptions.EntidadeEmUsoException;
 import br.com.schiavon.food.domain.exceptions.EntidadeNaoEncontradaException;
 import br.com.schiavon.food.domain.exceptions.RelacionamentoEntidadeNaoEncontradoException;
@@ -13,7 +14,7 @@ import java.util.Optional;
 
 @Service
 public class CidadeService {
-    public static final String CIDADE_ID_NÃO_ENCONTRADA = "Cidade de id %d não encontrada";
+    public static final String CIDADE_ID_EM_USO = "Cidade com o id %d esta em uso por oura entidade.";
     private final CidadeRepository cidadeRepository;
     private final EstadoService estadoService;
 
@@ -31,11 +32,7 @@ public class CidadeService {
 
     public Cidade atualizar(Long id, Cidade cidade) {
         buscarCidadeId(id);
-        try {
-            estadoService.buscaEstadoId(cidade.getEstado().getId());
-        }catch (EntidadeNaoEncontradaException e){
-            throw new RelacionamentoEntidadeNaoEncontradoException(e.getMessage());
-        }
+        estadoService.buscaEstadoId(cidade.getEstado().getId());
 
         cidade.setId(id);
         return cidadeRepository.save(cidade);
@@ -46,13 +43,12 @@ public class CidadeService {
             Cidade cidade = buscarCidadeId(id);
             cidadeRepository.delete(cidade);
         }catch (DataIntegrityViolationException e){
-            throw new EntidadeEmUsoException(String.format("Cidade com o id %d esta em uso por oura entidade.", id));
+            throw new EntidadeEmUsoException(String.format(CIDADE_ID_EM_USO, id));
         }
 
     }
 
     public Cidade buscarCidadeId(Long id) {
-        return cidadeRepository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException(String
-                .format(CIDADE_ID_NÃO_ENCONTRADA, id)));
+        return cidadeRepository.findById(id).orElseThrow(() -> new CidadeNaoEncontradaException(id));
     }
 }

@@ -2,6 +2,7 @@ package br.com.schiavon.food.domain.services;
 
 import br.com.schiavon.food.domain.exceptions.EntidadeEmUsoException;
 import br.com.schiavon.food.domain.exceptions.EntidadeNaoEncontradaException;
+import br.com.schiavon.food.domain.exceptions.EstadoNaoEncontradaException;
 import br.com.schiavon.food.domain.models.Estado;
 import br.com.schiavon.food.domain.repositories.EstadoRepository;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -11,7 +12,7 @@ import java.util.Optional;
 
 @Service
 public class EstadoService {
-    public static final String ESTADO_ID_NÃO_ENCONTRADO = "Estado com id %d não encontrado";
+    public static final String ESTADO_ID_EM_USO_POR = "Estado com o id %d esta em uso por oura entidade.";
     private final EstadoRepository estadoRepository;
 
     public EstadoService(EstadoRepository estadoRepository){
@@ -27,7 +28,7 @@ public class EstadoService {
             estado.setId(id);
             return estadoRepository.save(estado);
         }
-        throw new EntidadeNaoEncontradaException(String.format(ESTADO_ID_NÃO_ENCONTRADO, id));
+        throw new EstadoNaoEncontradaException(id);
     }
 
     public void deletar(Long id){
@@ -35,12 +36,11 @@ public class EstadoService {
         try{
             estadoRepository.delete(estado);
         }catch (DataIntegrityViolationException e){
-            throw new EntidadeEmUsoException(String.format("Estado com o id %d esta em uso por oura entidade.", id));
+            throw new EntidadeEmUsoException(String.format(ESTADO_ID_EM_USO_POR, id));
         }
     }
 
     public Estado buscaEstadoId(Long id) {
-        return estadoRepository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException(String
-                .format(ESTADO_ID_NÃO_ENCONTRADO, id)));
+        return estadoRepository.findById(id).orElseThrow(() -> new EstadoNaoEncontradaException(id));
     }
 }

@@ -3,6 +3,7 @@ package br.com.schiavon.food.domain.services;
 import br.com.schiavon.food.domain.exceptions.EntidadeEmUsoException;
 import br.com.schiavon.food.domain.exceptions.EntidadeNaoEncontradaException;
 import br.com.schiavon.food.domain.exceptions.RelacionamentoEntidadeNaoEncontradoException;
+import br.com.schiavon.food.domain.exceptions.RestauranteNaoEncontradaException;
 import br.com.schiavon.food.domain.models.Cozinha;
 import br.com.schiavon.food.domain.models.Restaurante;
 import br.com.schiavon.food.domain.repositories.CozinhaRepository;
@@ -18,7 +19,7 @@ import java.util.Optional;
 
 @Service
 public class RestauranteService {
-    public static final String RESTAURANTE_ID_NÃO_ENCONTRADO = "Restaurante com id %d não encontrado.";
+    public static final String RESTAURANTE_ID_EM_USO = "Restaurante de id %d esta em uso por outra entidade";
     private final RestauranteRepository restauranteRepository;
         private final CozinhaService cozinhaService;
 
@@ -37,12 +38,8 @@ public class RestauranteService {
 
     public Restaurante atualizar(Long id, Restaurante restaurante) {
         buscarRestauranteId(id);
-        try{
-            long cozinhaId = restaurante.getCozinha().getId();
-            cozinhaService.buscarCozinhaId(cozinhaId);
-        }catch (EntidadeNaoEncontradaException e){
-            throw new RelacionamentoEntidadeNaoEncontradoException(e.getMessage());
-        }
+        long cozinhaId = restaurante.getCozinha().getId();
+        cozinhaService.buscarCozinhaId(cozinhaId);
 
         restaurante.setId(id);
         return restauranteRepository.save(restaurante);
@@ -64,21 +61,15 @@ public class RestauranteService {
     }
 
     public void deletar(Long id) {
-        Optional<Restaurante> restauranteOptional = restauranteRepository.findById(id);
-
-        if (restauranteOptional.isPresent()) {
-            try {
-                restauranteRepository.delete(restauranteOptional.get());
-            } catch (DataIntegrityViolationException e) {
-                throw new EntidadeEmUsoException(String.format("Restaurante de id %d esta em uso por outra entidade", id));
-            }
-        } else {
-            throw new EntidadeNaoEncontradaException(String.format(RESTAURANTE_ID_NÃO_ENCONTRADO, id));
+        Restaurante restaurante = buscarRestauranteId(id);
+        try {
+            restauranteRepository.delete(restaurante);
+        } catch (DataIntegrityViolationException e) {
+            throw new EntidadeEmUsoException(String.format(RESTAURANTE_ID_EM_USO, id));
         }
     }
 
     public Restaurante buscarRestauranteId(Long id) {
-        return restauranteRepository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException(String
-                .format(RESTAURANTE_ID_NÃO_ENCONTRADO, id)));
+        return restauranteRepository.findById(id).orElseThrow(() -> new RestauranteNaoEncontradaException(id));
     }
 }
