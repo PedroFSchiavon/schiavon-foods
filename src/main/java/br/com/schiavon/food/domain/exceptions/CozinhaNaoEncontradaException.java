@@ -1,6 +1,6 @@
 package br.com.schiavon.food.domain.exceptions;
 
-public abstract class CozinhaNaoEncontradaException extends EntidadeNaoEncontradaException {
+public class CozinhaNaoEncontradaException extends EntidadeNaoEncontradaException {
     private static final long serialVersionUID = 1L;
     public static final String COZINHA_NAO_ENCONTRADA = "Cozinha de id %d não encontrada.";
 
