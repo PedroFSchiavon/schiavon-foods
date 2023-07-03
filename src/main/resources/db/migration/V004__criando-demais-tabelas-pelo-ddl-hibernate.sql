@@ -53,7 +53,7 @@ create table restaurante
     endereco_logradouro  varchar(100),
     endereco_numero      varchar(6),
     nome                 varchar(60),
-    taxa_frete           decimal(3, 2),
+    taxa_frete           decimal(4, 2),
     cozinha_id           bigint   not null,
     endereco_cidade_id   bigint,
     primary key (id)

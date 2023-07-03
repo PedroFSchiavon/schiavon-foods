@@ -1,7 +1,6 @@
 package br.com.schiavon.food.api.controller;
 
 import br.com.schiavon.food.domain.exceptions.CozinhaNaoEncontradaException;
-import br.com.schiavon.food.domain.exceptions.EntidadeNaoEncontradaException;
 import br.com.schiavon.food.domain.exceptions.RelacionamentoEntidadeNaoEncontradoException;
 import br.com.schiavon.food.domain.models.Restaurante;
 import br.com.schiavon.food.domain.repositories.RestauranteRepository;
@@ -61,7 +60,7 @@ public class RestauranteController {
         try{
             return restauranteService.cadastro(restaurante);
         }catch (CozinhaNaoEncontradaException e){
-            throw new RelacionamentoEntidadeNaoEncontradoException(e.getMessage());
+            throw new RelacionamentoEntidadeNaoEncontradoException(e.getMessage(), e);
         }
     }
 
@@ -70,7 +69,7 @@ public class RestauranteController {
         try{
             return restauranteService.atualizar(id, restaurante);
         }catch (CozinhaNaoEncontradaException e){
-            throw new RelacionamentoEntidadeNaoEncontradoException(e.getMessage());
+            throw new RelacionamentoEntidadeNaoEncontradoException(e.getMessage(), e);
         }
     }
 
@@ -81,7 +80,7 @@ public class RestauranteController {
         try {
             restauranteService.atualizarParcial(restaurante, restauranteMap);
         }catch (CozinhaNaoEncontradaException e){
-            throw new RelacionamentoEntidadeNaoEncontradoException(e.getMessage());
+            throw new RelacionamentoEntidadeNaoEncontradoException(e.getMessage(), e);
         }
 
         return atualizar(id, restaurante);
