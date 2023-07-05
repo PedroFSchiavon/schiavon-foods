@@ -1,5 +1,6 @@
 package br.com.schiavon.food.api.exceptionHandlers;
 
+import br.com.schiavon.food.domain.exceptions.EntidadeEmUsoException;
 import br.com.schiavon.food.domain.exceptions.EntidadeNaoEncontradaException;
 import br.com.schiavon.food.domain.exceptions.RelacionamentoEntidadeNaoEncontradoException;
 import org.springframework.http.HttpStatus;
@@ -22,5 +23,11 @@ public class ApiExceptionHandler {
     trataRelacionamentoEntidadeNaoEncontradoException(RelacionamentoEntidadeNaoEncontradoException e){
         Problema problema = new Problema(e.getMessage(), LocalDateTime.now());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problema);
+    }
+
+    @ExceptionHandler(EntidadeEmUsoException.class)
+    public ResponseEntity<?> trataEntidadeEmUsoException(EntidadeEmUsoException e){
+        Problema problema = new Problema(e.getMessage(), LocalDateTime.now());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(problema);
     }
 }
