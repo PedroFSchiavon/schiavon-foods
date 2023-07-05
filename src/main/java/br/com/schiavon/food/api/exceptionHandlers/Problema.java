@@ -1,4 +1,4 @@
-package br.com.schiavon.food.api.controller.exceptionHandlers;
+package br.com.schiavon.food.api.exceptionHandlers;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
