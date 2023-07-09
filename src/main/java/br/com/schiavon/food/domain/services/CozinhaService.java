@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Service
 public class CozinhaService {
-    public static final String COZINHA_ID_EM_USO = "Cozinha de id %d se encontra em uso no momento.";
+    public static final String COZINHA_ID_EM_USO = "Não foi possível deletar a cozinha com o id %d, pois esta em uso no momento..";
     private final CozinhaRepository cozinhaRepository;
 
     public CozinhaService(CozinhaRepository cozinhaRepository) {

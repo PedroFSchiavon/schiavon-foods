@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Service
 public class CidadeService {
-    public static final String CIDADE_ID_EM_USO = "Cidade com o id %d esta em uso por oura entidade.";
+    public static final String CIDADE_ID_EM_USO = "Não foi possível deletar a cidade com o id %d, pois esta em uso no momento.";
     private final CidadeRepository cidadeRepository;
     private final EstadoService estadoService;
 

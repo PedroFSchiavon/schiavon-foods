@@ -36,11 +36,13 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
                                                              HttpStatus status, WebRequest request) {
         if(body == null){
-            body = new Problema(status.getReasonPhrase(), LocalDateTime.now());
+            body = new Problem(status.getReasonPhrase(), LocalDateTime.now());
         } else if (body instanceof String) {
-            body = new Problema((String) body, LocalDateTime.now());
+            body = new Problem((String) body, LocalDateTime.now());
         }
 
         return super.handleExceptionInternal(ex, body, headers, status, request);
     }
+
+    private Problem criaProblema
 }

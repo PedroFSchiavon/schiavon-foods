@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Service
 public class EstadoService {
-    public static final String ESTADO_ID_EM_USO_POR = "Estado com o id %d esta em uso por oura entidade.";
+    public static final String ESTADO_ID_EM_USO_POR = "Não foi possível deletar o estado com o id %d, pois esta em uso no momento.";
     private final EstadoRepository estadoRepository;
 
     public EstadoService(EstadoRepository estadoRepository){

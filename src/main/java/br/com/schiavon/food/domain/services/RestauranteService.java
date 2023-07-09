@@ -19,7 +19,8 @@ import java.util.Optional;
 
 @Service
 public class RestauranteService {
-    public static final String RESTAURANTE_ID_EM_USO = "Restaurante de id %d esta em uso por outra entidade";
+    public static final String RESTAURANTE_ID_EM_USO = "Não foi possível deletar o restaurante" +
+            " com o id %d, pois esta em uso no momento.";
     private final RestauranteRepository restauranteRepository;
         private final CozinhaService cozinhaService;
 
