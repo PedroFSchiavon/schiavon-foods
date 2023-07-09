@@ -17,18 +17,21 @@ import java.time.LocalDateTime;
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(EntidadeNaoEncontradaException.class)
     public ResponseEntity<?>
-    trataEntidadeNaoEncontradaException(EntidadeNaoEncontradaException e, WebRequest webRequest){
-        return handleExceptionInternal(e, e.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND, webRequest);
+    handleEntidadeNaoEncontradaException(EntidadeNaoEncontradaException e, WebRequest webRequest){
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        Problem problem = createProblem(status.value(), ProblemType.ENTIDADE_NAO_ENCONTRADA, e.getMessage());
+
+        return handleExceptionInternal(e, problem, new HttpHeaders(), status, webRequest);
     }
 
     @ExceptionHandler(RelacionamentoEntidadeNaoEncontradoException.class)
     public ResponseEntity<?>
-    trataRelacionamentoEntidadeNaoEncontradoException(RelacionamentoEntidadeNaoEncontradoException e, WebRequest webRequest){
+    handleRelacionamentoEntidadeNaoEncontradoException(RelacionamentoEntidadeNaoEncontradoException e, WebRequest webRequest){
         return handleExceptionInternal(e, e.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, webRequest);
     }
 
     @ExceptionHandler(EntidadeEmUsoException.class)
-    public ResponseEntity<?> trataEntidadeEmUsoException(EntidadeEmUsoException e, WebRequest webRequest){
+    public ResponseEntity<?> handleEntidadeEmUsoException(EntidadeEmUsoException e, WebRequest webRequest){
         return handleExceptionInternal(e, e.getMessage(), new HttpHeaders(), HttpStatus.CONFLICT, webRequest);
     }
 
@@ -36,13 +39,13 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
                                                              HttpStatus status, WebRequest request) {
         if(body == null){
-            body = new Problem(status.getReasonPhrase(), LocalDateTime.now());
-        } else if (body instanceof String) {
-            body = new Problem((String) body, LocalDateTime.now());
+            body = new Problem(status.value(), status.getReasonPhrase());
         }
 
         return super.handleExceptionInternal(ex, body, headers, status, request);
     }
 
-    private Problem criaProblema
+    private Problem createProblem(int status, ProblemType problemType, String detail){
+        return new Problem(status, problemType.type, problemType.title, detail);
+    }
 }

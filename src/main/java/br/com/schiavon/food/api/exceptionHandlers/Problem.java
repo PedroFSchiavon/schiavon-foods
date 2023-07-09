@@ -12,4 +12,9 @@ public class Problem {
     private String type;
     private String title;
     private String detail;
+
+    public Problem(int status, String title){
+        this.status = status;
+        this.title = title;
+    }
 }
