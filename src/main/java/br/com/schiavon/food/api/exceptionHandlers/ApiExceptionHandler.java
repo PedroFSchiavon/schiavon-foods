@@ -3,8 +3,10 @@ package br.com.schiavon.food.api.exceptionHandlers;
 import br.com.schiavon.food.domain.exceptions.EntidadeEmUsoException;
 import br.com.schiavon.food.domain.exceptions.EntidadeNaoEncontradaException;
 import br.com.schiavon.food.domain.exceptions.RelacionamentoEntidadeNaoEncontradoException;
+import com.fasterxml.jackson.databind.exc.IgnoredPropertyException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -64,11 +66,24 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, problem, headers, status, request);
     }
 
-    private ResponseEntity<Object> handlePropertyBindingException(PropertyBindingException rootCause,
+    private ResponseEntity<Object> handlePropertyBindingException(PropertyBindingException ex,
                                                                   HttpHeaders headers, HttpStatus status, WebRequest request) {
+        String causa = null;
 
+        if(ex instanceof IgnoredPropertyException){
+            causa = "não deve ser informada";
+        } else if (ex instanceof UnrecognizedPropertyException) {
+            causa = "não existe";
+        }
 
-        return null;
+        String propriedade = ex.getPath().stream().map(reference -> reference.getFieldName())
+                .collect(Collectors.joining("."));
+
+        String detail = String.format("A propriedade '%s' recebeu algum valor, porém está propriedade %s.",
+                propriedade, causa);
+        Problem problem = createProblem(status.value(), ProblemType.ERRO_DE_SINTAXE, detail);
+
+        return handleExceptionInternal(ex, problem, headers, status, request);
     }
 
     private ResponseEntity<Object> handleInvalidFormatException(InvalidFormatException ex,
