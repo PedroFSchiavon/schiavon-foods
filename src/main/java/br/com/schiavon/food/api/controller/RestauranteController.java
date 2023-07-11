@@ -8,6 +8,7 @@ import br.com.schiavon.food.domain.services.RestauranteService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
@@ -74,11 +75,12 @@ public class RestauranteController {
     }
 
     @PatchMapping("/{id}")
-    public Restaurante atualizarParcial(@PathVariable Long id, @RequestBody Map<String, Object> restauranteMap){
+    public Restaurante atualizarParcial(@PathVariable Long id, @RequestBody Map<String, Object> restauranteMap,
+                                        HttpServletRequest request){
         Restaurante restaurante = restauranteService.buscarRestauranteId(id);
 
         try {
-            restauranteService.atualizarParcial(restaurante, restauranteMap);
+            restauranteService.atualizarParcial(restaurante, restauranteMap, request);
         }catch (CozinhaNaoEncontradaException e){
             throw new RelacionamentoEntidadeNaoEncontradoException(e.getMessage(), e);
         }

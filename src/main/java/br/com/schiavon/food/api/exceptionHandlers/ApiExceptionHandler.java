@@ -79,7 +79,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         String propriedade = ex.getPath().stream().map(reference -> reference.getFieldName())
                 .collect(Collectors.joining("."));
 
-        String detail = String.format("A propriedade '%s' recebeu algum valor, porém está propriedade %s.",
+        String detail = String.format("A propriedade '%s' recebeu algum valor, porém está propriedade %s. Corriga ou remova.",
                 propriedade, causa);
         Problem problem = createProblem(status.value(), ProblemType.ERRO_DE_SINTAXE, detail);
 
