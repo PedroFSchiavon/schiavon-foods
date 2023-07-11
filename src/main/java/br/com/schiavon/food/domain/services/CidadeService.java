@@ -2,15 +2,10 @@ package br.com.schiavon.food.domain.services;
 
 import br.com.schiavon.food.domain.exceptions.CidadeNaoEncontradaException;
 import br.com.schiavon.food.domain.exceptions.EntidadeEmUsoException;
-import br.com.schiavon.food.domain.exceptions.EntidadeNaoEncontradaException;
-import br.com.schiavon.food.domain.exceptions.RelacionamentoEntidadeNaoEncontradoException;
 import br.com.schiavon.food.domain.models.Cidade;
 import br.com.schiavon.food.domain.repositories.CidadeRepository;
-import br.com.schiavon.food.domain.repositories.EstadoRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class CidadeService {

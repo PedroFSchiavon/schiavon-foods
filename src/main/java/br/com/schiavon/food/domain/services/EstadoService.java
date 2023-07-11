@@ -1,14 +1,11 @@
 package br.com.schiavon.food.domain.services;
 
 import br.com.schiavon.food.domain.exceptions.EntidadeEmUsoException;
-import br.com.schiavon.food.domain.exceptions.EntidadeNaoEncontradaException;
 import br.com.schiavon.food.domain.exceptions.EstadoNaoEncontradaException;
 import br.com.schiavon.food.domain.models.Estado;
 import br.com.schiavon.food.domain.repositories.EstadoRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class EstadoService {
