@@ -27,12 +27,19 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(RelacionamentoEntidadeNaoEncontradoException.class)
     public ResponseEntity<?>
     handleRelacionamentoEntidadeNaoEncontradoException(RelacionamentoEntidadeNaoEncontradoException e, WebRequest webRequest){
-        return handleExceptionInternal(e, e.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, webRequest);
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        ProblemType problemType = ProblemType.RELACIONAMENTO_ENTIDADE_NAO_ENCONTRADO;
+        Problem problem = createProblem(status.value(), problemType, e.getMessage());
+
+        return handleExceptionInternal(e, problem, new HttpHeaders(), status, webRequest);
     }
 
     @ExceptionHandler(EntidadeEmUsoException.class)
     public ResponseEntity<?> handleEntidadeEmUsoException(EntidadeEmUsoException e, WebRequest webRequest){
-        return handleExceptionInternal(e, e.getMessage(), new HttpHeaders(), HttpStatus.CONFLICT, webRequest);
+        HttpStatus status = HttpStatus.CONFLICT;
+        Problem problem = createProblem(status.value(), ProblemType.ENTIDADE_EM_USO, e.getMessage());
+
+        return handleExceptionInternal(e, problem, new HttpHeaders(), status, webRequest);
     }
 
     @Override
