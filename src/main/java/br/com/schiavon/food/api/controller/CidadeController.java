@@ -26,9 +26,9 @@ public class CidadeController {
         return cidadeRepository.findAll();
     }
 
-    @GetMapping("/{id}")
-    public Cidade buscar(@PathVariable Long id){
-        return cidadeService.buscarCidadeId(id);
+    @GetMapping("/{cidadeId}")
+    public Cidade buscar(@PathVariable Long cidadeId){
+        return cidadeService.buscarCidadeId(cidadeId);
     }
 
     @PostMapping
@@ -41,19 +41,19 @@ public class CidadeController {
         }
     }
 
-    @PutMapping("/{id}")
-    public Cidade atualizar(@PathVariable Long id, @RequestBody Cidade cidade){
+    @PutMapping("/{cidadeId}")
+    public Cidade atualizar(@PathVariable Long cidadeId, @RequestBody Cidade cidade){
         try{
-            return cidadeService.atualizar(id, cidade);
+            return cidadeService.atualizar(cidadeId, cidade);
         }catch (EstadoNaoEncontradaException e){
             throw new RelacionamentoEntidadeNaoEncontradoException(e.getMessage(), e);
         }
 
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{cidadeId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletar(@PathVariable Long id){
-            cidadeService.deletar(id);
+    public void deletar(@PathVariable Long cidadeId){
+            cidadeService.deletar(cidadeId);
     }
 }
