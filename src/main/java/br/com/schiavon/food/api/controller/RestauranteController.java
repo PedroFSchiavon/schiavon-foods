@@ -50,9 +50,9 @@ public class RestauranteController {
         return restauranteRepository.bucarPrimeiro().get();
     }
 
-    @GetMapping("/{id}")
-    public Restaurante buscar(@PathVariable Long id){
-        return restauranteService.buscarRestauranteId(id);
+    @GetMapping("/{idRestaurante}")
+    public Restaurante buscar(@PathVariable Long idRestaurante){
+        return restauranteService.buscarRestauranteId(idRestaurante);
     }
 
     @PostMapping
@@ -65,19 +65,19 @@ public class RestauranteController {
         }
     }
 
-    @PutMapping("/{id}")
-    public Restaurante atualizar(@PathVariable Long id, @RequestBody Restaurante restaurante){
+    @PutMapping("/{idRestaurante}")
+    public Restaurante atualizar(@PathVariable Long idRestaurante, @RequestBody Restaurante restaurante){
         try{
-            return restauranteService.atualizar(id, restaurante);
+            return restauranteService.atualizar(idRestaurante, restaurante);
         }catch (CozinhaNaoEncontradaException e){
             throw new RelacionamentoEntidadeNaoEncontradoException(e.getMessage(), e);
         }
     }
 
-    @PatchMapping("/{id}")
-    public Restaurante atualizarParcial(@PathVariable Long id, @RequestBody Map<String, Object> restauranteMap,
+    @PatchMapping("/{idRestaurante}")
+    public Restaurante atualizarParcial(@PathVariable Long idRestaurante, @RequestBody Map<String, Object> restauranteMap,
                                         HttpServletRequest request){
-        Restaurante restaurante = restauranteService.buscarRestauranteId(id);
+        Restaurante restaurante = restauranteService.buscarRestauranteId(idRestaurante);
 
         try {
             restauranteService.atualizarParcial(restaurante, restauranteMap, request);
@@ -85,12 +85,12 @@ public class RestauranteController {
             throw new RelacionamentoEntidadeNaoEncontradoException(e.getMessage(), e);
         }
 
-        return atualizar(id, restaurante);
+        return atualizar(idRestaurante, restaurante);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{idRestaurante}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletar(@PathVariable Long id){
-        restauranteService.deletar(id);
+    public void deletar(@PathVariable Long idRestaurante){
+        restauranteService.deletar(idRestaurante);
     }
 }

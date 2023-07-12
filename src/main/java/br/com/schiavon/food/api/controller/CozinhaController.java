@@ -31,9 +31,9 @@ public class CozinhaController {
         return new CozinhasXMLWrapper(cozinhaRepository.findAll());
     }
 
-    @GetMapping("/{id}")
-    public Cozinha buscar(@PathVariable Long id){
-        return cozinhaService.buscarCozinhaId(id);
+    @GetMapping("/{idCozinha}")
+    public Cozinha buscar(@PathVariable Long idCozinha){
+        return cozinhaService.buscarCozinhaId(idCozinha);
         
 //        HttpHeaders headers = new HttpHeaders();
 //        headers.add(HttpHeaders.LOCATION, "http://localhost:8080/cozinhas");
@@ -47,15 +47,15 @@ public class CozinhaController {
         return cozinhaService.cadastro(cozinha);
     }
 
-    @PutMapping("/{id}")
-    public Cozinha atualizar(@PathVariable Long id, @RequestBody Cozinha cozinha){
-            return cozinhaService.atualizar(id, cozinha);
+    @PutMapping("/{idCozinha}")
+    public Cozinha atualizar(@PathVariable Long idCozinha, @RequestBody Cozinha cozinha){
+            return cozinhaService.atualizar(idCozinha, cozinha);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{idCozinha}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletar(@PathVariable Long id){
-        cozinhaService.deletar(id);
+    public void deletar(@PathVariable Long idCozinha){
+        cozinhaService.deletar(idCozinha);
     }
 
 }

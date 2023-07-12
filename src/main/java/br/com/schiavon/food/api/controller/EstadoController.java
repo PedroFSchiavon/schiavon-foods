@@ -24,9 +24,9 @@ public class EstadoController {
         return estadoRepository.findAll();
     }
 
-    @GetMapping("/{id}")
-    public Estado buscar(@PathVariable Long id) {
-        return estadoService.buscaEstadoId(id);
+    @GetMapping("/{idEstado}")
+    public Estado buscar(@PathVariable Long idEstado) {
+        return estadoService.buscaEstadoId(idEstado);
     }
 
     @PostMapping
@@ -35,14 +35,14 @@ public class EstadoController {
         return estadoService.cadastro(estado);
     }
 
-    @PutMapping("/{id}")
-    public Estado atualizar(@PathVariable Long id, @RequestBody Estado estado) {
-        return estadoService.atualizar(id, estado);
+    @PutMapping("/{idEstado}")
+    public Estado atualizar(@PathVariable Long idEstado, @RequestBody Estado estado) {
+        return estadoService.atualizar(idEstado, estado);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{idEstado}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletar(@PathVariable Long id) {
-        estadoService.deletar(id);
+    public void deletar(@PathVariable Long idEstado) {
+        estadoService.deletar(idEstado);
     }
 }
