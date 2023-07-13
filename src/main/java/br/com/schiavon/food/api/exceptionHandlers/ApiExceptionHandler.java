@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.stream.Collectors;
@@ -27,7 +28,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<?>
     handleEntidadeNaoEncontradaException(EntidadeNaoEncontradaException e, WebRequest webRequest){
         HttpStatus status = HttpStatus.NOT_FOUND;
-        Problem problem = createProblem(status.value(), ProblemType.ENTIDADE_NAO_ENCONTRADA, e.getMessage());
+        Problem problem = createProblem(status.value(), ProblemType.RECURSO_NAO_ENCONTRADO, e.getMessage());
 
         return handleExceptionInternal(e, problem, new HttpHeaders(), status, webRequest);
     }
@@ -117,6 +118,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                 " Corrija e informe um valor compatível com o tipo '%s'", ex.getName(), ex.getValue(),
                 ex.getRequiredType().getSimpleName());
         Problem problem = createProblem(status.value(), ProblemType.PARAMETRO_INVALIDO, detail);
+
+        return handleExceptionInternal(ex, problem, headers, status, request);
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        String detail = String.format("O recurso '%s', que você tentou acessar, é inesistente.", ex.getRequestURL());
+        Problem problem = createProblem(status.value(), ProblemType.RECURSO_NAO_ENCONTRADO, detail);
 
         return handleExceptionInternal(ex, problem, headers, status, request);
     }

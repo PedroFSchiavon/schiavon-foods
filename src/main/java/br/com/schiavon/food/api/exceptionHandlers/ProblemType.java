@@ -1,11 +1,10 @@
 package br.com.schiavon.food.api.exceptionHandlers;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 public enum ProblemType {
-    ENTIDADE_NAO_ENCONTRADA("/entidade-nao-encontrada", "Entidade não encontrada."),
+    RECURSO_NAO_ENCONTRADO("/recurso-nao-encontrado", "Recurso não encontrado."),
     RELACIONAMENTO_ENTIDADE_NAO_ENCONTRADO("/relacionamento-entidade-nao-encontrado",
             "Relacionamento entidade não encontrado."),
     ENTIDADE_EM_USO("/entidade-em-uso", "Entidade em uso."),
