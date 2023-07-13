@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
@@ -57,7 +58,7 @@ public class RestauranteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Restaurante cadastro(@RequestBody Restaurante restaurante){
+    public Restaurante cadastro(@RequestBody @Valid Restaurante restaurante){
         try{
             return restauranteService.cadastro(restaurante);
         }catch (CozinhaNaoEncontradaException e){

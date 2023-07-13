@@ -10,7 +10,8 @@ public enum ProblemType {
     ENTIDADE_EM_USO("/entidade-em-uso", "Entidade em uso."),
     ERRO_DE_SINTAXE("/erro-de-sintaxe", "Erro de sintaxe."),
     PARAMETRO_INVALIDO("/parametro-invalido", "Parametro invalido."),
-    ERRO_DE_SISTEMA("/erro-de-sistema", "Erro de sistema.");
+    ERRO_DE_SISTEMA("/erro-de-sistema", "Erro de sistema."),
+    DADOS_INVALIDOS("/dados-invalidos", "Dados invalidos");
 
     String type;
     String title;
