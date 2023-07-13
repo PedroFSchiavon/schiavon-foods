@@ -26,6 +26,10 @@ public class EstadoController {
 
     @GetMapping("/{idEstado}")
     public Estado buscar(@PathVariable Long idEstado) {
+        if(true){
+            throw new NullPointerException();
+        }
+
         return estadoService.buscaEstadoId(idEstado);
     }
 

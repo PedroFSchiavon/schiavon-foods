@@ -9,7 +9,8 @@ public enum ProblemType {
             "Relacionamento entidade não encontrado."),
     ENTIDADE_EM_USO("/entidade-em-uso", "Entidade em uso."),
     ERRO_DE_SINTAXE("/erro-de-sintaxe", "Erro de sintaxe."),
-    PARAMETRO_INVALIDO("/parametro-invalido", "Parametro invalido.");
+    PARAMETRO_INVALIDO("/parametro-invalido", "Parametro invalido."),
+    ERRO_DE_SISTEMA("/erro-de-sistema", "Erro de sistema.");
 
     String type;
     String title;
