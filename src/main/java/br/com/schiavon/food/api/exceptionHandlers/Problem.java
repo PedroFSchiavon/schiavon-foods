@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
@@ -15,6 +16,8 @@ public class Problem {
 
     private String userMessage;
     private LocalDateTime timestamp;
+
+    private List<ProblemFieldValidation> fields;
 
     public Problem(int status, String type, String title, String detail, String userMessage) {
         this.status = status;
@@ -29,5 +32,9 @@ public class Problem {
         this.status = status;
         this.title = title;
         this.timestamp = LocalDateTime.now();
+    }
+
+    public void setFields(List<ProblemFieldValidation> fields) {
+        this.fields = fields;
     }
 }
