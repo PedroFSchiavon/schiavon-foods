@@ -8,7 +8,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PositiveOrZero;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -25,9 +26,10 @@ public class Restaurante implements Serializable {
     @EqualsAndHashCode.Include
     private long id;
 
-    @NotNull
+    @NotBlank
     private String nome;
 
+    @PositiveOrZero
     private BigDecimal taxaFrete;
 
     @JsonIgnoreProperties("hibernateLazyInitializer")
