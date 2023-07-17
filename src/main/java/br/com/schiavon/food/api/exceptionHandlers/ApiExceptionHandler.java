@@ -21,7 +21,6 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 @ControllerAdvice
@@ -167,6 +166,6 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         if(userMessage == null){
             userMessage = MSG_GENERICA_PARA_USUARIO;
         }
-        return new Problem(status, problemType.type, problemType.title, detail, userMessage, LocalDateTime.now());
+        return new Problem(status, problemType.type, problemType.title, detail, userMessage);
     }
 }

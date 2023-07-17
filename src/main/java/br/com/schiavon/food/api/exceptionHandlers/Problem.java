@@ -1,14 +1,12 @@
 package br.com.schiavon.food.api.exceptionHandlers;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
-@AllArgsConstructor
 public class Problem {
     private int status;
     private String type;
@@ -17,6 +15,15 @@ public class Problem {
 
     private String userMessage;
     private LocalDateTime timestamp;
+
+    public Problem(int status, String type, String title, String detail, String userMessage) {
+        this.status = status;
+        this.type = type;
+        this.title = title;
+        this.detail = detail;
+        this.userMessage = userMessage;
+        this.timestamp = LocalDateTime.now();
+    }
 
     public Problem(int status, String title){
         this.status = status;
