@@ -35,6 +35,7 @@ public class Restaurante implements Serializable {
     private String nome;
 
     @PositiveOrZero
+    @NotNull
     private BigDecimal taxaFrete;
 
     @Valid
