@@ -24,7 +24,7 @@ public class Cozinha implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    @NotNull(groups = Groups.CadastroRestaurante.class)
+    @NotNull(groups = Groups.IdCozinha.class)
     private long id;
 
     //@JsonIgnore

@@ -39,11 +39,12 @@ public class RestauranteService {
     }
 
     public Restaurante atualizar(Long id, Restaurante restaurante) {
-        buscarRestauranteId(id);
+        Restaurante restauranteAntigo = buscarRestauranteId(id);
         long cozinhaId = restaurante.getCozinha().getId();
         cozinhaService.buscarCozinhaId(cozinhaId);
 
         restaurante.setId(id);
+        restaurante.setDataCadastro(restauranteAntigo.getDataCadastro());
         return restauranteRepository.save(restaurante);
     }
 

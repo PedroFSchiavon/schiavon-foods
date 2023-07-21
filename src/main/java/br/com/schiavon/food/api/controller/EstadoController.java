@@ -6,6 +6,7 @@ import br.com.schiavon.food.domain.services.EstadoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -31,12 +32,12 @@ public class EstadoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Estado cadastro(@RequestBody Estado estado) {
+    public Estado cadastro(@RequestBody @Valid Estado estado) {
         return estadoService.cadastro(estado);
     }
 
     @PutMapping("/{idEstado}")
-    public Estado atualizar(@PathVariable Long idEstado, @RequestBody Estado estado) {
+    public Estado atualizar(@PathVariable Long idEstado, @RequestBody @Valid Estado estado) {
         return estadoService.atualizar(idEstado, estado);
     }
 

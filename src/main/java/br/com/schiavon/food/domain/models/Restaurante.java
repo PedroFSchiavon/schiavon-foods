@@ -38,7 +38,7 @@ public class Restaurante implements Serializable {
     private BigDecimal taxaFrete;
 
     @Valid
-    @ConvertGroup(from = Default.class, to = Groups.CadastroRestaurante.class)
+    @ConvertGroup(from = Default.class, to = Groups.IdCozinha.class)
     @NotNull
     @JsonIgnoreProperties("hibernateLazyInitializer")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -61,7 +61,6 @@ public class Restaurante implements Serializable {
 
     @CreationTimestamp
     @Column(nullable = false, columnDefinition = "datetime")
-    @JsonIgnore
     LocalDateTime dataCadastro;
 
     @UpdateTimestamp
