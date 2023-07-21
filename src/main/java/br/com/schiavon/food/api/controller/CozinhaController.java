@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -43,7 +44,7 @@ public class CozinhaController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Cozinha cadastro(@RequestBody Cozinha cozinha){
+    public Cozinha cadastro(@RequestBody @Valid Cozinha cozinha){
         return cozinhaService.cadastro(cozinha);
     }
 
