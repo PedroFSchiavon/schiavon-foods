@@ -1,16 +1,15 @@
 package br.com.schiavon.food.api.controller;
 
-import br.com.schiavon.food.Groups;
 import br.com.schiavon.food.domain.exceptions.CozinhaNaoEncontradaException;
 import br.com.schiavon.food.domain.exceptions.RelacionamentoEntidadeNaoEncontradoException;
 import br.com.schiavon.food.domain.models.Restaurante;
 import br.com.schiavon.food.domain.repositories.RestauranteRepository;
 import br.com.schiavon.food.domain.services.RestauranteService;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
@@ -59,7 +58,7 @@ public class RestauranteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Restaurante cadastro(@RequestBody @Validated( Groups.CadastroRestaurante.class) Restaurante restaurante){
+    public Restaurante cadastro(@RequestBody @Valid Restaurante restaurante){
         try{
             return restauranteService.cadastro(restaurante);
         }catch (CozinhaNaoEncontradaException e){

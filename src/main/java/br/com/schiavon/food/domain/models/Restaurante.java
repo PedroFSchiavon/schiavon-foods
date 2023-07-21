@@ -13,6 +13,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
+import javax.validation.groups.ConvertGroup;
+import javax.validation.groups.Default;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -29,14 +31,15 @@ public class Restaurante implements Serializable {
     @EqualsAndHashCode.Include
     private long id;
 
-    @NotBlank(groups = Groups.CadastroRestaurante.class)
+    @NotBlank
     private String nome;
 
-    @PositiveOrZero(groups = Groups.CadastroRestaurante.class)
+    @PositiveOrZero
     private BigDecimal taxaFrete;
 
     @Valid
-    @NotNull(groups = Groups.CadastroRestaurante.class)
+    @ConvertGroup(from = Default.class, to = Groups.CadastroRestaurante.class)
+    @NotNull
     @JsonIgnoreProperties("hibernateLazyInitializer")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cozinha_id", nullable = false)
@@ -58,6 +61,7 @@ public class Restaurante implements Serializable {
 
     @CreationTimestamp
     @Column(nullable = false, columnDefinition = "datetime")
+    @JsonIgnore
     LocalDateTime dataCadastro;
 
     @UpdateTimestamp
