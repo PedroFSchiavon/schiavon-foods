@@ -1,5 +1,6 @@
 package br.com.schiavon.food.domain.models;
 
+import br.com.schiavon.food.Groups;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
@@ -28,13 +29,14 @@ public class Restaurante implements Serializable {
     @EqualsAndHashCode.Include
     private long id;
 
-    @NotBlank
+    @NotBlank(groups = Groups.CadastroRestaurante.class)
     private String nome;
 
-    @PositiveOrZero
+    @PositiveOrZero(groups = Groups.CadastroRestaurante.class)
     private BigDecimal taxaFrete;
 
-    @NotNull
+    @Valid
+    @NotNull(groups = Groups.CadastroRestaurante.class)
     @JsonIgnoreProperties("hibernateLazyInitializer")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cozinha_id", nullable = false)
