@@ -20,4 +20,10 @@ public @interface ValorZeroIncluiDescricao {
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
+
+    String valorField();
+
+    String descricaoField();
+
+    String descricao();
 }
