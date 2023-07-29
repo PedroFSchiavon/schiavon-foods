@@ -1,6 +1,7 @@
 package br.com.schiavon.food.domain.models;
 
 import br.com.schiavon.food.core.validation.Groups;
+import br.com.schiavon.food.core.validation.TaxaFrete;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
@@ -34,7 +35,7 @@ public class Restaurante implements Serializable {
     @NotBlank
     private String nome;
 
-    @PositiveOrZero
+    @TaxaFrete
     @NotNull
     private BigDecimal taxaFrete;
 
