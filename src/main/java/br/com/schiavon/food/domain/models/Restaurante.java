@@ -3,6 +3,7 @@ package br.com.schiavon.food.domain.models;
 import br.com.schiavon.food.core.validation.Groups;
 import br.com.schiavon.food.core.validation.Multiplo;
 import br.com.schiavon.food.core.validation.TaxaFrete;
+import br.com.schiavon.food.core.validation.ValorZeroIncluiDescricao;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
@@ -25,6 +26,7 @@ import java.util.List;
 @Entity
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ValorZeroIncluiDescricao(valorField = "taxaFrete", descricaoField = "nome", descricao = "Frete Grátis")
 public class Restaurante implements Serializable {
     private static final long serialVersionUID = 1L;
 
