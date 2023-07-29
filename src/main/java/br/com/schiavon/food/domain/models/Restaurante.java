@@ -1,6 +1,7 @@
 package br.com.schiavon.food.domain.models;
 
 import br.com.schiavon.food.core.validation.Groups;
+import br.com.schiavon.food.core.validation.Multiplo;
 import br.com.schiavon.food.core.validation.TaxaFrete;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -36,6 +37,7 @@ public class Restaurante implements Serializable {
     private String nome;
 
     @TaxaFrete
+    @Multiplo(number = 5)
     @NotNull
     private BigDecimal taxaFrete;
 
