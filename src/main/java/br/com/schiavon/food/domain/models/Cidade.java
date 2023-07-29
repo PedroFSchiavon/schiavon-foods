@@ -1,6 +1,6 @@
 package br.com.schiavon.food.domain.models;
 
-import br.com.schiavon.food.Groups;
+import br.com.schiavon.food.core.validation.Groups;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
