@@ -9,10 +9,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.CONSTRUCTOR, ElementType.PARAMETER,
-        ElementType.TYPE_USE})
+@Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {})
+@Constraint(validatedBy = {ValorZeroIncluiDescricaoValidation.class})
 public @interface ValorZeroIncluiDescricao {
     @OverridesAttribute(constraint = PositiveOrZero.class, name = "message")
     String message() default "Não possui a descrição informada.";

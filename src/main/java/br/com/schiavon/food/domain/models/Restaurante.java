@@ -1,7 +1,6 @@
 package br.com.schiavon.food.domain.models;
 
 import br.com.schiavon.food.core.validation.Groups;
-import br.com.schiavon.food.core.validation.Multiplo;
 import br.com.schiavon.food.core.validation.TaxaFrete;
 import br.com.schiavon.food.core.validation.ValorZeroIncluiDescricao;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -15,7 +14,6 @@ import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
 import javax.validation.groups.ConvertGroup;
 import javax.validation.groups.Default;
 import java.io.Serializable;
@@ -39,7 +37,6 @@ public class Restaurante implements Serializable {
     private String nome;
 
     @TaxaFrete
-    @Multiplo(number = 5)
     @NotNull
     private BigDecimal taxaFrete;
 
