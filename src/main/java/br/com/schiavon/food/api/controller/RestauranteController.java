@@ -1,6 +1,6 @@
 package br.com.schiavon.food.api.controller;
 
-import br.com.schiavon.food.core.validation.ValidationPatchError;
+import br.com.schiavon.food.core.validation.ValidationPatchException;
 import br.com.schiavon.food.domain.exceptions.CozinhaNaoEncontradaException;
 import br.com.schiavon.food.domain.exceptions.RelacionamentoEntidadeNaoEncontradoException;
 import br.com.schiavon.food.domain.models.Restaurante;
@@ -93,17 +93,17 @@ public class RestauranteController {
             throw new RelacionamentoEntidadeNaoEncontradoException(e.getMessage(), e);
         }
 
-        validade(restaurante, "restaurante");
+        validate(restaurante, "restaurante");
 
         return atualizar(idRestaurante, restaurante);
     }
 
-    private void validade(Restaurante restaurante, String objectName) {
+    private void validate(Restaurante restaurante, String objectName) {
         BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(restaurante, objectName);
         validator.validate(restaurante, bindingResult);
 
         if(bindingResult.hasErrors()){
-            throw new ValidationPatchError(bindingResult);
+            throw new ValidationPatchException(bindingResult);
         }
     }
 

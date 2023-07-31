@@ -1,5 +1,6 @@
 package br.com.schiavon.food.api.exceptionHandlers;
 
+import br.com.schiavon.food.core.validation.ValidationPatchException;
 import br.com.schiavon.food.domain.exceptions.EntidadeEmUsoException;
 import br.com.schiavon.food.domain.exceptions.EntidadeNaoEncontradaException;
 import br.com.schiavon.food.domain.exceptions.RelacionamentoEntidadeNaoEncontradoException;
@@ -62,6 +63,13 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         Problem problem = createProblem(status.value(), ProblemType.ENTIDADE_EM_USO, e.getMessage(), e.getMessage());
 
         return handleExceptionInternal(e, problem, new HttpHeaders(), status, webRequest);
+    }
+
+    @ExceptionHandler(ValidationPatchException.class)
+    public ResponseEntity<?> handleValidationPatchException(ValidationPatchException e, WebRequest webRequest){
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        BindingResult bindingResult = e.getBindingResult();
+        return trataValidationExceptions(e, new HttpHeaders(), status, webRequest, bindingResult);
     }
 
     @ExceptionHandler(Exception.class)
@@ -156,6 +164,10 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers,
                                                                   HttpStatus status, WebRequest request) {
         BindingResult bindingResult = ex.getBindingResult();
+        return trataValidationExceptions(ex, headers, status, request, bindingResult);
+    }
+
+    private ResponseEntity<Object> trataValidationExceptions(Exception ex, HttpHeaders headers, HttpStatus status, WebRequest request, BindingResult bindingResult) {
         List<ProblemFieldValidation> fields = bindingResult.getAllErrors().stream()
                 .map(objectError ->{
                     String message = messageSource.getMessage(objectError, LocaleContextHolder.getLocale());

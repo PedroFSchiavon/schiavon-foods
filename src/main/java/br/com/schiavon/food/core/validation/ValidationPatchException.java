@@ -6,6 +6,6 @@ import org.springframework.validation.BindingResult;
 
 @AllArgsConstructor
 @Getter
-public class ValidationPatchError extends RuntimeException {
+public class ValidationPatchException extends RuntimeException {
     private BindingResult bindingResult;
 }
