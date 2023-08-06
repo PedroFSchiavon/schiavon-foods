@@ -1,5 +1,7 @@
 package br.com.schiavon.food;
 
+import br.com.schiavon.food.domain.exceptions.CozinhaNaoEncontradaException;
+import br.com.schiavon.food.domain.exceptions.EntidadeEmUsoException;
 import br.com.schiavon.food.domain.models.Cozinha;
 import br.com.schiavon.food.domain.services.CozinhaService;
 import org.assertj.core.api.Assertions;
@@ -18,7 +20,7 @@ public class CadastroCozinhaIntegrationTest {
     private CozinhaService cozinhaService;
 
     @Test
-    public void cadastroCozinhaComSucesso(){
+    public void deveAtribuirId_QuandoCadastrarCozinhaCorretamente(){
         Cozinha cozinha = new Cozinha();
         cozinha.setNome("Russa");
 
@@ -29,10 +31,20 @@ public class CadastroCozinhaIntegrationTest {
     }
 
     @Test(expected = ConstraintViolationException.class)
-    public void testarCadastroInvalidodeCozinhaErro(){
+    public void deveFalhar_QuandoCadastrarCozinhaSemNome(){
         Cozinha cozinha = new Cozinha();
         cozinha.setNome(null);
 
         cozinha = cozinhaService.cadastro(cozinha);
+    }
+
+    @Test(expected = EntidadeEmUsoException.class)
+    public void deveFalhar_QuandoCozinhaEstiverEmUso(){
+        cozinhaService.deletar(1L);
+    }
+
+    @Test(expected = CozinhaNaoEncontradaException.class)
+    public void deveFalhar_QuandoExcluirCozinhaInexistente(){
+        cozinhaService.deletar(22L);
     }
 }
