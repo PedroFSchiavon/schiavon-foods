@@ -1,19 +1,15 @@
 package br.com.schiavon.food;
 
-import br.com.schiavon.food.domain.exceptions.CozinhaNaoEncontradaException;
-import br.com.schiavon.food.domain.exceptions.EntidadeEmUsoException;
 import br.com.schiavon.food.domain.models.Cozinha;
 import br.com.schiavon.food.domain.services.CozinhaService;
 import org.assertj.core.api.Assertions;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.validation.ConstraintViolationException;
+import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(SpringRunner.class)
+
 @SpringBootTest
 public class CadastroCozinhaIntegrationTest {
     @Autowired
@@ -30,21 +26,36 @@ public class CadastroCozinhaIntegrationTest {
         Assertions.assertThat(cozinha.getId()).isNotNull();
     }
 
-    @Test(expected = ConstraintViolationException.class)
+    @Test
     public void deveFalhar_QuandoCadastrarCozinhaSemNome(){
         Cozinha cozinha = new Cozinha();
         cozinha.setNome(null);
+        Exception exception = assertThrows(Exception.class,
+                () -> cozinhaService.cadastro(cozinha));
 
-        cozinha = cozinhaService.cadastro(cozinha);
+        String menssagemObtida = exception.getMessage();
+        String menssagemCorreta = "Validation failed for classes";
+
+        assertTrue(menssagemObtida.contains(menssagemCorreta));
     }
 
-    @Test(expected = EntidadeEmUsoException.class)
+    @Test
     public void deveFalhar_QuandoCozinhaEstiverEmUso(){
-        cozinhaService.deletar(1L);
+        Exception exception = assertThrows(Exception.class,
+                () ->  cozinhaService.deletar(1L));
+        String menssagemObtida = exception.getMessage();
+        String menssagemCorreta = "Não foi possível deletar";
+
+        assertTrue(menssagemObtida.contains(menssagemCorreta));
     }
 
-    @Test(expected = CozinhaNaoEncontradaException.class)
+    @Test
     public void deveFalhar_QuandoExcluirCozinhaInexistente(){
-        cozinhaService.deletar(22L);
+        Exception exception = assertThrows(Exception.class,
+                () ->  cozinhaService.deletar(22L));
+        String menssagemObtida = exception.getMessage();
+        String menssagemCorreta = "não foi encontrada";
+
+        assertTrue(menssagemObtida.contains(menssagemCorreta));
     }
 }
