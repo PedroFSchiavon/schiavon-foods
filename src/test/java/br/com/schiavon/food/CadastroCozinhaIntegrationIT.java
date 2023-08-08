@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 @SpringBootTest
-public class CadastroCozinhaIntegrationTest {
+public class CadastroCozinhaIntegrationIT {
     @Autowired
     private CozinhaService cozinhaService;
 
