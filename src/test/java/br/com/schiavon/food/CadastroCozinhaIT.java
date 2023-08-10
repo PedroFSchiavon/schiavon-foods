@@ -41,7 +41,7 @@ public class CadastroCozinhaIT {
     }
 
     @Test
-    public void deveConter4Cozinhas_QuandoConsultarCozinha() {
+    public void deveConter4CozinhasEConterCozinhaMineiraEFrancesa_QuandoConsultarCozinha() {
         given().accept(ContentType.JSON)
                 .when().get()
                 .then().body("", Matchers.hasSize(3)).body("nome", Matchers.hasItems("Mineira", "Francesa"));
@@ -52,5 +52,19 @@ public class CadastroCozinhaIT {
         given().body("{\"nome\": \"Inglesa\"}").contentType(ContentType.JSON).accept(ContentType.JSON)
                 .when().post()
                 .then().statusCode(HttpStatus.CREATED.value());
+    }
+
+    @Test
+    public void deveRetornarNomeCozinhaEStatusCorreto200_QuandoConsultarCozinhaExistente(){
+        given().pathParam("idCozinha", 1).accept(ContentType.JSON)
+                .when().get("/{idCozinha}")
+                .then().statusCode(200).body("nome", Matchers.equalTo("Amazonense"));
+    }
+
+    @Test
+    public void deveRetornarStatus400_QuandoConsultarCozinhaInexistente(){
+        given().pathParam("idCozinha", 200).accept(ContentType.JSON)
+                .when().get("/{idCozinha}")
+                .then().statusCode(404);
     }
 }
