@@ -22,7 +22,7 @@ public class CadastroCozinhaIT {
     private int port;
 
     @Autowired
-    private Flyway flyway;
+    Flyway flyway;
 
     @BeforeEach
     public void configurations() {
@@ -44,7 +44,7 @@ public class CadastroCozinhaIT {
     public void deveConter4Cozinhas_QuandoConsultarCozinha() {
         given().accept(ContentType.JSON)
                 .when().get()
-                .then().body("", Matchers.hasSize(3)).body("nome", Matchers.hasItems("Mineira", "Amazonense"));
+                .then().body("", Matchers.hasSize(3)).body("nome", Matchers.hasItems("Mineira", "Francesa"));
     }
 
     @Test
