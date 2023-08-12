@@ -18,6 +18,8 @@ import static io.restassured.RestAssured.given;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource("/application-test.properties")
 public class CadastroCozinhaIT {
+    private final int ID_COZINHA_INVALIDO = 200;
+
     @LocalServerPort
     private int port;
 
@@ -63,7 +65,7 @@ public class CadastroCozinhaIT {
 
     @Test
     public void deveRetornarStatus400_QuandoConsultarCozinhaInexistente(){
-        given().pathParam("idCozinha", 200).accept(ContentType.JSON)
+        given().pathParam("idCozinha", ID_COZINHA_INVALIDO).accept(ContentType.JSON)
                 .when().get("/{idCozinha}")
                 .then().statusCode(404);
     }
