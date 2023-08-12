@@ -6,6 +6,7 @@ import br.com.schiavon.food.domain.models.Cidade;
 import br.com.schiavon.food.domain.repositories.CidadeRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CidadeService {
@@ -18,6 +19,7 @@ public class CidadeService {
         this.estadoService = estadoService;
     }
 
+    @Transactional
     public Cidade cadastro(Cidade cidade) {
         long idEstado = cidade.getEstado().getId();
         estadoService.buscaEstadoId(idEstado);
@@ -25,6 +27,7 @@ public class CidadeService {
         return cidadeRepository.save(cidade);
     }
 
+    @Transactional
     public Cidade atualizar(Long id, Cidade cidade) {
         buscarCidadeId(id);
         estadoService.buscaEstadoId(cidade.getEstado().getId());
@@ -33,6 +36,7 @@ public class CidadeService {
         return cidadeRepository.save(cidade);
     }
 
+    @Transactional
     public void deletar(Long id) {
         try{
             Cidade cidade = buscarCidadeId(id);

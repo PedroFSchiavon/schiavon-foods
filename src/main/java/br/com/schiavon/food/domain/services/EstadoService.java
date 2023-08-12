@@ -6,6 +6,7 @@ import br.com.schiavon.food.domain.models.Estado;
 import br.com.schiavon.food.domain.repositories.EstadoRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class EstadoService {
@@ -16,10 +17,12 @@ public class EstadoService {
         this.estadoRepository = estadoRepository;
     }
 
+    @Transactional
     public Estado cadastro(Estado estado){
         return estadoRepository.save(estado);
     }
 
+    @Transactional
     public Estado atualizar(Long id, Estado estado){
         if(estadoRepository.existsById(id)){
             estado.setId(id);
@@ -28,6 +31,7 @@ public class EstadoService {
         throw new EstadoNaoEncontradaException(id);
     }
 
+    @Transactional
     public void deletar(Long id){
         Estado estado = buscaEstadoId(id);
         try{

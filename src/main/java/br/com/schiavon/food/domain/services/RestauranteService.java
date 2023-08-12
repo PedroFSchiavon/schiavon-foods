@@ -12,6 +12,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +31,7 @@ public class RestauranteService {
         this.cozinhaService = cozinhaService;
     }
 
+    @Transactional
     public Restaurante cadastro(Restaurante restaurante) {
         long idCozinha = restaurante.getCozinha().getId();
         Cozinha cozinha = cozinhaService.buscarCozinhaId(idCozinha);
@@ -38,6 +40,7 @@ public class RestauranteService {
         return restauranteRepository.save(restaurante);
     }
 
+    @Transactional
     public Restaurante atualizar(Long id, Restaurante restaurante) {
         Restaurante restauranteAntigo = buscarRestauranteId(id);
         long cozinhaId = restaurante.getCozinha().getId();
@@ -74,6 +77,7 @@ public class RestauranteService {
         }
     }
 
+    @Transactional
     public void deletar(Long id) {
         Restaurante restaurante = buscarRestauranteId(id);
         try {

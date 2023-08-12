@@ -6,6 +6,7 @@ import br.com.schiavon.food.domain.models.Cozinha;
 import br.com.schiavon.food.domain.repositories.CozinhaRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CozinhaService {
@@ -16,10 +17,12 @@ public class CozinhaService {
         this.cozinhaRepository = cozinhaRepository;
     }
 
+    @Transactional
     public Cozinha cadastro(Cozinha cozinha) {
         return cozinhaRepository.save(cozinha);
     }
 
+    @Transactional
     public void deletar(Long id) {
         Cozinha cozinha = buscarCozinhaId(id);
         try {
@@ -29,6 +32,7 @@ public class CozinhaService {
         }
     }
 
+    @Transactional
     public Cozinha atualizar(Long id, Cozinha cozinha) {
         if (cozinhaRepository.existsById(id)) {
             cozinha.setId(id);
