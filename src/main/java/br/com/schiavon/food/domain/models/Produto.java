@@ -26,6 +26,5 @@ public class Produto implements Serializable {
 
     @ManyToOne()
     @JoinColumn(name = "restaurante_id", nullable = false)
-    @JsonIgnore
     private Restaurante restaurante;
 }
