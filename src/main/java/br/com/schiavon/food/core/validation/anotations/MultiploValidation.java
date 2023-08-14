@@ -1,6 +1,7 @@
-package br.com.schiavon.food.core.validation;
+package br.com.schiavon.food.core.validation.anotations;
 
 
+import br.com.schiavon.food.core.validation.anotations.Multiplo;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.math.BigDecimal;

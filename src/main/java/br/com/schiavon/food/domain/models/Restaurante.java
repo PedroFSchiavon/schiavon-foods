@@ -1,8 +1,8 @@
 package br.com.schiavon.food.domain.models;
 
 import br.com.schiavon.food.core.validation.Groups;
-import br.com.schiavon.food.core.validation.TaxaFrete;
-import br.com.schiavon.food.core.validation.ValorZeroIncluiDescricao;
+import br.com.schiavon.food.core.validation.anotations.TaxaFrete;
+import br.com.schiavon.food.core.validation.anotations.ValorZeroIncluiDescricao;
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;

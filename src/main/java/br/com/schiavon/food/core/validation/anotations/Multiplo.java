@@ -1,4 +1,4 @@
-package br.com.schiavon.food.core.validation;
+package br.com.schiavon.food.core.validation.anotations;
 
 import javax.validation.Constraint;
 import javax.validation.OverridesAttribute;
@@ -10,15 +10,16 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Target({ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.CONSTRUCTOR, ElementType.PARAMETER,
-ElementType.TYPE_USE})
+        ElementType.TYPE_USE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {})
-@PositiveOrZero
-public @interface TaxaFrete {
+@Constraint(validatedBy = {MultiploValidation.class})
+public @interface Multiplo {
     @OverridesAttribute(constraint = PositiveOrZero.class, name = "message")
-    String message() default "{TaxaFrete.invalida}";
+    String message() default "Multiplo invalido";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
+
+    int number();
 }

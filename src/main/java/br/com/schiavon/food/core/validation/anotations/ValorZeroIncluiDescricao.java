@@ -1,4 +1,4 @@
-package br.com.schiavon.food.core.validation;
+package br.com.schiavon.food.core.validation.anotations;
 
 import javax.validation.Constraint;
 import javax.validation.OverridesAttribute;
@@ -9,17 +9,20 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.CONSTRUCTOR, ElementType.PARAMETER,
-        ElementType.TYPE_USE})
+@Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {MultiploValidation.class})
-public @interface Multiplo {
+@Constraint(validatedBy = {ValorZeroIncluiDescricaoValidation.class})
+public @interface ValorZeroIncluiDescricao {
     @OverridesAttribute(constraint = PositiveOrZero.class, name = "message")
-    String message() default "Multiplo invalido";
+    String message() default "Não possui a descrição informada.";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
 
-    int number();
+    String valorField();
+
+    String descricaoField();
+
+    String descricao();
 }

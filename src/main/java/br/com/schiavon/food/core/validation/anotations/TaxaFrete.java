@@ -1,4 +1,4 @@
-package br.com.schiavon.food.core.validation;
+package br.com.schiavon.food.core.validation.anotations;
 
 import javax.validation.Constraint;
 import javax.validation.OverridesAttribute;
@@ -9,20 +9,16 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({ElementType.TYPE})
+@Target({ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.CONSTRUCTOR, ElementType.PARAMETER,
+ElementType.TYPE_USE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {ValorZeroIncluiDescricaoValidation.class})
-public @interface ValorZeroIncluiDescricao {
+@Constraint(validatedBy = {})
+@PositiveOrZero
+public @interface TaxaFrete {
     @OverridesAttribute(constraint = PositiveOrZero.class, name = "message")
-    String message() default "Não possui a descrição informada.";
+    String message() default "{TaxaFrete.invalida}";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
-
-    String valorField();
-
-    String descricaoField();
-
-    String descricao();
 }

@@ -1,11 +1,12 @@
-package br.com.schiavon.food.core.validation;
+package br.com.schiavon.food.core.validation.anotations;
 
+import br.com.schiavon.food.core.validation.anotations.ValorZeroIncluiDescricao;
 import org.springframework.beans.BeanUtils;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import javax.validation.ValidationException;
-import java.lang.reflect.InvocationTargetException;
+
 import java.math.BigDecimal;
 
 public class ValorZeroIncluiDescricaoValidation implements ConstraintValidator<ValorZeroIncluiDescricao, Object> {
