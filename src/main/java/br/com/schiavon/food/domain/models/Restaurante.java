@@ -16,7 +16,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Entity
@@ -59,9 +59,9 @@ public class Restaurante implements Serializable {
 
     @CreationTimestamp
     @Column(nullable = false, columnDefinition = "datetime")
-    LocalDateTime dataCadastro;
+    OffsetDateTime dataCadastro;
 
     @UpdateTimestamp
     @Column(nullable = false, columnDefinition = "datetime")
-    LocalDateTime dataAtualizacao;
+    OffsetDateTime dataAtualizacao;
 }

@@ -25,9 +25,9 @@ public abstract class RestauranteMixin {
     @OneToMany(mappedBy = "restaurante")
     private List<Produto> produtos;
 
-    @JsonIgnore
-    LocalDateTime dataCadastro;
-
-    @JsonIgnore
-    LocalDateTime dataAtualizacao;
+//    @JsonIgnore
+//    LocalDateTime dataCadastro;
+//
+//    @JsonIgnore
+//    LocalDateTime dataAtualizacao;
 }

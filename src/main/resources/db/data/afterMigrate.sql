@@ -53,31 +53,31 @@ insert into forma_pagamento (descricao) values ('Boleto');
 -- Restaurante e forma de pagamento
 insert into restaurante_forma_pagamento values (1,1), (1,2), (1,3), (1,4), (2,1), (2,2), (2,3), (3,2), (3,4), (4,5);
 -- Produtos
-insert into produto (nome, preco, ativo, restaurante_id) values ("Super Cantinho", 33.33, true, 1);
-insert into produto (nome, preco, ativo, restaurante_id) values ("Pizza italiana", 45.50, true, 4);
-insert into produto (nome, preco, ativo, restaurante_id) values ("Especial da casa combo", 50, true, 2);
-insert into produto (nome, preco, ativo, restaurante_id) values ("Açai completo", 15.99, true, 3);
+insert into produto (nome, preco, ativo, restaurante_id) values ('Super Cantinho', 33.33, true, 1);
+insert into produto (nome, preco, ativo, restaurante_id) values ('Pizza italiana', 45.50, true, 4);
+insert into produto (nome, preco, ativo, restaurante_id) values ('Especial da casa combo', 50, true, 2);
+insert into produto (nome, preco, ativo, restaurante_id) values ('Açai completo', 15.99, true, 3);
 -- Permissao
-insert into permissao (nome, descricao) values ("Vender", "Permissao para vender");
-insert into permissao (nome, descricao) values ("Criar produto", "Permissao para criar");
-insert into permissao (nome, descricao) values ("Deletar produto", "Permissao para deletar");
-insert into permissao (nome, descricao) values ("Comprar", "Permissao para comprar");
-insert into permissao (nome, descricao) values ("Cadastrar forma de pagamento", "Permissao para cadastrar forma de pagamento");
-insert into permissao (nome, descricao) values ("Visualizar restaurante", "Permissao para visualizar restaurante");
+insert into permissao (nome, descricao) values ('Vender', 'Permissao para vender');
+insert into permissao (nome, descricao) values ('Criar produto', 'Permissao para criar');
+insert into permissao (nome, descricao) values ('Deletar produto', 'Permissao para deletar');
+insert into permissao (nome, descricao) values ('Comprar', 'Permissao para comprar');
+insert into permissao (nome, descricao) values ('Cadastrar forma de pagamento', 'Permissao para cadastrar forma de pagamento');
+insert into permissao (nome, descricao) values ('Visualizar restaurante', 'Permissao para visualizar restaurante');
 -- Grupo
-insert into grupo (nome) values ("Vendedor");
-insert into grupo (nome) values ("Admin");
-insert into grupo (nome) values ("Consumidor");
-insert into grupo (nome) values ("Visitante");
+insert into grupo (nome) values ('Vendedor');
+insert into grupo (nome) values ('Admin');
+insert into grupo (nome) values ('Consumidor');
+insert into grupo (nome) values ('Visitante');
 -- Grupo de Permissao
 insert  into grupo_permissao values (1,1), (1,2), (1,4), (1,5), (1,6);
 insert  into grupo_permissao values (2,1), (2,2), (2,3), (2,4), (2,5), (2,6);
 insert  into grupo_permissao values (3,4), (3,5), (3,6);
 insert  into grupo_permissao values (4,6);
 -- Usuario
-insert into usuario (nome, email, senha) values ("Pedro", "pedro@gmail.com", "senhasenha");
-insert into usuario (nome, email, senha) values ("Andressa", "andressa@gmail.com", "senhasenha123");
-insert into usuario (nome, email, senha) values ("Noah", "noah@gmail.com", "broabroa");
-insert into usuario (nome, email, senha) values ("Amora", "amora@gmail.com", "rozilda");
+insert into usuario (nome, email, senha) values ('Pedro', 'pedro@gmail.com', 'senhasenha');
+insert into usuario (nome, email, senha) values ('Andressa', 'andressa@gmail.com', 'senhasenha123');
+insert into usuario (nome, email, senha) values ('Noah', 'noah@gmail.com', 'broabroa');
+insert into usuario (nome, email, senha) values ('Amora', 'amora@gmail.com', 'rozilda');
 -- Grupo de usuario
 insert into grupo_usuario values (1,2), (2,1), (3,4), (4,3);
