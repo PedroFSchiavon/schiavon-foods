@@ -3,7 +3,7 @@ package br.com.schiavon.food.api.exceptionHandlers;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -15,7 +15,7 @@ public class Problem {
     private String detail;
 
     private String userMessage;
-    private LocalDateTime timestamp;
+    private OffsetDateTime timestamp;
 
     private List<ProblemFieldValidation> fields;
 
@@ -25,13 +25,13 @@ public class Problem {
         this.title = title;
         this.detail = detail;
         this.userMessage = userMessage;
-        this.timestamp = LocalDateTime.now();
+        this.timestamp = OffsetDateTime.now();
     }
 
     public Problem(int status, String title){
         this.status = status;
         this.title = title;
-        this.timestamp = LocalDateTime.now();
+        this.timestamp = OffsetDateTime.now();
     }
 
     public void setFields(List<ProblemFieldValidation> fields) {

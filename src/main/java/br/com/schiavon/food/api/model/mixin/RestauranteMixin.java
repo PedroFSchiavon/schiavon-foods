@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.OneToMany;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 public abstract class RestauranteMixin {
@@ -25,9 +25,9 @@ public abstract class RestauranteMixin {
     @OneToMany(mappedBy = "restaurante")
     private List<Produto> produtos;
 
-//    @JsonIgnore
-//    LocalDateTime dataCadastro;
-//
-//    @JsonIgnore
-//    LocalDateTime dataAtualizacao;
+    @JsonIgnore
+    OffsetDateTime dataCadastro;
+
+    @JsonIgnore
+    OffsetDateTime dataAtualizacao;
 }
