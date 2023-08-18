@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.TypeMismatchException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
@@ -35,8 +34,11 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     private static final String MSG_GENERICA_PARA_USUARIO = "Ocorreu um erro interno inesperado no sistema. Tente novamente e se o problema persistir, " +
             "entre em contato com o administrador do sistema.";
 
-    @Autowired
-    private MessageSource messageSource;
+    private final MessageSource messageSource;
+
+    public ApiExceptionHandler(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     @ExceptionHandler(EntidadeNaoEncontradaException.class)
     public ResponseEntity<?>
