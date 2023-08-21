@@ -1,5 +1,7 @@
 package br.com.schiavon.food.api.controller;
 
+import br.com.schiavon.food.api.model.dto.CozinhaDTO;
+import br.com.schiavon.food.api.model.dto.RestauranteDTO;
 import br.com.schiavon.food.core.validation.ValidationPatchException;
 import br.com.schiavon.food.domain.exceptions.CozinhaNaoEncontradaException;
 import br.com.schiavon.food.domain.exceptions.RelacionamentoEntidadeNaoEncontradoException;
@@ -16,6 +18,7 @@ import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/restaurantes")
@@ -33,34 +36,34 @@ public class RestauranteController {
     }
 
     @GetMapping
-    public List<Restaurante> listar(){
-        return restauranteRepository.findAll();
+    public List<RestauranteDTO> listar(){
+        return toCollectionDTO(restauranteRepository.findAll());
     }
 
     @GetMapping("/nome")
-    public List<Restaurante> buscarPorNome(@RequestParam String nome){
-        return restauranteRepository.buscarPorNome(nome);
+    public List<RestauranteDTO> buscarPorNome(@RequestParam String nome){
+        return toCollectionDTO(restauranteRepository.buscarPorNome(nome));
     }
 
     @GetMapping("/nome-taxa")
-    public List<Restaurante> buscarPorNomeETaxa(String nome, BigDecimal taxaInicial, BigDecimal taxaFinal){
-
-        return restauranteRepository.buscaPorNomeETaxa(nome, taxaInicial, taxaFinal);
+    public List<RestauranteDTO> buscarPorNomeETaxa(String nome, BigDecimal taxaInicial, BigDecimal taxaFinal){
+        return toCollectionDTO(restauranteRepository.buscaPorNomeETaxa(nome, taxaInicial, taxaFinal));
     }
 
     @GetMapping("/taxa-zero")
-    public List<Restaurante> restauranteTaxaZeroENome(String nome){
-        return restauranteRepository.buscarFreteGratis(nome);
+    public List<RestauranteDTO> restauranteTaxaZeroENome(String nome){
+        return toCollectionDTO(restauranteRepository.buscarFreteGratis(nome));
     }
 
     @GetMapping("/primeiro")
-    public Restaurante buscarPrimeiro(){
-        return restauranteRepository.bucarPrimeiro().get();
+    public RestauranteDTO buscarPrimeiro(){
+        return toDTO(restauranteRepository.bucarPrimeiro().get());
     }
 
     @GetMapping("/{idRestaurante}")
-    public Restaurante buscar(@PathVariable Long idRestaurante){
-        return restauranteService.buscarRestauranteId(idRestaurante);
+    public RestauranteDTO buscar(@PathVariable Long idRestaurante){
+        Restaurante restaurante = restauranteService.buscarRestauranteId(idRestaurante);
+        return toDTO(restaurante);
     }
 
     @PostMapping
@@ -111,5 +114,17 @@ public class RestauranteController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletar(@PathVariable Long idRestaurante){
         restauranteService.deletar(idRestaurante);
+    }
+
+    private RestauranteDTO toDTO(Restaurante restaurante) {
+        RestauranteDTO restauranteDTO = new RestauranteDTO(restaurante.getId(), restaurante.getNome(),
+                restaurante.getTaxaFrete(),
+                new CozinhaDTO(restaurante.getCozinha().getId(), restaurante.getCozinha().getNome()));
+
+        return restauranteDTO;
+    }
+
+    private List<RestauranteDTO> toCollectionDTO(List<Restaurante> restaurantes){
+        return restaurantes.stream().map(this::toDTO).collect(Collectors.toList());
     }
 }
