@@ -3,7 +3,6 @@ package br.com.schiavon.food.core.jackson;
 import br.com.schiavon.food.api.model.mixin.CidadeMixin;
 import br.com.schiavon.food.api.model.mixin.CozinhaMixin;
 import br.com.schiavon.food.api.model.mixin.ProdutoMixin;
-import br.com.schiavon.food.api.model.mixin.RestauranteMixin;
 import br.com.schiavon.food.domain.models.Cidade;
 import br.com.schiavon.food.domain.models.Cozinha;
 import br.com.schiavon.food.domain.models.Produto;
@@ -16,7 +15,6 @@ public class JacksonMixinModule extends SimpleModule {
     private final static long serialVersionUID = 1L;
 
     public JacksonMixinModule() {
-        setMixInAnnotation(Restaurante.class, RestauranteMixin.class);
         setMixInAnnotation(Cidade.class, CidadeMixin.class);
         setMixInAnnotation(Cozinha.class, CozinhaMixin.class);
         setMixInAnnotation(Produto.class, ProdutoMixin.class);

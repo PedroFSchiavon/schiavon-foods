@@ -1,14 +1,6 @@
 package br.com.schiavon.food.domain.models;
 
-import br.com.schiavon.food.core.validation.Groups;
-import br.com.schiavon.food.core.validation.anotations.TaxaFrete;
-import br.com.schiavon.food.core.validation.anotations.ValorZeroIncluiDescricao;
 import javax.persistence.*;
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.groups.ConvertGroup;
-import javax.validation.groups.Default;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
@@ -22,7 +14,6 @@ import java.util.List;
 @Entity
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ValorZeroIncluiDescricao(valorField = "taxaFrete", descricaoField = "nome", descricao = "Frete Grátis")
 public class Restaurante implements Serializable {
     private static final long serialVersionUID = 1L;
 

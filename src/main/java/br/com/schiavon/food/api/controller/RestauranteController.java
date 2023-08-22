@@ -10,6 +10,7 @@ import br.com.schiavon.food.domain.models.Cozinha;
 import br.com.schiavon.food.domain.models.Restaurante;
 import br.com.schiavon.food.domain.repositories.RestauranteRepository;
 import br.com.schiavon.food.domain.services.RestauranteService;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.SmartValidator;
@@ -26,15 +27,19 @@ import java.util.stream.Collectors;
 @RequestMapping("/restaurantes")
 public class RestauranteController {
     private final RestauranteRepository restauranteRepository;
+
     private final RestauranteService restauranteService;
 
     private final SmartValidator validator;
 
+    private final ModelMapper modelMapper;
+
     public RestauranteController(RestauranteRepository restauranteRepository, RestauranteService restauranteService,
-                                 SmartValidator validator){
+                                 SmartValidator validator, ModelMapper modelMapper){
         this.restauranteRepository = restauranteRepository;
         this.restauranteService = restauranteService;
         this.validator = validator;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping
