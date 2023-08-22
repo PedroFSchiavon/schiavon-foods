@@ -1,10 +1,12 @@
 package br.com.schiavon.food.api.controller;
 
+import br.com.schiavon.food.api.model.dto.input.RestauranteInputDTO;
 import br.com.schiavon.food.api.model.dto.output.CozinhaDTO;
 import br.com.schiavon.food.api.model.dto.output.RestauranteDTO;
 import br.com.schiavon.food.core.validation.ValidationPatchException;
 import br.com.schiavon.food.domain.exceptions.CozinhaNaoEncontradaException;
 import br.com.schiavon.food.domain.exceptions.RelacionamentoEntidadeNaoEncontradoException;
+import br.com.schiavon.food.domain.models.Cozinha;
 import br.com.schiavon.food.domain.models.Restaurante;
 import br.com.schiavon.food.domain.repositories.RestauranteRepository;
 import br.com.schiavon.food.domain.services.RestauranteService;
@@ -68,25 +70,27 @@ public class RestauranteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Restaurante cadastro(@RequestBody @Valid Restaurante restaurante){
+    public RestauranteDTO cadastro(@RequestBody @Valid RestauranteInputDTO restauranteInputDTO){
         try{
-            return restauranteService.cadastro(restaurante);
+            Restaurante restaurante = toDomainModel(restauranteInputDTO);
+            return toDTO(restauranteService.cadastro(restaurante));
         }catch (CozinhaNaoEncontradaException e){
             throw new RelacionamentoEntidadeNaoEncontradoException(e.getMessage(), e);
         }
     }
 
     @PutMapping("/{idRestaurante}")
-    public Restaurante atualizar(@PathVariable Long idRestaurante, @RequestBody @Valid Restaurante restaurante){
+    public RestauranteDTO atualizar(@PathVariable Long idRestaurante, @RequestBody @Valid RestauranteInputDTO restauranteInputDTO){
         try{
-            return restauranteService.atualizar(idRestaurante, restaurante);
+            Restaurante restaurante = toDomainModel(restauranteInputDTO);
+            return toDTO(restauranteService.atualizar(idRestaurante, restaurante));
         }catch (CozinhaNaoEncontradaException e){
             throw new RelacionamentoEntidadeNaoEncontradoException(e.getMessage(), e);
         }
     }
 
     @PatchMapping("/{idRestaurante}")
-    public Restaurante atualizarParcial(@PathVariable Long idRestaurante, @RequestBody Map<String, Object> restauranteMap,
+    public RestauranteDTO atualizarParcial(@PathVariable Long idRestaurante, @RequestBody Map<String, Object> restauranteMap,
                                         HttpServletRequest request){
         Restaurante restaurante = restauranteService.buscarRestauranteId(idRestaurante);
 
@@ -98,7 +102,7 @@ public class RestauranteController {
 
         validate(restaurante, "restaurante");
 
-        return atualizar(idRestaurante, restaurante);
+        return toDTO(restauranteService.atualizar(idRestaurante, restaurante));
     }
 
     private void validate(Restaurante restaurante, String objectName) {
@@ -126,5 +130,17 @@ public class RestauranteController {
 
     private List<RestauranteDTO> toCollectionDTO(List<Restaurante> restaurantes){
         return restaurantes.stream().map(this::toDTO).collect(Collectors.toList());
+    }
+
+    private Restaurante toDomainModel(RestauranteInputDTO restauranteInputDTO){
+        Restaurante restaurante = new Restaurante();
+        restaurante.setNome(restauranteInputDTO.getNome());
+        restaurante.setTaxaFrete(restauranteInputDTO.getTaxaFrete());
+
+        Cozinha cozinha = new Cozinha();
+        cozinha.setId(restauranteInputDTO.getCozinha().getId());
+        restaurante.setCozinha(cozinha);
+
+        return restaurante;
     }
 }
