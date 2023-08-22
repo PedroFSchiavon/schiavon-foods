@@ -1,4 +1,4 @@
-package br.com.schiavon.food.api.model.dto;
+package br.com.schiavon.food.api.model.dto.output;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

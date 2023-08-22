@@ -1,7 +1,7 @@
 package br.com.schiavon.food.api.controller;
 
-import br.com.schiavon.food.api.model.dto.CozinhaDTO;
-import br.com.schiavon.food.api.model.dto.RestauranteDTO;
+import br.com.schiavon.food.api.model.dto.output.CozinhaDTO;
+import br.com.schiavon.food.api.model.dto.output.RestauranteDTO;
 import br.com.schiavon.food.core.validation.ValidationPatchException;
 import br.com.schiavon.food.domain.exceptions.CozinhaNaoEncontradaException;
 import br.com.schiavon.food.domain.exceptions.RelacionamentoEntidadeNaoEncontradoException;

@@ -23,7 +23,7 @@ public class Cozinha implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    @NotNull(groups = Groups.IdCozinha.class)
+    //@NotNull(groups = Groups.IdCozinha.class)
     private long id;
 
     @NotBlank

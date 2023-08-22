@@ -31,16 +31,10 @@ public class Restaurante implements Serializable {
     @EqualsAndHashCode.Include
     private long id;
 
-    @NotBlank
     private String nome;
 
-    @TaxaFrete
-    @NotNull
     private BigDecimal taxaFrete;
 
-    @Valid
-    @ConvertGroup(from = Default.class, to = Groups.IdCozinha.class)
-    @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cozinha_id", nullable = false)
     private Cozinha cozinha;
