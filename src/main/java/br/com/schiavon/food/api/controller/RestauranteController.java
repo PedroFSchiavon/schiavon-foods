@@ -1,23 +1,22 @@
 package br.com.schiavon.food.api.controller;
 
 import br.com.schiavon.food.api.model.dto.input.RestauranteInputDTO;
-import br.com.schiavon.food.api.model.dto.output.CozinhaDTO;
 import br.com.schiavon.food.api.model.dto.output.RestauranteDTO;
 import br.com.schiavon.food.core.validation.ValidationPatchException;
 import br.com.schiavon.food.domain.exceptions.CozinhaNaoEncontradaException;
 import br.com.schiavon.food.domain.exceptions.RelacionamentoEntidadeNaoEncontradoException;
-import br.com.schiavon.food.domain.models.Cozinha;
 import br.com.schiavon.food.domain.models.Restaurante;
 import br.com.schiavon.food.domain.repositories.RestauranteRepository;
 import br.com.schiavon.food.domain.services.RestauranteService;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeMap;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.SmartValidator;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
@@ -126,11 +125,7 @@ public class RestauranteController {
     }
 
     private RestauranteDTO toDTO(Restaurante restaurante) {
-        RestauranteDTO restauranteDTO = new RestauranteDTO(restaurante.getId(), restaurante.getNome(),
-                restaurante.getTaxaFrete(),
-                new CozinhaDTO(restaurante.getCozinha().getId(), restaurante.getCozinha().getNome()));
-
-        return restauranteDTO;
+        return modelMapper.map(restaurante, RestauranteDTO.class);
     }
 
     private List<RestauranteDTO> toCollectionDTO(List<Restaurante> restaurantes){
@@ -138,14 +133,6 @@ public class RestauranteController {
     }
 
     private Restaurante toDomainModel(RestauranteInputDTO restauranteInputDTO){
-        Restaurante restaurante = new Restaurante();
-        restaurante.setNome(restauranteInputDTO.getNome());
-        restaurante.setTaxaFrete(restauranteInputDTO.getTaxaFrete());
-
-        Cozinha cozinha = new Cozinha();
-        cozinha.setId(restauranteInputDTO.getCozinha().getId());
-        restaurante.setCozinha(cozinha);
-
-        return restaurante;
+        return modelMapper.map(restauranteInputDTO, Restaurante.class);
     }
 }

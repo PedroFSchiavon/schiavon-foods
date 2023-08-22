@@ -1,13 +1,12 @@
 package br.com.schiavon.food.api.model.dto.output;
 
-import br.com.schiavon.food.api.model.dto.output.CozinhaDTO;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 
 @Getter
-@AllArgsConstructor
+@Setter
 public class RestauranteDTO {
     private long id;
     private String nome;
