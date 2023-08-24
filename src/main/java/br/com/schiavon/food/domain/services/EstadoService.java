@@ -36,6 +36,7 @@ public class EstadoService {
         Estado estado = buscaEstadoId(id);
         try{
             estadoRepository.delete(estado);
+            estadoRepository.flush();
         }catch (DataIntegrityViolationException e){
             throw new EntidadeEmUsoException(String.format(ESTADO_ID_EM_USO_POR, id));
         }

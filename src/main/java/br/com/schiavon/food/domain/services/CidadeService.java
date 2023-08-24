@@ -41,6 +41,7 @@ public class CidadeService {
         try{
             Cidade cidade = buscarCidadeId(id);
             cidadeRepository.delete(cidade);
+            cidadeRepository.flush();
         }catch (DataIntegrityViolationException e){
             throw new EntidadeEmUsoException(String.format(CIDADE_ID_EM_USO, id));
         }
