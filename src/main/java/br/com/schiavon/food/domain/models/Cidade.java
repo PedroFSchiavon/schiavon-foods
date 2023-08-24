@@ -1,14 +1,15 @@
 package br.com.schiavon.food.domain.models;
 
-import br.com.schiavon.food.core.validation.Groups;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.*;
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.groups.ConvertGroup;
 import java.io.Serializable;
 
 @Entity
@@ -22,13 +23,9 @@ public class Cidade implements Serializable {
     @EqualsAndHashCode.Include
     private long id;
 
-    @NotBlank
     @Column(nullable = false)
     private String nome;
 
-    @Valid
-    @ConvertGroup(to = Groups.IdEstado.class)
-    @NotNull
     @ManyToOne
     @JoinColumn(nullable = false, name = "estado_id")
     private Estado estado;
