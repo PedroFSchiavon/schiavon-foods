@@ -1,10 +1,13 @@
 package br.com.schiavon.food.api.controller;
 
 import br.com.schiavon.food.api.model.CozinhasXMLWrapper;
+import br.com.schiavon.food.api.model.dto.input.CozinhaInputDTO;
+import br.com.schiavon.food.api.model.dto.output.CozinhaDTO;
 import br.com.schiavon.food.domain.models.Cozinha;
 import br.com.schiavon.food.domain.repositories.CozinhaRepository;
 import br.com.schiavon.food.domain.services.CozinhaService;
 import javax.validation.Valid;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,21 +21,24 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/cozinhas")
 public class CozinhaController {
     private final CozinhaRepository cozinhaRepository;
     private final CozinhaService cozinhaService;
+    private final ModelMapper modelMapper;
 
-    public CozinhaController(CozinhaRepository cozinhaRepository, CozinhaService cozinhaService){
+    public CozinhaController(CozinhaRepository cozinhaRepository, CozinhaService cozinhaService, ModelMapper modelMapper){
         this.cozinhaRepository = cozinhaRepository;
         this.cozinhaService = cozinhaService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping
-    public List<Cozinha> listar(){
-        return cozinhaRepository.findAll();
+    public List<CozinhaDTO> listar(){
+        return toCollectionDTO(cozinhaRepository.findAll());
     }
 
     @GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
@@ -41,24 +47,21 @@ public class CozinhaController {
     }
 
     @GetMapping("/{idCozinha}")
-    public Cozinha buscar(@PathVariable Long idCozinha){
-        return cozinhaService.buscarCozinhaId(idCozinha);
-        
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.add(HttpHeaders.LOCATION, "http://localhost:8080/cozinhas");
-//
-//        return ResponseEntity.status(HttpStatus.FOUND).headers(headers).build();
+    public CozinhaDTO buscar(@PathVariable Long idCozinha){
+        return toDTO(cozinhaService.buscarCozinhaId(idCozinha));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Cozinha cadastro(@RequestBody @Valid Cozinha cozinha){
-        return cozinhaService.cadastro(cozinha);
+    public CozinhaDTO cadastro(@RequestBody @Valid CozinhaInputDTO cozinhaInputDTO){
+        Cozinha cozinha = toDomainModel(cozinhaInputDTO);
+        return toDTO(cozinhaService.cadastro(cozinha));
     }
 
     @PutMapping("/{idCozinha}")
-    public Cozinha atualizar(@PathVariable Long idCozinha, @RequestBody Cozinha cozinha){
-            return cozinhaService.atualizar(idCozinha, cozinha);
+    public CozinhaDTO atualizar(@PathVariable Long idCozinha, @RequestBody @Valid CozinhaInputDTO cozinhaInputDTO){
+        Cozinha cozinha = toDomainModel(cozinhaInputDTO);
+        return toDTO(cozinhaService.atualizar(idCozinha, cozinha));
     }
 
     @DeleteMapping("/{idCozinha}")
@@ -67,4 +70,15 @@ public class CozinhaController {
         cozinhaService.deletar(idCozinha);
     }
 
+    private CozinhaDTO toDTO(Cozinha cozinha){
+        return modelMapper.map(cozinha, CozinhaDTO.class);
+    }
+
+    private List<CozinhaDTO> toCollectionDTO(List<Cozinha> cozinhas){
+        return cozinhas.stream().map(this::toDTO).collect(Collectors.toList());
+    }
+
+    private Cozinha toDomainModel(CozinhaInputDTO cozinhaInputDTO){
+        return modelMapper.map(cozinhaInputDTO, Cozinha.class);
+    }
 }
