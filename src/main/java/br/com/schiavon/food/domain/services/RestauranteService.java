@@ -88,6 +88,18 @@ public class RestauranteService {
         }
     }
 
+    @Transactional
+    public void ativar(Long id){
+        Restaurante restaurante = buscarRestauranteId(id);
+        restaurante.ativar();
+    }
+
+    @Transactional
+    public void inativar(Long id){
+        Restaurante restaurante = buscarRestauranteId(id);
+        restaurante.inativar();
+    }
+
     public Restaurante buscarRestauranteId(Long id) {
         return restauranteRepository.findById(id).orElseThrow(() -> new RestauranteNaoEncontradaException(id));
     }

@@ -123,6 +123,18 @@ public class RestauranteController {
         restauranteService.deletar(idRestaurante);
     }
 
+    @PutMapping("/{idRestaurante}/ativo")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void ativar(@PathVariable Long idRestaurante){
+        restauranteService.ativar(idRestaurante);
+    }
+
+    @DeleteMapping("/{idRestaurante}/ativo")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void inativar(@PathVariable Long idRestaurante){
+        restauranteService.inativar(idRestaurante);
+    }
+
     private RestauranteDTO toDTO(Restaurante restaurante) {
         return modelMapper.map(restaurante, RestauranteDTO.class);
     }
