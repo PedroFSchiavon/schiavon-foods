@@ -34,6 +34,9 @@ public class Restaurante implements Serializable {
     @Embedded
     private Endereco endereco;
 
+    @Column(nullable = false)
+    private Boolean ativo = Boolean.TRUE;
+
     @ManyToMany
     @JoinTable(name = "restaurante_forma_pagamento",
             joinColumns = @JoinColumn(name = "restaurante_id"),

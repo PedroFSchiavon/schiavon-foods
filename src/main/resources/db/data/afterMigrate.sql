@@ -30,10 +30,10 @@ insert into cozinha (nome) values ('Amazonense');
 insert into cozinha (nome) values ('Mineira');
 insert into cozinha (nome) values ('Italiana');
 -- restaurante
-insert into restaurante (nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao) values ('Cantinho do Burguer', 4.76, 2, utc_timestamp, utc_timestamp);
-insert into restaurante (nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao) values ('Vini burguer', 3.80, 2, utc_timestamp, utc_timestamp);
-insert into restaurante (nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao) values ('Paçai', 7.80, 1, utc_timestamp, utc_timestamp);
-insert into restaurante (nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao) values ('Forno da saudade', 1.15, 3, utc_timestamp, utc_timestamp);
+insert into restaurante (nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo) values ('Cantinho do Burguer', 4.76, 2, utc_timestamp, utc_timestamp, true);
+insert into restaurante (nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo) values ('Vini burguer', 3.80, 2, utc_timestamp, utc_timestamp, true);
+insert into restaurante (nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo) values ('Paçai', 7.80, 1, utc_timestamp, utc_timestamp, true);
+insert into restaurante (nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, ativo) values ('Forno da saudade', 1.15, 3, utc_timestamp, utc_timestamp, true);
 -- estado
 insert into estado (nome) values ('Minas Gerais');
 insert into estado (nome) values ('São Paulo');
