@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CidadeService {
-    public static final String CIDADE_ID_EM_USO = "Não foi possível deletar a cidade com o id %d, pois esta em uso no momento.";
+    public final String CIDADE_ID_EM_USO = "Não foi possível deletar a cidade com o id %d, pois esta em uso no momento.";
     private final CidadeRepository cidadeRepository;
     private final EstadoService estadoService;
 
