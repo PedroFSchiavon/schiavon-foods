@@ -1,6 +1,9 @@
 package br.com.schiavon.food.core.modelmapper;
 
+import br.com.schiavon.food.api.model.dto.output.EnderecoDTO;
+import br.com.schiavon.food.domain.models.Endereco;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeMap;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -8,6 +11,14 @@ import org.springframework.context.annotation.Configuration;
 public class ModelMapperConfig {
     @Bean
     public ModelMapper modelMapperBean(){
-        return new ModelMapper();
+        ModelMapper modelMapper = new ModelMapper();
+
+        TypeMap<Endereco, EnderecoDTO> typeMapEndereco = modelMapper.createTypeMap(Endereco.class, EnderecoDTO.class);
+
+        typeMapEndereco.addMapping((src) -> src.getCidade().getNome(), EnderecoDTO::setCidade);
+
+       typeMapEndereco.addMapping((src) -> src.getCidade().getEstado().getNome(), EnderecoDTO::setEstado);
+
+        return modelMapper;
     }
 }
