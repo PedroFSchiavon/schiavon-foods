@@ -10,9 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class FormaPagamentoService {
-    private final FormaPagamentoRepository formaPagamentoRepository;
+    private final  FormaPagamentoRepository formaPagamentoRepository;
 
-    private final String FORMA_PAGAMENTO_ID_EM_USO = "Não foi possível deletar a forma de pagamento com o id %d, " +
+    private final static String FORMA_PAGAMENTO_ID_EM_USO = "Não foi possível deletar a forma de pagamento com o id %d, " +
             "pois esta em uso no momento.";
 
     public FormaPagamentoService(FormaPagamentoRepository formaPagamentoRepository){
