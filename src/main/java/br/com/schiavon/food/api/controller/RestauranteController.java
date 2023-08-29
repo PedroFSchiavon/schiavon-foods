@@ -3,6 +3,7 @@ package br.com.schiavon.food.api.controller;
 import br.com.schiavon.food.api.model.dto.input.RestauranteInputDTO;
 import br.com.schiavon.food.api.model.dto.output.RestauranteDTO;
 import br.com.schiavon.food.core.validation.ValidationPatchException;
+import br.com.schiavon.food.domain.exceptions.CidadeNaoEncontradaException;
 import br.com.schiavon.food.domain.exceptions.CozinhaNaoEncontradaException;
 import br.com.schiavon.food.domain.exceptions.RelacionamentoEntidadeNaoEncontradoException;
 import br.com.schiavon.food.domain.models.Restaurante;
@@ -77,7 +78,7 @@ public class RestauranteController {
         try{
             Restaurante restaurante = toDomainModel(restauranteInputDTO);
             return toDTO(restauranteService.cadastro(restaurante));
-        }catch (CozinhaNaoEncontradaException e){
+        }catch (CozinhaNaoEncontradaException | CidadeNaoEncontradaException e){
             throw new RelacionamentoEntidadeNaoEncontradoException(e.getMessage(), e);
         }
     }
@@ -87,7 +88,7 @@ public class RestauranteController {
         try{
             Restaurante restaurante = toDomainModel(restauranteInputDTO);
             return toDTO(restauranteService.atualizar(idRestaurante, restaurante));
-        }catch (CozinhaNaoEncontradaException e){
+        }catch (CozinhaNaoEncontradaException | CidadeNaoEncontradaException e){
             throw new RelacionamentoEntidadeNaoEncontradoException(e.getMessage(), e);
         }
     }

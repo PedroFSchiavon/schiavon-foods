@@ -2,6 +2,7 @@ package br.com.schiavon.food.domain.services;
 
 import br.com.schiavon.food.domain.exceptions.EntidadeEmUsoException;
 import br.com.schiavon.food.domain.exceptions.RestauranteNaoEncontradaException;
+import br.com.schiavon.food.domain.models.Cidade;
 import br.com.schiavon.food.domain.models.Cozinha;
 import br.com.schiavon.food.domain.models.Restaurante;
 import br.com.schiavon.food.domain.repositories.RestauranteRepository;
@@ -40,9 +41,10 @@ public class RestauranteService {
         Cozinha cozinha = cozinhaService.buscarCozinhaId(idCozinha);
 
         long cidadeId = restaurante.getEndereco().getCidade().getId();
-        cidadeService.buscarCidadeId(cidadeId);
+        Cidade cidade = cidadeService.buscarCidadeId(cidadeId);
 
         restaurante.setCozinha(cozinha);
+        restaurante.getEndereco().setCidade(cidade);
         return restauranteRepository.save(restaurante);
     }
 
