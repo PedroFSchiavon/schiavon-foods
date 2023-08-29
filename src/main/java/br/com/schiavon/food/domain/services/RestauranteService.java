@@ -24,17 +24,23 @@ public class RestauranteService {
     public static final String RESTAURANTE_ID_EM_USO = "Não foi possível deletar o restaurante" +
             " com o id %d, pois esta em uso no momento.";
     private final RestauranteRepository restauranteRepository;
-        private final CozinhaService cozinhaService;
+    private final CozinhaService cozinhaService;
+    private final CidadeService cidadeService;
 
-    public RestauranteService(RestauranteRepository restauranteRepository, CozinhaService cozinhaService) {
+    public RestauranteService(RestauranteRepository restauranteRepository, CozinhaService cozinhaService,
+                              CidadeService cidadeService) {
         this.restauranteRepository = restauranteRepository;
         this.cozinhaService = cozinhaService;
+        this.cidadeService = cidadeService;
     }
 
     @Transactional
     public Restaurante cadastro(Restaurante restaurante) {
         long idCozinha = restaurante.getCozinha().getId();
         Cozinha cozinha = cozinhaService.buscarCozinhaId(idCozinha);
+
+        long cidadeId = restaurante.getEndereco().getCidade().getId();
+        cidadeService.buscarCidadeId(cidadeId);
 
         restaurante.setCozinha(cozinha);
         return restauranteRepository.save(restaurante);
@@ -45,6 +51,9 @@ public class RestauranteService {
         Restaurante restauranteAntigo = buscarRestauranteId(id);
         long cozinhaId = restaurante.getCozinha().getId();
         cozinhaService.buscarCozinhaId(cozinhaId);
+
+        long cidadeId = restaurante.getEndereco().getCidade().getId();
+        cidadeService.buscarCidadeId(cidadeId);
 
         restaurante.setId(id);
         restaurante.setDataCadastro(restauranteAntigo.getDataCadastro());
