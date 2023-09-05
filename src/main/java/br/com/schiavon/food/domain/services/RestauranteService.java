@@ -1,7 +1,7 @@
 package br.com.schiavon.food.domain.services;
 
 import br.com.schiavon.food.domain.exceptions.EntidadeEmUsoException;
-import br.com.schiavon.food.domain.exceptions.RestauranteNaoEncontradaException;
+import br.com.schiavon.food.domain.exceptions.naoencontrada.RestauranteNaoEncontradaException;
 import br.com.schiavon.food.domain.models.Cidade;
 import br.com.schiavon.food.domain.models.Cozinha;
 import br.com.schiavon.food.domain.models.Restaurante;

@@ -1,4 +1,4 @@
-package br.com.schiavon.food.domain.exceptions;
+package br.com.schiavon.food.domain.exceptions.naoencontrada;
 
 public class EstadoNaoEncontradaException extends EntidadeNaoEncontradaException {
     private static final long serialVersionUID = 1L;

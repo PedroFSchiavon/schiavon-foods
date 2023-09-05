@@ -1,7 +1,7 @@
 package br.com.schiavon.food.domain.services;
 
 import br.com.schiavon.food.domain.exceptions.EntidadeEmUsoException;
-import br.com.schiavon.food.domain.exceptions.FormaPagamentoNaoEncontradaException;
+import br.com.schiavon.food.domain.exceptions.naoencontrada.FormaPagamentoNaoEncontradaException;
 import br.com.schiavon.food.domain.models.FormaPagamento;
 import br.com.schiavon.food.domain.repositories.FormaPagamentoRepository;
 import org.springframework.dao.DataIntegrityViolationException;

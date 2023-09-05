@@ -2,7 +2,7 @@ package br.com.schiavon.food.api.controller;
 
 import br.com.schiavon.food.api.model.dto.input.CidadeInputDTO;
 import br.com.schiavon.food.api.model.dto.output.CidadeDTO;
-import br.com.schiavon.food.domain.exceptions.EstadoNaoEncontradaException;
+import br.com.schiavon.food.domain.exceptions.naoencontrada.EstadoNaoEncontradaException;
 import br.com.schiavon.food.domain.exceptions.RelacionamentoEntidadeNaoEncontradoException;
 import br.com.schiavon.food.domain.models.Cidade;
 import br.com.schiavon.food.domain.repositories.CidadeRepository;

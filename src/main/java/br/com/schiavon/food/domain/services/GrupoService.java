@@ -1,7 +1,7 @@
 package br.com.schiavon.food.domain.services;
 
 import br.com.schiavon.food.domain.exceptions.EntidadeEmUsoException;
-import br.com.schiavon.food.domain.exceptions.GrupoNaoEncontradaException;
+import br.com.schiavon.food.domain.exceptions.naoencontrada.GrupoNaoEncontradaException;
 import br.com.schiavon.food.domain.models.Grupo;
 import br.com.schiavon.food.domain.repositories.GrupoRepository;
 import org.springframework.dao.DataIntegrityViolationException;

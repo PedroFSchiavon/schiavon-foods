@@ -2,7 +2,7 @@ package br.com.schiavon.food.api.exceptionHandlers;
 
 import br.com.schiavon.food.core.validation.ValidationPatchException;
 import br.com.schiavon.food.domain.exceptions.EntidadeEmUsoException;
-import br.com.schiavon.food.domain.exceptions.EntidadeNaoEncontradaException;
+import br.com.schiavon.food.domain.exceptions.naoencontrada.EntidadeNaoEncontradaException;
 import br.com.schiavon.food.domain.exceptions.RelacionamentoEntidadeNaoEncontradoException;
 import br.com.schiavon.food.domain.exceptions.SenhaDeUsuarioNaoCoincidemException;
 import com.fasterxml.jackson.databind.exc.IgnoredPropertyException;

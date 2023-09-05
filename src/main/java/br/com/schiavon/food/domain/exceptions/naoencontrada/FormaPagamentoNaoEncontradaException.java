@@ -1,6 +1,6 @@
-package br.com.schiavon.food.domain.exceptions;
+package br.com.schiavon.food.domain.exceptions.naoencontrada;
 
-public class FormaPagamentoNaoEncontradaException extends EntidadeNaoEncontradaException{
+public class FormaPagamentoNaoEncontradaException extends EntidadeNaoEncontradaException {
     private final static long serialVersionUID = 1L;
 
     public static final String FORMA_PAGAMENTO_NAO_ENCONTRADA = "Forma pagamento de id %d não foi encontrada.";

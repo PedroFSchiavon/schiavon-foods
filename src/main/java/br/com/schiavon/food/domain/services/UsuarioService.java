@@ -2,7 +2,7 @@ package br.com.schiavon.food.domain.services;
 
 import br.com.schiavon.food.api.model.dto.input.usuario.UsuarioSenha;
 import br.com.schiavon.food.domain.exceptions.SenhaDeUsuarioNaoCoincidemException;
-import br.com.schiavon.food.domain.exceptions.UsuarioNaoEncontradaException;
+import br.com.schiavon.food.domain.exceptions.naoencontrada.UsuarioNaoEncontradaException;
 import br.com.schiavon.food.domain.models.Usuario;
 import br.com.schiavon.food.domain.repositories.UsuarioRepository;
 import org.springframework.stereotype.Service;
@@ -31,8 +31,7 @@ public class UsuarioService {
     }
 
     @Transactional
-    public void
-    atualizaSenha(Long id, UsuarioSenha usuarioSenha){
+    public void atualizaSenha(Long id, UsuarioSenha usuarioSenha){
         Usuario usuario = buscarUsuarioId(id);
 
         boolean eIgual = usuario.getSenha().equals(usuarioSenha.getSenhaAntiga());

@@ -1,6 +1,6 @@
 package br.com.schiavon.food.domain.services;
 
-import br.com.schiavon.food.domain.exceptions.CozinhaNaoEncontradaException;
+import br.com.schiavon.food.domain.exceptions.naoencontrada.CozinhaNaoEncontradaException;
 import br.com.schiavon.food.domain.exceptions.EntidadeEmUsoException;
 import br.com.schiavon.food.domain.models.Cozinha;
 import br.com.schiavon.food.domain.repositories.CozinhaRepository;

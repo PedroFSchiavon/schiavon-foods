@@ -1,6 +1,6 @@
 package br.com.schiavon.food.domain.services;
 
-import br.com.schiavon.food.domain.exceptions.CidadeNaoEncontradaException;
+import br.com.schiavon.food.domain.exceptions.naoencontrada.CidadeNaoEncontradaException;
 import br.com.schiavon.food.domain.exceptions.EntidadeEmUsoException;
 import br.com.schiavon.food.domain.models.Cidade;
 import br.com.schiavon.food.domain.repositories.CidadeRepository;
