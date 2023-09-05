@@ -34,9 +34,7 @@ public class UsuarioService {
     public void atualizaSenha(Long id, UsuarioSenha usuarioSenha){
         Usuario usuario = buscarUsuarioId(id);
 
-        boolean eIgual = usuario.getSenha().equals(usuarioSenha.getSenhaAntiga());
-
-        if (eIgual){
+        if (usuario.senhaCoincidem(usuarioSenha.getSenhaAntiga())){
             usuario.setSenha(usuarioSenha.getSenhaNova());
         }else {
             throw new SenhaDeUsuarioNaoCoincidemException();

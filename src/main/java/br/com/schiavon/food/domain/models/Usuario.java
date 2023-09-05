@@ -38,4 +38,8 @@ public class Usuario implements Serializable {
     joinColumns = @JoinColumn(name = "usuario_id"),
     inverseJoinColumns = @JoinColumn(name = "grupo_id"))
     private List<Grupo> grupos;
+
+    public boolean senhaCoincidem(String senhaAntiga){
+        return senha.equals(senhaAntiga);
+    }
 }
