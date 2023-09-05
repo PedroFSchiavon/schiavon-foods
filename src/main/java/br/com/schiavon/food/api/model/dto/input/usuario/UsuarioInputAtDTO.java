@@ -1,4 +1,4 @@
-package br.com.schiavon.food.api.model.dto.input;
+package br.com.schiavon.food.api.model.dto.input.usuario;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UsuarioInputAtDTO {
+public class UsuarioInputAtDTO implements UsuarioInput{
     @NotBlank
     private String nome;
     @Email
