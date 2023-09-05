@@ -11,7 +11,8 @@ public enum ProblemType {
     ERRO_DE_SINTAXE("/erro-de-sintaxe", "Erro de sintaxe."),
     PARAMETRO_INVALIDO("/parametro-invalido", "Parametro invalido."),
     ERRO_DE_SISTEMA("/erro-de-sistema", "Erro de sistema."),
-    DADOS_INVALIDOS("/dados-invalidos", "Dados invalidos");
+    DADOS_INVALIDOS("/dados-invalidos", "Dados invalidos."),
+    SENHA_NAO_COINCIDEM("/senha-nao-coincidem", "Senha não coincidem.");
 
     String type;
     String title;

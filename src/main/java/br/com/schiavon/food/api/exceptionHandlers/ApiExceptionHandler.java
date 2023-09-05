@@ -4,6 +4,7 @@ import br.com.schiavon.food.core.validation.ValidationPatchException;
 import br.com.schiavon.food.domain.exceptions.EntidadeEmUsoException;
 import br.com.schiavon.food.domain.exceptions.EntidadeNaoEncontradaException;
 import br.com.schiavon.food.domain.exceptions.RelacionamentoEntidadeNaoEncontradoException;
+import br.com.schiavon.food.domain.exceptions.SenhaDeUsuarioNaoCoincidemException;
 import com.fasterxml.jackson.databind.exc.IgnoredPropertyException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
@@ -65,6 +66,15 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         Problem problem = createProblem(status.value(), ProblemType.ENTIDADE_EM_USO, e.getMessage(), e.getMessage());
 
         return handleExceptionInternal(e, problem, new HttpHeaders(), status, webRequest);
+    }
+
+    @ExceptionHandler(SenhaDeUsuarioNaoCoincidemException.class)
+    public ResponseEntity<?> handleSenhaDeUsuarioNaoCoincidemException(SenhaDeUsuarioNaoCoincidemException ex,
+                                                                       WebRequest webRequest){
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        Problem problem = createProblem(status.value(), ProblemType.SENHA_NAO_COINCIDEM, ex.getMessage(), ex.getMessage());
+
+        return handleExceptionInternal(ex, problem, new HttpHeaders(), status, webRequest);
     }
 
     @ExceptionHandler(ValidationPatchException.class)
