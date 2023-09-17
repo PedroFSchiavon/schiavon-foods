@@ -20,11 +20,13 @@ public class Produto implements Serializable {
 
     private String nome;
 
+    private String descricao;
+
     private BigDecimal preco;
 
     private boolean ativo;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurante_id", nullable = false)
     private Restaurante restaurante;
 }

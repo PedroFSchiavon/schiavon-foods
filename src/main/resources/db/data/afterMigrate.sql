@@ -53,10 +53,10 @@ insert into forma_pagamento (descricao) values ('Boleto');
 -- Restaurante e forma de pagamento
 insert into restaurante_forma_pagamento values (1,1), (1,2), (1,3), (1,4), (2,1), (2,2), (2,3), (3,2), (3,4), (4,5);
 -- Produtos
-insert into produto (nome, preco, ativo, restaurante_id) values ('Super Cantinho', 33.33, true, 1);
-insert into produto (nome, preco, ativo, restaurante_id) values ('Pizza italiana', 45.50, true, 4);
-insert into produto (nome, preco, ativo, restaurante_id) values ('Especial da casa combo', 50, true, 2);
-insert into produto (nome, preco, ativo, restaurante_id) values ('Açai completo', 15.99, true, 3);
+insert into produto (nome, descricao, preco, ativo, restaurante_id) values ('Super Cantinho', 'O melhor podrão da cidade!', 33.33, true, 1);
+insert into produto (nome, descricao, preco, ativo, restaurante_id) values ('Pizza italiana', 'Pizza da mais tradicional!', 45.50, true, 4);
+insert into produto (nome, descricao, preco, ativo, restaurante_id) values ('Especial da casa combo', 'O segundo melhor podrão da cidade', 50, true, 2);
+insert into produto (nome, descricao, preco, ativo, restaurante_id) values ('Açai completo', 'Açai tradicional do sudeste.',15.99, true, 3);
 -- Permissao
 insert into permissao (nome, descricao) values ('Vender', 'Permissao para vender');
 insert into permissao (nome, descricao) values ('Criar produto', 'Permissao para criar');
