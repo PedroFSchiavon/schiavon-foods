@@ -1,6 +1,6 @@
 package br.com.schiavon.food.domain.services;
 
-import br.com.schiavon.food.domain.exceptions.RecursoNaoEncontradoException;
+import br.com.schiavon.food.domain.exceptions.naoencontrada.ProdutoNaoEncontradoException;
 import br.com.schiavon.food.domain.models.Produto;
 import br.com.schiavon.food.domain.models.Restaurante;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,7 @@ public class RestauranteProdutoService {
                 .findAny();
 
         if(produtoOptional.isEmpty()){
-            throw new RecursoNaoEncontradoException(
+            throw new ProdutoNaoEncontradoException(
                     String.format("O recurso de id %d não encontrado no restaurante %s.",
                             idProduto, restaurante.getNome()));
         }
