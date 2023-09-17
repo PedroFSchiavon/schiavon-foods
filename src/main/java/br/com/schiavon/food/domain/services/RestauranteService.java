@@ -4,6 +4,7 @@ import br.com.schiavon.food.domain.exceptions.EntidadeEmUsoException;
 import br.com.schiavon.food.domain.exceptions.naoencontrada.RestauranteNaoEncontradaException;
 import br.com.schiavon.food.domain.models.Cidade;
 import br.com.schiavon.food.domain.models.Cozinha;
+import br.com.schiavon.food.domain.models.FormaPagamento;
 import br.com.schiavon.food.domain.models.Restaurante;
 import br.com.schiavon.food.domain.repositories.RestauranteRepository;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -28,11 +29,14 @@ public class RestauranteService {
     private final CozinhaService cozinhaService;
     private final CidadeService cidadeService;
 
+    private final FormaPagamentoService formaPagamentoService;
+
     public RestauranteService(RestauranteRepository restauranteRepository, CozinhaService cozinhaService,
-                              CidadeService cidadeService) {
+                              CidadeService cidadeService, FormaPagamentoService formaPagamentoService) {
         this.restauranteRepository = restauranteRepository;
         this.cozinhaService = cozinhaService;
         this.cidadeService = cidadeService;
+        this.formaPagamentoService =formaPagamentoService;
     }
 
     @Transactional
@@ -109,6 +113,22 @@ public class RestauranteService {
     public void inativar(Long id){
         Restaurante restaurante = buscarRestauranteId(id);
         restaurante.inativar();
+    }
+
+    @Transactional
+    public void desassociarFormaPagamento(Long idRestaurante, Long idFormaPagamento){
+        Restaurante restaurante = buscarRestauranteId(idRestaurante);
+        FormaPagamento formaPagamento = formaPagamentoService.buscarFormaPagamentoID(idFormaPagamento);
+
+        restaurante.getFormaPagamento().remove(formaPagamento);
+    }
+
+    @Transactional
+    public void associarFormaPagamento(Long idRestaurante, Long idFormaPagamento){
+        Restaurante restaurante = buscarRestauranteId(idRestaurante);
+        FormaPagamento formaPagamento = formaPagamentoService.buscarFormaPagamentoID(idFormaPagamento);
+
+        restaurante.getFormaPagamento().add(formaPagamento);
     }
 
     public Restaurante buscarRestauranteId(Long id) {

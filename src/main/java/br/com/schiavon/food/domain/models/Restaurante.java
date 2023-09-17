@@ -3,14 +3,15 @@ package br.com.schiavon.food.domain.models;
 import javax.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -41,7 +42,7 @@ public class Restaurante implements Serializable {
     @JoinTable(name = "restaurante_forma_pagamento",
             joinColumns = @JoinColumn(name = "restaurante_id"),
             inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
-    private List<FormaPagamento> formaPagamento;
+    private Set<FormaPagamento> formaPagamento = new HashSet<>();
 
     @OneToMany(mappedBy = "restaurante")
     private List<Produto> produtos;
