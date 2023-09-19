@@ -40,6 +40,16 @@ public class RestauranteProdutoService {
         return produtoRepository.save(produto);
     }
 
+    @Transactional
+    public Produto atualizar(Long idRestaurante, Long idProduto, Produto produto) {
+        Produto produtoAtual = buscarProdutoID(idRestaurante, idProduto);
+
+        produto.setRestaurante(produtoAtual.getRestaurante());
+        produto.setId(produtoAtual.getId());
+
+        return produtoRepository.save(produto);
+    }
+
     public Produto buscarProdutoID(Long idRestaurante, Long idProduto){
         Restaurante restaurante = restauranteService.buscarRestauranteId(idRestaurante);
 

@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -44,8 +45,14 @@ public class RestauranteProdutoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ProdutoDTO cadastro(@PathVariable Long idRestaurante, @RequestBody @Valid ProdutoInputDTO produtoInputDTO){
+    public ProdutoDTO cadastrar(@PathVariable Long idRestaurante, @RequestBody @Valid ProdutoInputDTO produtoInputDTO){
         return toDTO(produtoService.cadastro(idRestaurante, toDomainModel(produtoInputDTO)));
+    }
+
+    @PutMapping("/{idProduto}")
+    public ProdutoDTO atualizar(@PathVariable Long idRestaurante, @PathVariable Long idProduto,
+                                @RequestBody @Valid ProdutoInputDTO produtoInputDTO){
+        return toDTO(produtoService.atualizar(idRestaurante, idProduto, toDomainModel(produtoInputDTO)));
     }
 
     private ProdutoDTO toDTO(Produto produto){
