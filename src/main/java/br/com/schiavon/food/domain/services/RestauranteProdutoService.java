@@ -3,7 +3,10 @@ package br.com.schiavon.food.domain.services;
 import br.com.schiavon.food.domain.exceptions.naoencontrada.ProdutoNaoEncontradoException;
 import br.com.schiavon.food.domain.models.Produto;
 import br.com.schiavon.food.domain.models.Restaurante;
+import br.com.schiavon.food.domain.repositories.ProdutoRepository;
+import br.com.schiavon.food.domain.repositories.RestauranteRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,8 +15,15 @@ import java.util.Optional;
 public class RestauranteProdutoService {
     private final RestauranteService restauranteService;
 
-    public RestauranteProdutoService(RestauranteService restauranteService){
+    private final RestauranteRepository restauranteRepository;
+
+    private final ProdutoRepository produtoRepository;
+
+    public RestauranteProdutoService(RestauranteService restauranteService, RestauranteRepository restauranteRepository,
+                                     ProdutoRepository produtoRepository){
         this.restauranteService = restauranteService;
+        this.restauranteRepository = restauranteRepository;
+        this.produtoRepository = produtoRepository;
     }
 
     public List<Produto> listarProduto(Long idRestaurante){
@@ -22,7 +32,15 @@ public class RestauranteProdutoService {
         return restaurante.getProdutos();
     }
 
-    public Produto buscarProduto(Long idRestaurante, Long idProduto){
+    @Transactional
+    public Produto cadastro(Long idRestaurante, Produto produto){
+        Restaurante restaurante = restauranteService.buscarRestauranteId(idRestaurante);
+        produto.setRestaurante(restaurante);
+
+        return produtoRepository.save(produto);
+    }
+
+    public Produto buscarProdutoID(Long idRestaurante, Long idProduto){
         Restaurante restaurante = restauranteService.buscarRestauranteId(idRestaurante);
 
         Optional<Produto> produtoOptional = restaurante.getProdutos().stream()

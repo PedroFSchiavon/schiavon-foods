@@ -9,6 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -45,7 +46,7 @@ public class Restaurante implements Serializable {
     private Set<FormaPagamento> formaPagamento = new HashSet<>();
 
     @OneToMany(mappedBy = "restaurante")
-    private List<Produto> produtos;
+    private List<Produto> produtos = new ArrayList<>();
 
     @CreationTimestamp
     @Column(nullable = false, columnDefinition = "datetime")
