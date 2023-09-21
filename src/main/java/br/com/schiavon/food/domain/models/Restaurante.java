@@ -39,6 +39,9 @@ public class Restaurante implements Serializable {
     @Column(nullable = false)
     private Boolean ativo = Boolean.TRUE;
 
+    @Column(nullable = false)
+    private Boolean aberto = Boolean.FALSE;
+
     @ManyToMany
     @JoinTable(name = "restaurante_forma_pagamento",
             joinColumns = @JoinColumn(name = "restaurante_id"),
