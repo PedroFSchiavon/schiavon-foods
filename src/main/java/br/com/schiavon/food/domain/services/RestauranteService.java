@@ -131,6 +131,18 @@ public class RestauranteService {
         restaurante.getFormaPagamento().add(formaPagamento);
     }
 
+    @Transactional
+    public void abrirRestaurante(Long id){
+        Restaurante restaurante = buscarRestauranteId(id);
+        restaurante.abrirRestaurante();
+    }
+
+    @Transactional
+    public void fecharRestaurante(Long id){
+        Restaurante restaurante = buscarRestauranteId(id);
+        restaurante.fecharRestaurante();
+    }
+
     public Restaurante buscarRestauranteId(Long id) {
         return restauranteRepository.findById(id).orElseThrow(() -> new RestauranteNaoEncontradaException(id));
     }

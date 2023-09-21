@@ -66,4 +66,12 @@ public class Restaurante implements Serializable {
     public void inativar(){
         this.ativo = false;
     }
+
+    public void abrirRestaurante(){
+        this.aberto = true;
+    }
+
+    public void fecharRestaurante(){
+        this.aberto = false;
+    }
 }

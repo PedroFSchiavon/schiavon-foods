@@ -136,6 +136,18 @@ public class RestauranteController {
         restauranteService.inativar(idRestaurante);
     }
 
+    @PutMapping("/{idRestaurante}/abrir")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void abrir(@PathVariable Long idRestaurante){
+        restauranteService.abrirRestaurante(idRestaurante);
+    }
+
+    @PutMapping("/{idRestaurante}/fechar")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void fechar(@PathVariable Long idRestaurante){
+        restauranteService.fecharRestaurante(idRestaurante);
+    }
+
     private RestauranteDTO toDTO(Restaurante restaurante) {
         return modelMapper.map(restaurante, RestauranteDTO.class);
     }
