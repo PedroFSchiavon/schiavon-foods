@@ -2,6 +2,7 @@ package br.com.schiavon.food.api.controller;
 
 import br.com.schiavon.food.api.model.dto.input.GrupoInputDTO;
 import br.com.schiavon.food.api.model.dto.output.GrupoDTO;
+import br.com.schiavon.food.api.model.dto.output.PermissaoDTO;
 import br.com.schiavon.food.domain.models.Grupo;
 import br.com.schiavon.food.domain.repositories.GrupoRepository;
 import br.com.schiavon.food.domain.services.GrupoService;
