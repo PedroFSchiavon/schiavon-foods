@@ -48,6 +48,12 @@ public class Restaurante implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
     private Set<FormaPagamento> formaPagamento = new HashSet<>();
 
+    @ManyToMany
+    @JoinTable(name = "restaurante_usuario_responsaveis",
+            joinColumns = @JoinColumn(name = "restaurante_id"),
+            inverseJoinColumns = @JoinColumn(name = "usuario_id"))
+    private Set<Usuario> responsaveis = new HashSet<>();
+
     @OneToMany(mappedBy = "restaurante")
     private List<Produto> produtos = new ArrayList<>();
 
@@ -59,19 +65,19 @@ public class Restaurante implements Serializable {
     @Column(nullable = false, columnDefinition = "datetime")
     OffsetDateTime dataAtualizacao;
 
-    public void ativar(){
+    public void ativar() {
         this.ativo = true;
     }
 
-    public void inativar(){
+    public void inativar() {
         this.ativo = false;
     }
 
-    public void abrirRestaurante(){
+    public void abrirRestaurante() {
         this.aberto = true;
     }
 
-    public void fecharRestaurante(){
+    public void fecharRestaurante() {
         this.aberto = false;
     }
 }

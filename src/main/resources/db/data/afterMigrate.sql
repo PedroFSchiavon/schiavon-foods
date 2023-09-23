@@ -81,3 +81,5 @@ insert into usuario (nome, email, senha) values ('Noah', 'noah@gmail.com', 'broa
 insert into usuario (nome, email, senha) values ('Amora', 'amora@gmail.com', 'rozilda');
 -- Grupo de usuario
 insert into grupo_usuario values (1,2), (2,1), (3,4), (4,3);
+-- Usuários responsaveis por Restaurantes
+insert into restaurante_usuario_responsaveis (restaurante_id, usuario_id) values (4, 1), (3, 2), (2, 3), (1, 4);
