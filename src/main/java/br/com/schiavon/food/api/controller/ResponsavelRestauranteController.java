@@ -5,9 +5,13 @@ import br.com.schiavon.food.domain.models.Restaurante;
 import br.com.schiavon.food.domain.models.Usuario;
 import br.com.schiavon.food.domain.services.ResponsavelService;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -27,17 +31,29 @@ public class ResponsavelRestauranteController {
     }
 
     @GetMapping
-    public List<UsuarioDTO> listar(@PathVariable Long idRestaurante){
+    public List<UsuarioDTO> listar(@PathVariable Long idRestaurante) {
         Restaurante restaurante = responsavelService.buscarRestauranteId(idRestaurante);
 
         return toCollectionDTO(restaurante.getResponsaveis());
     }
 
-    private UsuarioDTO toDTO(Usuario usuario){
+    @PutMapping("/{idUsuario}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void associarResponsavel(@PathVariable Long idRestaurante, @PathVariable Long idUsuario) {
+        responsavelService.associarResponsavel(idRestaurante, idUsuario);
+    }
+
+    @DeleteMapping("/{idUsuario}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void desassociarResponsavel(@PathVariable Long idRestaurante, @PathVariable Long idUsuario) {
+        responsavelService.desassociarResponsavel(idRestaurante, idUsuario);
+    }
+
+    private UsuarioDTO toDTO(Usuario usuario) {
         return modelMapper.map(usuario, UsuarioDTO.class);
     }
 
-    private List<UsuarioDTO> toCollectionDTO(Set<Usuario> usuarios){
+    private List<UsuarioDTO> toCollectionDTO(Set<Usuario> usuarios) {
         return usuarios.stream().map(this::toDTO).collect(Collectors.toList());
     }
 }
