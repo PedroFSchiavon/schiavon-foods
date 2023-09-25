@@ -1,5 +1,7 @@
 package br.com.schiavon.food.domain.services;
 
+import br.com.schiavon.food.domain.exceptions.naoencontrada.PedidoNaoEncontradaException;
+import br.com.schiavon.food.domain.models.Pedido;
 import br.com.schiavon.food.domain.repositories.PedidoRepository;
 import org.springframework.stereotype.Service;
 
@@ -11,5 +13,7 @@ public class PedidoService {
         this.pedidoRepository = pedidoRepository;
     }
 
-
+    public Pedido buscarPedidoId(Long id){
+        return pedidoRepository.findById(id).orElseThrow(() -> new PedidoNaoEncontradaException(id));
+    }
 }
