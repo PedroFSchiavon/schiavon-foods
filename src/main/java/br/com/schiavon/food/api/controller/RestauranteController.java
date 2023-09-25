@@ -136,6 +136,18 @@ public class RestauranteController {
         restauranteService.inativar(idRestaurante);
     }
 
+    @PutMapping("/ativar-lote")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void ativarLote(@RequestBody List<Long> idRestaurantes){
+        restauranteService.ativar(idRestaurantes);
+    }
+
+    @DeleteMapping("/ativar-lote")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void inativarLote(@RequestBody List<Long> idRestaurantes){
+        restauranteService.inativar(idRestaurantes);
+    }
+
     @PutMapping("/{idRestaurante}/abrir")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void abrir(@PathVariable Long idRestaurante){

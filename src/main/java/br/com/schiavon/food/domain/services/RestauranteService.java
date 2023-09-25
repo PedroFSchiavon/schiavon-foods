@@ -1,6 +1,7 @@
 package br.com.schiavon.food.domain.services;
 
 import br.com.schiavon.food.domain.exceptions.EntidadeEmUsoException;
+import br.com.schiavon.food.domain.exceptions.naoencontrada.RestauranteLoteNaoEncontradaException;
 import br.com.schiavon.food.domain.exceptions.naoencontrada.RestauranteNaoEncontradaException;
 import br.com.schiavon.food.domain.models.Cidade;
 import br.com.schiavon.food.domain.models.Cozinha;
@@ -19,6 +20,7 @@ import org.springframework.util.ReflectionUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Field;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -113,6 +115,24 @@ public class RestauranteService {
     public void inativar(Long id){
         Restaurante restaurante = buscarRestauranteId(id);
         restaurante.inativar();
+    }
+
+    @Transactional
+    public void ativar(List<Long> idsRestaurantes){
+        try{
+            idsRestaurantes.forEach(this::ativar);
+        }catch (RestauranteNaoEncontradaException e){
+            throw new RestauranteLoteNaoEncontradaException(e.getMessage());
+        }
+    }
+
+    @Transactional
+    public void inativar(List<Long> idsRestaurantes){
+        try {
+            idsRestaurantes.forEach(this::inativar);
+        }catch (RestauranteNaoEncontradaException e){
+            throw new RestauranteLoteNaoEncontradaException(e.getMessage());
+        }
     }
 
     @Transactional
