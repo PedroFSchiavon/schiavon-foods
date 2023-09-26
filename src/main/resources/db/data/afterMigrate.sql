@@ -12,6 +12,9 @@ delete from produto;
 delete from restaurante;
 delete from restaurante_forma_pagamento;
 delete from usuario;
+delete from pedido;
+delete from item_pedido;
+delete from restaurante_usuario_responsaveis;
 
 set foreign_key_checks = 1;
 
@@ -24,6 +27,9 @@ ALTER TABLE permissao AUTO_INCREMENT = 1;
 ALTER TABLE produto AUTO_INCREMENT = 1;
 ALTER TABLE restaurante AUTO_INCREMENT = 1;
 ALTER TABLE usuario AUTO_INCREMENT = 1;
+ALTER TABLE pedido AUTO_INCREMENT = 1;
+ALTER TABLE item_pedido AUTO_INCREMENT = 1;
+ALTER TABLE restaurante_usuario_responsaveis AUTO_INCREMENT = 1;
 
 -- cozinha
 insert into cozinha (nome) values ('Amazonense');

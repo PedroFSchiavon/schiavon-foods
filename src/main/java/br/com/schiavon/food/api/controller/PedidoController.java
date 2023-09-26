@@ -6,6 +6,7 @@ import br.com.schiavon.food.domain.repositories.PedidoRepository;
 import br.com.schiavon.food.domain.services.PedidoService;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,6 +31,11 @@ public class PedidoController {
     @GetMapping
     public List<PedidoDTO> listar(){
         return toCollectionDTO(pedidoRepository.findAll());
+    }
+
+    @GetMapping("/{idPedido}")
+    public PedidoDTO buscar(@PathVariable Long idPedido){
+        return toDTO(pedidoService.buscarPedidoId(idPedido));
     }
 
     private PedidoDTO toDTO(Pedido pedido){
