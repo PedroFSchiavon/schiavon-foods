@@ -1,6 +1,7 @@
 package br.com.schiavon.food.api.controller;
 
 import br.com.schiavon.food.api.model.dto.output.PedidoDTO;
+import br.com.schiavon.food.api.model.dto.output.PedidoResumoDTO;
 import br.com.schiavon.food.domain.models.Pedido;
 import br.com.schiavon.food.domain.repositories.PedidoRepository;
 import br.com.schiavon.food.domain.services.PedidoService;
@@ -29,8 +30,8 @@ public class PedidoController {
     }
 
     @GetMapping
-    public List<PedidoDTO> listar(){
-        return toCollectionDTO(pedidoRepository.findAll());
+    public List<PedidoResumoDTO> listar(){
+        return toCollectionResumoDTO(pedidoRepository.findAll());
     }
 
     @GetMapping("/{idPedido}")
@@ -44,5 +45,13 @@ public class PedidoController {
 
     private List<PedidoDTO> toCollectionDTO(List<Pedido> pedidos){
         return pedidos.stream().map(this::toDTO).collect(Collectors.toList());
+    }
+
+    private PedidoResumoDTO toResumoDTO(Pedido pedido){
+        return modelMapper.map(pedido, PedidoResumoDTO.class);
+    }
+
+    private List<PedidoResumoDTO> toCollectionResumoDTO(List<Pedido> pedidos){
+        return pedidos.stream().map(this::toResumoDTO).collect(Collectors.toList());
     }
 }
