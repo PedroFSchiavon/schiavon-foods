@@ -36,4 +36,9 @@ public class ItemPedido implements Serializable {
     @ManyToOne
     @JoinColumn(name = "pedido_id", nullable = false)
     private Pedido pedido;
+
+    public void calculaPreco(){
+        this.precoUnitario = produto.getPreco();
+        this.precoTotal = precoUnitario.multiply(new BigDecimal(quantidade));
+    }
 }

@@ -61,8 +61,4 @@ public class PedidoController {
     private List<PedidoResumoDTO> toCollectionResumoDTO(List<Pedido> pedidos){
         return pedidos.stream().map(this::toResumoDTO).collect(Collectors.toList());
     }
-
-    private Pedido toDomainModel(PedidoInputDTO pedidoInputDTO){
-        return modelMapper.map(pedidoInputDTO, Pedido.class);
-    }
 }

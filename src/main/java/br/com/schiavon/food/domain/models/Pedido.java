@@ -78,4 +78,9 @@ public class Pedido implements Serializable {
                             formaPagamento.getDescricao(), this.restaurante.getNome()));
         }
     }
+
+    public void calculaPreco(){
+        itensPedidos.forEach(item -> this.valorTotal = this.valorTotal.add(item.getPrecoTotal()));
+        this.valorTotal = this.valorTotal.add(taxaFrete);
+    }
 }

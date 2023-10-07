@@ -15,14 +15,12 @@ import java.util.Optional;
 public class RestauranteProdutoService {
     private final RestauranteService restauranteService;
 
-    private final RestauranteRepository restauranteRepository;
 
     private final ProdutoRepository produtoRepository;
 
-    public RestauranteProdutoService(RestauranteService restauranteService, RestauranteRepository restauranteRepository,
+    public RestauranteProdutoService(RestauranteService restauranteService,
                                      ProdutoRepository produtoRepository){
         this.restauranteService = restauranteService;
-        this.restauranteRepository = restauranteRepository;
         this.produtoRepository = produtoRepository;
     }
 
