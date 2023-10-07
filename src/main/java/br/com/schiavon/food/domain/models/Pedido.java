@@ -1,5 +1,6 @@
 package br.com.schiavon.food.domain.models;
 
+import br.com.schiavon.food.domain.exceptions.RelacionamentoEntidadeNaoEncontradoException;
 import br.com.schiavon.food.domain.models.enuns.StatusPedido;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,6 +11,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Entity
 @Data
@@ -58,4 +61,21 @@ public class Pedido implements Serializable {
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
     private List<ItemPedido> itensPedidos;
+
+    public void setFormaPagamento(FormaPagamento formaPagamento) {
+        Long id = formaPagamento.getId();
+
+        Optional<FormaPagamento> formaPagamentoOptional = restaurante.getFormaPagamento()
+                .stream()
+                .filter(pagamento -> id.equals(pagamento.getId()))
+                .findAny();
+
+        if (formaPagamentoOptional.isPresent()){
+            this.formaPagamento = formaPagamento;
+        }else {
+            throw new RelacionamentoEntidadeNaoEncontradoException(
+                    String.format("A forma de pagamento %s não é permitida no restaurante %s",
+                            formaPagamento.getDescricao(), this.restaurante.getNome()));
+        }
+    }
 }

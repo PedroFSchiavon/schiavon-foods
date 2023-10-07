@@ -6,4 +6,8 @@ public class RelacionamentoEntidadeNaoEncontradoException extends RuntimeExcepti
     public  RelacionamentoEntidadeNaoEncontradoException(String menssagem, Throwable throwable){
         super(menssagem, throwable);
     }
+
+    public  RelacionamentoEntidadeNaoEncontradoException(String menssagem){
+        super(menssagem);
+    }
 }
