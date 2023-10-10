@@ -47,7 +47,8 @@ public class PedidoController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public PedidoDTO cadastro(@RequestBody PedidoInputDTO pedidoInputDTO){
-        return toDTO(pedidoService.cadastro(pedidoInputDTO));
+        Pedido pedido = toDomainModel(pedidoInputDTO);
+        return toDTO(pedidoService.cadastro(pedido));
     }
 
     private PedidoDTO toDTO(Pedido pedido){
@@ -60,5 +61,9 @@ public class PedidoController {
 
     private List<PedidoResumoDTO> toCollectionResumoDTO(List<Pedido> pedidos){
         return pedidos.stream().map(this::toResumoDTO).collect(Collectors.toList());
+    }
+
+    private Pedido toDomainModel(PedidoInputDTO pedidoInputDTO){
+        return modelMapper.map(pedidoInputDTO, Pedido.class);
     }
 }

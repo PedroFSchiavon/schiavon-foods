@@ -21,7 +21,7 @@ public class ModelMapperConfig {
 
         typeMapEndereco.addMapping((src) -> src.getCidade().getEstado().getNome(), EnderecoDTO::setEstado);
 
-        //modelMapper.createTypeMap(ItemPedidoInputDTO.class, ItemPedido.class).addMappings(mapper -> mapper.skip(ItemPedido::setId));
+        modelMapper.createTypeMap(ItemPedidoInputDTO.class, ItemPedido.class).addMappings(mapper -> mapper.skip(ItemPedido::setId));
 
         return modelMapper;
     }

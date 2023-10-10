@@ -1,10 +1,5 @@
 package br.com.schiavon.food.api.model.dto.output;
 
-import br.com.schiavon.food.api.model.dto.output.EnderecoDTO;
-import br.com.schiavon.food.api.model.dto.output.FormaPagamentoDTO;
-import br.com.schiavon.food.api.model.dto.output.ItemPedidoDTO;
-import br.com.schiavon.food.api.model.dto.output.RestauranteResumidoDTO;
-import br.com.schiavon.food.api.model.dto.output.UsuarioDTO;
 import br.com.schiavon.food.domain.models.enuns.StatusPedido;
 import lombok.Getter;
 import lombok.Setter;

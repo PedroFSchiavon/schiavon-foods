@@ -23,5 +23,5 @@ public class PedidoInputDTO {
     @NotNull
     @Size(min = 1)
     @Valid
-    private List<ItemPedidoInputDTO> itens;
+    private List<ItemPedidoInputDTO> itensPedidos;
 }

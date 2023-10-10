@@ -10,6 +10,7 @@ import br.com.schiavon.food.domain.models.ItemPedido;
 import br.com.schiavon.food.domain.models.Pedido;
 import br.com.schiavon.food.domain.models.Restaurante;
 import br.com.schiavon.food.domain.models.Usuario;
+import br.com.schiavon.food.domain.repositories.ItemPedidoRepository;
 import br.com.schiavon.food.domain.repositories.PedidoRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -28,59 +29,28 @@ public class PedidoService {
 
     private final RestauranteProdutoService restauranteProdutoService;
 
+    private final ItemPedidoRepository itemPedidoRepository;
+
     private final ModelMapper modelMapper;
 
     public PedidoService(PedidoRepository pedidoRepository, RestauranteService restauranteService,
                          FormaPagamentoService formaPagamentoService, ModelMapper modelMapper,
-                         RestauranteProdutoService restauranteProdutoService) {
+                         RestauranteProdutoService restauranteProdutoService, ItemPedidoRepository itemPedidoRepository) {
         this.pedidoRepository = pedidoRepository;
         this.restauranteService = restauranteService;
-        this.formaPagamentoService =formaPagamentoService;
+        this.formaPagamentoService = formaPagamentoService;
         this.restauranteProdutoService = restauranteProdutoService;
+        this.itemPedidoRepository = itemPedidoRepository;
         this.modelMapper = modelMapper;
     }
 
-    @Transactional
-    public Pedido cadastro(PedidoInputDTO pedido){
-        Pedido novoPedido = new Pedido();
-        //Por hora o pedido sempre terá o usuário de id 1
-        novoPedido.setCliente(new Usuario());
-        novoPedido.getCliente().setId(1);
+    public Pedido cadastro(Pedido pedido) {
+        System.out.println(pedido);
 
-        Restaurante restaurante = restauranteService.buscarRestauranteId(pedido.getRestaurante().getId());
-        novoPedido.setRestaurante(restaurante);
-        novoPedido.setTaxaFrete(restaurante.getTaxaFrete());
-
-        FormaPagamento formaPagamento = formaPagamentoService.buscarFormaPagamentoID(pedido.getFormaPagamento().getId());
-        novoPedido.setFormaPagamento(formaPagamento);
-
-        novoPedido.setEnderecoEntrega(toDomainModelEndereco(pedido.getEnderecoEntrega()));
-
-        List<ItemPedido> itensPedidosGerados = pedido.getItens()
-                .stream()
-                .map(item -> criaItemPedido(item, restaurante.getId()))
-                .collect(Collectors.toList());
-        novoPedido.setItensPedidos(itensPedidosGerados);
-
-        novoPedido.calculaPreco();
-
-        return pedidoRepository.save(novoPedido);
+        return pedido;
     }
 
-    public Pedido buscarPedidoId(Long id){
+    public Pedido buscarPedidoId(Long id) {
         return pedidoRepository.findById(id).orElseThrow(() -> new PedidoNaoEncontradaException(id));
-    }
-
-    private Endereco toDomainModelEndereco(EnderecoInputDTO enderecoInputDTO){
-        return modelMapper.map(enderecoInputDTO, Endereco.class);
-    }
-
-    private ItemPedido criaItemPedido(ItemPedidoInputDTO itemPedidoInputDTO, Long idRestaurante){
-        ItemPedido itemPedido = modelMapper.map(itemPedidoInputDTO, ItemPedido.class);
-        itemPedido.setProduto(restauranteProdutoService.buscarProdutoID(idRestaurante, itemPedidoInputDTO.getProdutoId()));
-
-        itemPedido.calculaPreco();
-
-        return itemPedido;
     }
 }

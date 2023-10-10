@@ -62,7 +62,7 @@ public class Pedido implements Serializable {
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
     private List<ItemPedido> itensPedidos;
 
-    public void setFormaPagamento(FormaPagamento formaPagamento) {
+    public void verificaECadastraFormaDePagamento(FormaPagamento formaPagamento) {
         Long id = formaPagamento.getId();
 
         Optional<FormaPagamento> formaPagamentoOptional = restaurante.getFormaPagamento()
