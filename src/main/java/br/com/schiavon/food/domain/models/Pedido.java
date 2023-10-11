@@ -2,17 +2,16 @@ package br.com.schiavon.food.domain.models;
 
 import br.com.schiavon.food.domain.exceptions.RelacionamentoEntidadeNaoEncontradoException;
 import br.com.schiavon.food.domain.models.enuns.StatusPedido;
+import javax.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Entity
 @Data
@@ -80,6 +79,7 @@ public class Pedido implements Serializable {
     }
 
     public void calculaPreco(){
+        this.valorTotal = BigDecimal.ZERO;
         itensPedidos.forEach(item -> this.valorTotal = this.valorTotal.add(item.getPrecoTotal()));
         this.valorTotal = this.valorTotal.add(taxaFrete);
     }

@@ -6,6 +6,7 @@ import br.com.schiavon.food.api.model.dto.output.PedidoResumoDTO;
 import br.com.schiavon.food.domain.models.Pedido;
 import br.com.schiavon.food.domain.repositories.PedidoRepository;
 import br.com.schiavon.food.domain.services.PedidoService;
+import javax.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,9 +47,15 @@ public class PedidoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PedidoDTO cadastro(@RequestBody PedidoInputDTO pedidoInputDTO){
+    public PedidoDTO cadastro(@RequestBody @Valid PedidoInputDTO pedidoInputDTO){
         Pedido pedido = toDomainModel(pedidoInputDTO);
-        return toDTO(pedidoService.cadastro(pedido));
+
+        Long cidadeId = pedidoInputDTO.getEnderecoEntrega().getCidade().getId();
+
+        Pedido pedidoNovo = pedidoService.cadastro(pedido, cidadeId);
+        pedidoService.persisteItemPedido(pedidoNovo);
+
+        return toDTO(pedidoNovo);
     }
 
     private PedidoDTO toDTO(Pedido pedido){

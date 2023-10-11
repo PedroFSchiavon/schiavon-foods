@@ -1,6 +1,5 @@
 package br.com.schiavon.food.api.model.dto.input;
 
-import br.com.schiavon.food.api.model.dto.input.usuario.ProdutoIdInput;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import lombok.Getter;
