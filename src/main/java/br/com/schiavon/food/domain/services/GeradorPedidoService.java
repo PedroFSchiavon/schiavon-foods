@@ -8,6 +8,7 @@ import br.com.schiavon.food.domain.models.Pedido;
 import br.com.schiavon.food.domain.models.Produto;
 import br.com.schiavon.food.domain.models.Restaurante;
 import br.com.schiavon.food.domain.models.Usuario;
+import br.com.schiavon.food.domain.models.enuns.StatusPedido;
 import br.com.schiavon.food.domain.repositories.PedidoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class PedidoService {
+public class GeradorPedidoService {
     private final PedidoRepository pedidoRepository;
 
     private final RestauranteService restauranteService;
@@ -28,10 +29,10 @@ public class PedidoService {
 
     private final CidadeService cidadeService;
 
-    public PedidoService(PedidoRepository pedidoRepository, RestauranteService restauranteService,
-                         FormaPagamentoService formaPagamentoService,
-                         RestauranteProdutoService restauranteProdutoService,
-                         UsuarioService usuarioService, CidadeService cidadeService) {
+    public GeradorPedidoService(PedidoRepository pedidoRepository, RestauranteService restauranteService,
+                                FormaPagamentoService formaPagamentoService,
+                                RestauranteProdutoService restauranteProdutoService,
+                                UsuarioService usuarioService, CidadeService cidadeService) {
         this.pedidoRepository = pedidoRepository;
         this.restauranteService = restauranteService;
         this.formaPagamentoService = formaPagamentoService;
@@ -67,6 +68,9 @@ public class PedidoService {
         //Calcula preço
         calculaPrecosItem(pedido);
         pedido.calculaPreco();
+
+        //Atualiza status do pedido
+        pedido.setStatusPedido(StatusPedido.CRIADO);
 
         return pedidoRepository.save(pedido);
     }

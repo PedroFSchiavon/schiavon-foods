@@ -5,7 +5,7 @@ import br.com.schiavon.food.api.model.dto.output.PedidoDTO;
 import br.com.schiavon.food.api.model.dto.output.PedidoResumoDTO;
 import br.com.schiavon.food.domain.models.Pedido;
 import br.com.schiavon.food.domain.repositories.PedidoRepository;
-import br.com.schiavon.food.domain.services.PedidoService;
+import br.com.schiavon.food.domain.services.GeradorPedidoService;
 import javax.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -23,14 +23,14 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/pedidos")
 public class PedidoController {
-    private final PedidoService pedidoService;
+    private final GeradorPedidoService geradorPedidoService;
 
     private final PedidoRepository pedidoRepository;
 
     private final ModelMapper modelMapper;
 
-    public PedidoController(PedidoService pedidoService, PedidoRepository pedidoRepository, ModelMapper modelMapper) {
-        this.pedidoService = pedidoService;
+    public PedidoController(GeradorPedidoService geradorPedidoService, PedidoRepository pedidoRepository, ModelMapper modelMapper) {
+        this.geradorPedidoService = geradorPedidoService;
         this.pedidoRepository = pedidoRepository;
         this.modelMapper = modelMapper;
     }
@@ -42,7 +42,7 @@ public class PedidoController {
 
     @GetMapping("/{idPedido}")
     public PedidoDTO buscar(@PathVariable Long idPedido){
-        return toDTO(pedidoService.buscarPedidoId(idPedido));
+        return toDTO(geradorPedidoService.buscarPedidoId(idPedido));
     }
 
     @PostMapping
@@ -52,8 +52,8 @@ public class PedidoController {
 
         Long cidadeId = pedidoInputDTO.getEnderecoEntrega().getCidade().getId();
 
-        Pedido pedidoNovo = pedidoService.cadastro(pedido, cidadeId);
-        pedidoService.persisteItemPedido(pedidoNovo);
+        Pedido pedidoNovo = geradorPedidoService.cadastro(pedido, cidadeId);
+        geradorPedidoService.persisteItemPedido(pedidoNovo);
 
         return toDTO(pedidoNovo);
     }
