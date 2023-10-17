@@ -2,6 +2,7 @@ package br.com.schiavon.food.api.exceptionHandlers;
 
 import br.com.schiavon.food.core.validation.ValidationPatchException;
 import br.com.schiavon.food.domain.exceptions.EntidadeEmUsoException;
+import br.com.schiavon.food.domain.exceptions.NegocioException;
 import br.com.schiavon.food.domain.exceptions.naoencontrada.EntidadeNaoEncontradaException;
 import br.com.schiavon.food.domain.exceptions.RelacionamentoEntidadeNaoEncontradoException;
 import br.com.schiavon.food.domain.exceptions.UsuarioNegocioException;
@@ -92,6 +93,15 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         HttpStatus status = HttpStatus.BAD_REQUEST;
         BindingResult bindingResult = e.getBindingResult();
         return trataValidationExceptions(e, new HttpHeaders(), status, webRequest, bindingResult);
+    }
+
+    @ExceptionHandler(NegocioException.class)
+    public ResponseEntity<?> handleNegocioException(NegocioException e, WebRequest webRequest) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        ProblemType problemType = ProblemType.FALHA_REGRA_DE_NEGOCIO;
+        Problem problem = createProblem(status.value(), problemType, e.getMessage(), e.getMessage());
+
+        return handleExceptionInternal(e, problem, new HttpHeaders(), status, webRequest);
     }
 
     @ExceptionHandler(Exception.class)

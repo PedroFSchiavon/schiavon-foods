@@ -12,7 +12,8 @@ public enum ProblemType {
     PARAMETRO_INVALIDO("/parametro-invalido", "Parametro invalido."),
     ERRO_DE_SISTEMA("/erro-de-sistema", "Erro de sistema."),
     DADOS_INVALIDOS("/dados-invalidos", "Dados invalidos."),
-    SENHA_NAO_COINCIDEM("/senha-nao-coincidem", "Senha não coincidem.");
+    SENHA_NAO_COINCIDEM("/senha-nao-coincidem", "Senha não coincidem."),
+    FALHA_REGRA_DE_NEGOCIO("/falha-regra-de-negocio", "Falha na regra de negocio.");
 
     String type;
     String title;
