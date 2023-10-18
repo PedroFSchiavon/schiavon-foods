@@ -1,5 +1,6 @@
 package br.com.schiavon.food.domain.models;
 
+import br.com.schiavon.food.domain.exceptions.NegocioException;
 import br.com.schiavon.food.domain.exceptions.RelacionamentoEntidadeNaoEncontradoException;
 import br.com.schiavon.food.domain.models.enuns.StatusPedido;
 import javax.persistence.*;
@@ -82,5 +83,33 @@ public class Pedido implements Serializable {
         this.valorTotal = BigDecimal.ZERO;
         itensPedidos.forEach(item -> this.valorTotal = this.valorTotal.add(item.getPrecoTotal()));
         this.valorTotal = this.valorTotal.add(taxaFrete);
+    }
+
+    public void confirma(){
+        setStatusPedido(StatusPedido.CONFIRMADO);
+        setDataConfirmacao(OffsetDateTime.now());
+    }
+
+    public void entregue(){
+        setStatusPedido(StatusPedido.ENTREGUE);
+        setDataEntrega(OffsetDateTime.now());
+    }
+
+    public void cancelado(){
+        setStatusPedido(StatusPedido.CANCELADO);
+        setDataCancelamento(OffsetDateTime.now());
+    }
+
+    public void criado(){
+        this.statusPedido = StatusPedido.CRIADO;
+    }
+
+    private void setStatusPedido(StatusPedido statusPedido){
+        if (!this.statusPedido.verificaAlteracaoStatus(statusPedido)){
+            throw new NegocioException(String.format("O pedido de id %d esta com o status \"%s\", não sendo " +
+                    "possível alterar para o status \"%s\".", this.id, this.statusPedido, statusPedido));
+        }
+
+        this.statusPedido = statusPedido;
     }
 }

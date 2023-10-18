@@ -70,7 +70,7 @@ public class GeradorPedidoService {
         pedido.calculaPreco();
 
         //Atualiza status do pedido
-        pedido.setStatusPedido(StatusPedido.CRIADO);
+        pedido.criado();
 
         return pedidoRepository.save(pedido);
     }
