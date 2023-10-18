@@ -1,7 +1,5 @@
 package br.com.schiavon.food.api.model.dto.output;
 
-import br.com.schiavon.food.api.model.dto.output.RestauranteResumidoDTO;
-import br.com.schiavon.food.api.model.dto.output.UsuarioDTO;
 import br.com.schiavon.food.domain.models.enuns.StatusPedido;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class PedidoResumoDTO {
-    private long id;
+    private String codigo;
     private BigDecimal taxaFrete;
     private BigDecimal valorTotal;
     private LocalDateTime dataCriacao;

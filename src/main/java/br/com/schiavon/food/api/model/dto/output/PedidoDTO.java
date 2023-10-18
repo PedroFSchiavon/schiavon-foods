@@ -5,14 +5,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.List;
 
 @Getter
 @Setter
 public class PedidoDTO {
-    private long id;
+    private String codigo;
     private BigDecimal taxaFrete;
     private BigDecimal valorTotal;
     private OffsetDateTime dataCriacao;

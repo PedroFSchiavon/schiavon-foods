@@ -8,12 +8,12 @@ import br.com.schiavon.food.domain.models.Pedido;
 import br.com.schiavon.food.domain.models.Produto;
 import br.com.schiavon.food.domain.models.Restaurante;
 import br.com.schiavon.food.domain.models.Usuario;
-import br.com.schiavon.food.domain.models.enuns.StatusPedido;
 import br.com.schiavon.food.domain.repositories.PedidoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class GeradorPedidoService {
@@ -80,8 +80,8 @@ public class GeradorPedidoService {
         pedido.getItensPedidos().forEach(itemPedido -> itemPedido.setPedido(pedido));
     }
 
-    public Pedido buscarPedidoId(Long id) {
-        return pedidoRepository.findById(id).orElseThrow(() -> new PedidoNaoEncontradaException(id));
+    public Pedido buscarPedidoId(String codigo) {
+        return pedidoRepository.findByCodigo(codigo).orElseThrow(() -> new PedidoNaoEncontradaException(codigo));
     }
 
     private void cadastroEValidacaoDeItens(Pedido pedido) {

@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -24,6 +25,9 @@ public class Pedido implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private long id;
+
+    @Column(nullable = false, unique = true)
+    private String codigo;
 
     @Column(nullable = false)
     private BigDecimal taxaFrete;
@@ -106,10 +110,15 @@ public class Pedido implements Serializable {
 
     private void setStatusPedido(StatusPedido statusPedido){
         if (!this.statusPedido.verificaAlteracaoStatus(statusPedido)){
-            throw new NegocioException(String.format("O pedido de id %d esta com o status \"%s\", não sendo " +
-                    "possível alterar para o status \"%s\".", this.id, this.statusPedido, statusPedido));
+            throw new NegocioException(String.format("O pedido de id %s esta com o status \"%s\", não sendo " +
+                    "possível alterar para o status \"%s\".", this.codigo, this.statusPedido, statusPedido));
         }
 
         this.statusPedido = statusPedido;
+    }
+
+    @PrePersist
+    private void geraCodigo(){
+        setCodigo(UUID.randomUUID().toString());
     }
 }

@@ -92,19 +92,19 @@ insert into grupo_usuario values (1,2), (2,1), (3,4), (4,3);
 insert into restaurante_usuario_responsaveis (restaurante_id, usuario_id) values (4, 1), (3, 2), (2, 3), (1, 4);
 -- Pedido
 insert into pedido
-    (taxa_frete, valor_total, data_criacao, data_confirmacao, status_pedido, endereco_bairro,
+    (codigo, taxa_frete, valor_total, data_criacao, data_confirmacao, status_pedido, endereco_bairro,
          endereco_cep, endereco_logradouro, endereco_numero, endereco_cidade_id, cliente_id, restaurante_id, forma_pagamento_id)
-            values (5.50, 95.49, utc_timestamp, utc_timestamp, 'CONFIRMADO', 'Bairro A', '30765987', 'Rua Boa esperanca',
+            values ('6918294c-6d66-11ee-ba51-58a02333c4b7', 5.50, 95.49, utc_timestamp, utc_timestamp, 'CONFIRMADO', 'Bairro A', '30765987', 'Rua Boa esperanca',
                     '1234', 1, 1, 1, 2);
 insert into pedido
-    (taxa_frete, valor_total, data_criacao, data_confirmacao, status_pedido, endereco_bairro,
+    (codigo, taxa_frete, valor_total, data_criacao, data_confirmacao, status_pedido, endereco_bairro,
         endereco_cep, endereco_logradouro, endereco_numero, endereco_cidade_id, cliente_id, restaurante_id, forma_pagamento_id)
-            values (3.80, 149.30, utc_timestamp, utc_timestamp, 'CONFIRMADO', 'Bairro B', '10665987', 'Rua da Vitória',
+            values ('286e862c-b3f9-46ee-8e94-986d82fca150', 3.80, 149.30, utc_timestamp, utc_timestamp, 'CONFIRMADO', 'Bairro B', '10665987', 'Rua da Vitória',
                 '4321', 2, 2, 2, 1);
 insert into pedido
-    (taxa_frete, valor_total, data_criacao, data_confirmacao, status_pedido, endereco_bairro,
+    (codigo, taxa_frete, valor_total, data_criacao, data_confirmacao, status_pedido, endereco_bairro,
         endereco_cep, endereco_logradouro, endereco_numero, endereco_cidade_id, cliente_id, restaurante_id, forma_pagamento_id)
-            values (7.80, 52.30, utc_timestamp, utc_timestamp, 'CONFIRMADO', 'Bairro c', '90765123', 'Rua da Perdição',
+            values ('d4168b2c-1085-4dff-9d6a-af076ea0fd6c', 7.80, 52.30, utc_timestamp, utc_timestamp, 'CONFIRMADO', 'Bairro c', '90765123', 'Rua da Perdição',
                 '4356', 3, 3, 3, 4);
 -- Item Pedido
 insert into item_pedido (quantidade, observacao, produto_id, pedido_id, preco_total, preco_unitario)

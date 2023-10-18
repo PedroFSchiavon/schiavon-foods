@@ -13,22 +13,22 @@ public class FluxoPedidoService {
     }
 
     @Transactional
-    public void statusConfirmado(Long id){
-        Pedido pedido = geradorPedidoService.buscarPedidoId(id);
+    public void statusConfirmado(String codigo){
+        Pedido pedido = geradorPedidoService.buscarPedidoId(codigo);
 
         pedido.confirma();
     }
 
     @Transactional
-    public void statusEntregue(Long id){
-        Pedido pedido = geradorPedidoService.buscarPedidoId(id);
+    public void statusEntregue(String codigo){
+        Pedido pedido = geradorPedidoService.buscarPedidoId(codigo);
 
         pedido.entregue();
     }
 
     @Transactional
-    public void statusCancelado(Long id){
-        Pedido pedido = geradorPedidoService.buscarPedidoId(id);
+    public void statusCancelado(String codigo){
+        Pedido pedido = geradorPedidoService.buscarPedidoId(codigo);
 
         pedido.cancelado();
     }

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/pedidos/{idPedido}/status")
+@RequestMapping("/pedidos/{codigoPedido}/status")
 public class FluxoPedidoController {
     private final FluxoPedidoService fluxoPedidoService;
 
@@ -19,19 +19,19 @@ public class FluxoPedidoController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/confirmado")
-    public void confirmado(@PathVariable Long idPedido){
-        fluxoPedidoService.statusConfirmado(idPedido);
+    public void confirmado(@PathVariable String codigoPedido){
+        fluxoPedidoService.statusConfirmado(codigoPedido);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/entregue")
-    public void entregue(@PathVariable Long idPedido){
-        fluxoPedidoService.statusEntregue(idPedido);
+    public void entregue(@PathVariable String codigoPedido){
+        fluxoPedidoService.statusEntregue(codigoPedido);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/cancelado")
-    public void cancelado(@PathVariable Long idPedido){
-        fluxoPedidoService.statusCancelado(idPedido);
+    public void cancelado(@PathVariable String codigoPedido){
+        fluxoPedidoService.statusCancelado(codigoPedido);
     }
 }

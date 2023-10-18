@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -40,9 +41,9 @@ public class PedidoController {
         return toCollectionResumoDTO(pedidoRepository.findAll());
     }
 
-    @GetMapping("/{idPedido}")
-    public PedidoDTO buscar(@PathVariable Long idPedido){
-        return toDTO(geradorPedidoService.buscarPedidoId(idPedido));
+    @GetMapping("/{codigoPedido}")
+    public PedidoDTO buscar(@PathVariable String codigoPedido){
+        return toDTO(geradorPedidoService.buscarPedidoId(codigoPedido));
     }
 
     @PostMapping
