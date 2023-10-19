@@ -2,6 +2,7 @@ package br.com.schiavon.food.api.controller;
 
 import br.com.schiavon.food.api.model.dto.input.RestauranteInputDTO;
 import br.com.schiavon.food.api.model.dto.output.RestauranteDTO;
+import br.com.schiavon.food.api.model.view.RestauranteView;
 import br.com.schiavon.food.core.validation.ValidationPatchException;
 import br.com.schiavon.food.domain.exceptions.naoencontrada.CidadeNaoEncontradaException;
 import br.com.schiavon.food.domain.exceptions.naoencontrada.CozinhaNaoEncontradaException;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.SmartValidator;
 import org.springframework.web.bind.annotation.*;
@@ -42,8 +44,18 @@ public class RestauranteController {
     }
 
     @GetMapping
-    public List<RestauranteDTO> listar(){
-        return toCollectionDTO(restauranteRepository.findAll());
+    public MappingJacksonValue listar(@RequestParam(required = false) String view){
+        List<Restaurante> restaurantes = restauranteRepository.findAll();
+        List<RestauranteDTO> restauranteDTO = toCollectionDTO(restaurantes);
+
+        MappingJacksonValue restauranteMapping = new MappingJacksonValue(restauranteDTO);
+        restauranteMapping.setSerializationView(RestauranteView.Resumo.class);
+
+        if ("apenas-nome".equals(view)) {
+            restauranteMapping.setSerializationView(RestauranteView.ApenasNome.class);
+        }
+
+        return restauranteMapping;
     }
 
     @GetMapping("/nome")
