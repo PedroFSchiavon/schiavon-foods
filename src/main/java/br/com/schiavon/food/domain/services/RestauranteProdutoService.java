@@ -4,7 +4,6 @@ import br.com.schiavon.food.domain.exceptions.naoencontrada.ProdutoNaoEncontrado
 import br.com.schiavon.food.domain.models.Produto;
 import br.com.schiavon.food.domain.models.Restaurante;
 import br.com.schiavon.food.domain.repositories.ProdutoRepository;
-import br.com.schiavon.food.domain.repositories.RestauranteRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +26,7 @@ public class RestauranteProdutoService {
     public List<Produto> listarProduto(Long idRestaurante){
         Restaurante restaurante = restauranteService.buscarRestauranteId(idRestaurante);
 
-        return restaurante.getProdutos();
+        return produtoRepository.findByRestaurante(restaurante);
     }
 
     @Transactional
@@ -49,16 +48,12 @@ public class RestauranteProdutoService {
     }
 
     public Produto buscarProdutoID(Long idRestaurante, Long idProduto){
-        Restaurante restaurante = restauranteService.buscarRestauranteId(idRestaurante);
-
-        Optional<Produto> produtoOptional = restaurante.getProdutos().stream()
-                .filter(produto -> idProduto.equals(produto.getId()))
-                .findAny();
+        Optional<Produto> produtoOptional = produtoRepository.findByRestaurante_IdAndId(idRestaurante, idProduto);
 
         if(produtoOptional.isEmpty()){
             throw new ProdutoNaoEncontradoException(
-                    String.format("O recurso de id %d não encontrado no restaurante %s.",
-                            idProduto, restaurante.getNome()));
+                    String.format("O recurso de id %d não encontrado no restaurante de id %d.",
+                            idProduto, idRestaurante));
         }
 
         return produtoOptional.get();
