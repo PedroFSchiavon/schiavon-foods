@@ -23,10 +23,13 @@ public class RestauranteProdutoService {
         this.produtoRepository = produtoRepository;
     }
 
-    public List<Produto> listarProduto(Long idRestaurante){
+    public List<Produto> listarProduto(Long idRestaurante, boolean inativo){
         Restaurante restaurante = restauranteService.buscarRestauranteId(idRestaurante);
 
-        return produtoRepository.findByRestaurante(restaurante);
+        if (inativo)
+            return produtoRepository.findByRestaurante(restaurante);
+        else
+            return produtoRepository.findByRestauranteAndAtivoIsTrue(restaurante);
     }
 
     @Transactional

@@ -10,5 +10,7 @@ import java.util.Optional;
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
     List<Produto> findByRestaurante(Restaurante restaurante);
 
+    List<Produto> findByRestauranteAndAtivoIsTrue(Restaurante restaurante);
+
     Optional<Produto> findByRestaurante_IdAndId(Long restauranteId, Long produtoId);
 }
