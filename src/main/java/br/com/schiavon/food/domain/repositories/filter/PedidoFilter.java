@@ -3,6 +3,7 @@ package br.com.schiavon.food.domain.repositories.filter;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.OffsetDateTime;
 
@@ -11,8 +12,13 @@ import java.time.OffsetDateTime;
 @ToString
 public class PedidoFilter {
     private Long clienteId;
+
     private Long restauranteId;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private OffsetDateTime dataCriacaoInicio;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE _TIME)
     private OffsetDateTime dataCriacaoFinal;
 
     public boolean isNull(){

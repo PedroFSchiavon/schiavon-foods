@@ -94,18 +94,23 @@ insert into restaurante_usuario_responsaveis (restaurante_id, usuario_id) values
 insert into pedido
     (codigo, taxa_frete, valor_total, data_criacao, data_confirmacao, status_pedido, endereco_bairro,
          endereco_cep, endereco_logradouro, endereco_numero, endereco_cidade_id, cliente_id, restaurante_id, forma_pagamento_id)
-            values ('6918294c-6d66-11ee-ba51-58a02333c4b7', 5.50, 95.49, utc_timestamp, utc_timestamp, 'CONFIRMADO', 'Bairro A', '30765987', 'Rua Boa esperanca',
+            values ('6918294c-6d66-11ee-ba51-58a02333c4b7', 5.50, 95.49, '2023-09-01T18:39:02', utc_timestamp, 'CONFIRMADO', 'Bairro A', '30765987', 'Rua Boa esperanca',
                     '1234', 1, 1, 1, 2);
 insert into pedido
     (codigo, taxa_frete, valor_total, data_criacao, data_confirmacao, status_pedido, endereco_bairro,
         endereco_cep, endereco_logradouro, endereco_numero, endereco_cidade_id, cliente_id, restaurante_id, forma_pagamento_id)
-            values ('286e862c-b3f9-46ee-8e94-986d82fca150', 3.80, 149.30, utc_timestamp, utc_timestamp, 'CONFIRMADO', 'Bairro B', '10665987', 'Rua da Vitória',
+            values ('286e862c-b3f9-46ee-8e94-986d82fca150', 3.80, 149.30, '2023-10-01T14:39:02', utc_timestamp, 'CONFIRMADO', 'Bairro B', '10665987', 'Rua da Vitória',
                 '4321', 2, 2, 2, 1);
 insert into pedido
     (codigo, taxa_frete, valor_total, data_criacao, data_confirmacao, status_pedido, endereco_bairro,
         endereco_cep, endereco_logradouro, endereco_numero, endereco_cidade_id, cliente_id, restaurante_id, forma_pagamento_id)
-            values ('d4168b2c-1085-4dff-9d6a-af076ea0fd6c', 7.80, 52.30, utc_timestamp, utc_timestamp, 'CONFIRMADO', 'Bairro c', '90765123', 'Rua da Perdição',
+            values ('d4168b2c-1085-4dff-9d6a-af076ea0fd6c', 7.80, 52.30, '2023-09-15T03:39:02', utc_timestamp, 'CONFIRMADO', 'Bairro c', '90765123', 'Rua da Perdição',
                 '4356', 3, 3, 3, 4);
+insert into pedido
+    (codigo, taxa_frete, valor_total, data_criacao, data_confirmacao, status_pedido, endereco_bairro,
+        endereco_cep, endereco_logradouro, endereco_numero, endereco_cidade_id, cliente_id, restaurante_id, forma_pagamento_id)
+            values ('44507a4b-7aeb-4b49-b9a4-a44d064559ef', 7.50, 915.49, '2023-10-24T23:39:02', utc_timestamp, 'CONFIRMADO', 'Bairro A', '30765987', 'Rua Boa esperanca',
+                '1234', 1, 1, 2, 4);
 -- Item Pedido
 insert into item_pedido (quantidade, observacao, produto_id, pedido_id, preco_total, preco_unitario)
     values (2, 'Sem abacaxi', 1, 1, 66.66, 33.33);
@@ -117,3 +122,6 @@ insert into item_pedido (quantidade, observacao, produto_id, pedido_id, preco_to
     values (2, 'Vocês são perfeitos', 4, 2, 100, 50);
 insert into item_pedido (quantidade, observacao, produto_id, pedido_id, preco_total, preco_unitario)
     values (1, 'Leite em pó extra', 5, 3, 32.99, 16.99);
+insert into item_pedido (quantidade, observacao, produto_id, pedido_id, preco_total, preco_unitario)
+values (2, 'Bota poucp recheio', 3, 4, 90, 45.50);
+
