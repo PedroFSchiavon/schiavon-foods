@@ -5,6 +5,7 @@ import br.com.schiavon.food.api.model.dto.output.PedidoDTO;
 import br.com.schiavon.food.api.model.dto.output.PedidoResumoDTO;
 import br.com.schiavon.food.domain.models.Pedido;
 import br.com.schiavon.food.domain.repositories.PedidoRepository;
+import br.com.schiavon.food.domain.repositories.filter.PedidoFilter;
 import br.com.schiavon.food.domain.services.GeradorPedidoService;
 import javax.validation.Valid;
 import org.modelmapper.ModelMapper;
@@ -37,8 +38,12 @@ public class PedidoController {
     }
 
     @GetMapping
-    public List<PedidoResumoDTO> listar(){
-        return toCollectionResumoDTO(pedidoRepository.findAll());
+    public List<PedidoResumoDTO> listar(PedidoFilter pedidoFilter){
+        if (pedidoFilter.isNull()){
+            return toCollectionResumoDTO(pedidoRepository.findAll());
+        }else {
+            return toCollectionResumoDTO(pedidoRepository.findByClienteRestauranteData(pedidoFilter));
+        }
     }
 
     @GetMapping("/{codigoPedido}")

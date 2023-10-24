@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface PedidoRepository extends JpaRepository<Pedido, Long> {
+public interface PedidoRepository extends JpaRepository<Pedido, Long>, PedidoRepositoryQuery {
 
     @Query("from Pedido p join fetch p.cliente join fetch p.restaurante r join fetch r.cozinha")
     List<Pedido> findAll();
