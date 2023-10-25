@@ -27,6 +27,9 @@ public class PedidoRepositoryImpl implements PedidoRepositoryQuery {
         CriteriaQuery<Pedido> criteria = criteriaBuilder.createQuery(Pedido.class);
         Root<Pedido> root = criteria.from(Pedido.class);
 
+        root.fetch("restaurante").fetch("cozinha");
+        root.fetch("cliente");
+
         ArrayList<Predicate> predicates = new ArrayList<>();
 
         if (pedidoFilter.getClienteId() != null){

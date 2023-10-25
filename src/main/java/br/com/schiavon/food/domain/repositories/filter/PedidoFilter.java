@@ -18,7 +18,7 @@ public class PedidoFilter {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private OffsetDateTime dataCriacaoInicio;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE _TIME)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private OffsetDateTime dataCriacaoFinal;
 
     public boolean isNull(){
