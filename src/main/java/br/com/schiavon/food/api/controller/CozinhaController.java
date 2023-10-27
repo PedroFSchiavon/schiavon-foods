@@ -8,6 +8,9 @@ import br.com.schiavon.food.domain.repositories.CozinhaRepository;
 import br.com.schiavon.food.domain.services.CozinhaService;
 import javax.validation.Valid;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,8 +40,13 @@ public class CozinhaController {
     }
 
     @GetMapping
-    public List<CozinhaDTO> listar(){
-        return toCollectionDTO(cozinhaRepository.findAll());
+    public Page<CozinhaDTO> listar(Pageable pageable){
+        Page<Cozinha> cozinhaPageable = cozinhaRepository.findAll(pageable);
+        List<CozinhaDTO> cozinhasDTO = toCollectionDTO(cozinhaPageable.getContent());
+
+        Page<CozinhaDTO> cozinhaDTOPage = new PageImpl<>(cozinhasDTO, pageable, cozinhaPageable.getTotalElements());
+
+        return cozinhaDTOPage;
     }
 
     @GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
