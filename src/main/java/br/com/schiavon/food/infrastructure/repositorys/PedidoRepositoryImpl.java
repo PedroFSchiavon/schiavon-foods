@@ -10,10 +10,11 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Repository
 public class PedidoRepositoryImpl implements PedidoRepositoryQuery {
@@ -21,8 +22,9 @@ public class PedidoRepositoryImpl implements PedidoRepositoryQuery {
     @PersistenceContext
     private EntityManager manager;
 
+
     @Override
-    public List<Pedido> findByClienteRestauranteData(PedidoFilter pedidoFilter) {
+    public Page<Pedido> findByClienteRestauranteData(PedidoFilter pedidoFilter, Pageable pageable) {
         CriteriaBuilder criteriaBuilder = manager.getCriteriaBuilder();
         CriteriaQuery<Pedido> criteria = criteriaBuilder.createQuery(Pedido.class);
         Root<Pedido> root = criteria.from(Pedido.class);
