@@ -9,6 +9,10 @@ import br.com.schiavon.food.domain.repositories.filter.PedidoFilter;
 import br.com.schiavon.food.domain.services.GeradorPedidoService;
 import javax.validation.Valid;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +23,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -38,11 +41,15 @@ public class PedidoController {
     }
 
     @GetMapping
-    public List<PedidoResumoDTO> listar(PedidoFilter pedidoFilter){
+    public Page<PedidoResumoDTO> listar(PedidoFilter pedidoFilter, @PageableDefault(size = 10) Pageable pageable){
         if (pedidoFilter.isNull()){
-            return toCollectionResumoDTO(pedidoRepository.findAll());
+            Page<Pedido> pedidoPage = pedidoRepository.findAll(pageable);
+            List<PedidoResumoDTO> pedidosDTO = toCollectionResumoDTO(pedidoPage.getContent());
+            return new PageImpl<PedidoResumoDTO>(pedidosDTO, pageable, pedidoPage.getTotalElements());
         }else {
-            return toCollectionResumoDTO(pedidoRepository.findByClienteRestauranteData(pedidoFilter));
+            Page<Pedido> pedidoPage = pedidoRepository.findByClienteRestauranteData(pedidoFilter, pageable);
+            List<PedidoResumoDTO> pedidosDTO = toCollectionResumoDTO(pedidoPage.getContent());
+            return new PageImpl<PedidoResumoDTO>(pedidosDTO, pageable, pedidoPage.getTotalElements());
         }
     }
 
